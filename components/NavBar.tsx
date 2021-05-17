@@ -14,7 +14,7 @@ const NavBar = () => {
 			<ActiveLink href="/lists">
 				<ListDashes size={26}></ListDashes>
 			</ActiveLink>
-			<ActiveLink href="/login" secondaryLinks={['/register']}>
+			<ActiveLink href="/profile" secondaryLinks={['/register']}>
 				<User size={26}></User>
 			</ActiveLink>
 		</div>

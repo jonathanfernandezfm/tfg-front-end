@@ -2,19 +2,19 @@ import { Listbox, Transition } from '@headlessui/react';
 import React, { Fragment, ReactNode, useState } from 'react';
 
 interface ListBoxProps {
+	selected: ItemListBox;
 	items: ItemListBox[];
+	setIconSelected: any;
 }
 interface ItemListBox {
 	id: number;
 	value: string | ReactNode;
 }
 
-export const ListBox = ({ items }: ListBoxProps) => {
-	const [selected, setSelected] = useState(items[0]);
-
+export const ListBox = ({ selected, items, setIconSelected }: ListBoxProps) => {
 	return (
 		<div>
-			<Listbox value={selected} onChange={setSelected}>
+			<Listbox value={selected} onChange={setIconSelected}>
 				{({ open }) => (
 					<div className="relative">
 						<Listbox.Button className="relative w-full py-2 pl-3 pr-3 text-left bg-white rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">

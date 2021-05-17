@@ -1,12 +1,19 @@
+import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
 
 interface ListProps {
-	icon: ReactElement;
+	icon: ReactElement | null;
 	name: string;
-	onClick: () => void;
+	id: number;
 }
 
-const List = ({ icon, name, onClick }: ListProps) => {
+const List = ({ icon, name, id }: ListProps) => {
+	const router = useRouter();
+
+	const onClick = () => {
+		if (id) router.push(`lists/${id}`);
+	};
+
 	return (
 		<button
 			onClick={onClick}
