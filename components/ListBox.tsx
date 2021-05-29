@@ -7,7 +7,7 @@ interface ListBoxProps {
 	setIconSelected: any;
 }
 interface ItemListBox {
-	id: number;
+	id: string;
 	value: string | ReactNode;
 }
 

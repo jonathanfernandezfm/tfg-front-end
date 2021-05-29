@@ -1,6 +1,24 @@
-import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Button from '../components/Button';
+import { removeUser } from '../store/reducers/userReducer';
 
 const Profile = () => {
+	const user = useSelector((state: State) => state.user);
+	const dispatch = useDispatch();
+	const router = useRouter();
+
+	useEffect(() => {
+		console.log(user);
+		if (!user) router.replace(`/login`);
+	}, [user]);
+
+	const handleLogout = () => {
+		dispatch(removeUser());
+	};
+
 	return (
 		<>
 			<img
@@ -18,21 +36,32 @@ const Profile = () => {
 				</div>
 				<div className="mt-20">
 					<div className="text-xl font-semibold">Information</div>
-					<div className="px-6 py-5 mt-2 rounded-md shadow-md bg-violet-50">
-						<div className="flex items-center gap-2">
-							<span className="font-semibold">Email: </span>
-							<div className="flex items-center w-full gap-4 ">jonathanfernandezfm@gmail.com</div>
+					<div className="mt-4">
+						<span className="mt-4 font-semibold">Email: </span>
+						<div className="px-6 py-4 mt-1 rounded-md shadow-md bg-violet-50">
+							<div className="flex items-center gap-2">
+								<div className="flex items-center w-full gap-4 ">{user?.email}</div>
+							</div>
 						</div>
-						<div className="flex items-center gap-2 mt-3">
-							<span className="font-semibold">Birth date: </span>
-							<div className="flex items-center w-full gap-4 ">jonathanfernandezfm@gmail.com</div>
+					</div>
+					<div className="mt-4">
+						<span className="font-semibold">Birth date: </span>
+						<div className="px-6 py-4 mt-1 rounded-md shadow-md bg-violet-50">
+							<div className="flex items-center gap-2 ">
+								<div className="flex items-center w-full gap-4 ">jonathanfernandezfm@gmail.com</div>
+							</div>
 						</div>
-						<div className="flex items-center gap-2 mt-3">
-							<span className="font-semibold">Gender: </span>
-							<div className="flex items-center w-full gap-4 ">jonathanfernandezfm@gmail.com</div>
+					</div>
+					<div className="mt-4">
+						<span className="font-semibold">Gender: </span>
+						<div className="px-6 py-4 mt-1 rounded-md shadow-md bg-violet-50">
+							<div className="flex items-center gap-2 ">
+								<div className="flex items-center w-full gap-4 ">jonathanfernandezfm@gmail.com</div>
+							</div>
 						</div>
 					</div>
 				</div>
+				<Button onClick={handleLogout} type="button" text="Log out" className="block m-auto mt-12" />
 			</div>
 		</>
 	);

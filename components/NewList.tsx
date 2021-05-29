@@ -1,8 +1,10 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { ListBox } from './ListBox';
 import { icons } from '../pages/lists';
 import { useDispatch } from 'react-redux';
-import { create } from '../store/reducers/listsReducer';
+import { useMutation } from '@apollo/client';
+import { CREATE_LIST } from '../graphql/mutations';
+import { ALL_LISTS } from '../graphql/queries';
 
 interface NewListProps {
 	icon: ReactElement;
@@ -12,14 +14,20 @@ interface NewListProps {
 const NewList = ({ icon, name }: NewListProps) => {
 	const [newListForm, setNewListForm] = useState(false);
 	const [iconSelected, setIconSelected] = useState(icons[0]);
-	const dispatch = useDispatch();
+
+	const [create] = useMutation(CREATE_LIST, {
+		refetchQueries: [{ query: ALL_LISTS }],
+		onError: (error) => {
+			console.log(error.graphQLErrors[0].message);
+		},
+	});
 
 	const handleCreate = (event: any) => {
 		event.preventDefault();
 		const name = event.target.name.value;
 		if (!name || name === '') return;
 		const description = event.target.description.value;
-		dispatch(create({ icon: iconSelected.id, name: name, description: description }));
+		create({ variables: { name, description, icon: iconSelected.id } });
 		setNewListForm(false);
 	};
 

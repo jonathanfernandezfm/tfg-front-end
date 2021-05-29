@@ -1,16 +1,17 @@
 interface List {
-	id: number,
-	icon: number,
-	name: string,
-	description: string,
+	id: number;
+	icon: string;
+	name: string;
+	description: string;
 }
 
 interface ListInput {
-	icon: number,
-	name: string,
-	description: string,
+	icon: string;
+	name: string;
+	description: string;
 }
 
 type State = {
-	lists: List[]
-}
+	lists: List[];
+	user: User;
+};

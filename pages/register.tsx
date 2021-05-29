@@ -1,10 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { UserPlus, LockKey, EnvelopeSimple } from 'phosphor-react';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import Link from 'next/link';
+import { useMutation } from '@apollo/client';
+import { REGISTER } from '../graphql/mutations';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
-const Login = () => {
+const Register = () => {
+	const user = useSelector((state: State) => state.user);
+	const router = useRouter();
+
+	const [register, result] = useMutation(REGISTER, {
+		onCompleted: () => {
+			// setPage('authors');
+		},
+		onError: (error) => {
+			// setError(error.graphQLErrors[0].message);
+		},
+	});
+
+	useEffect(() => {
+		if (result.data) {
+			console.log(result.data);
+			// const token = result.data.login.value;
+			// setToken(token);
+			// localStorage.setItem('user-token', token);
+		}
+	}, [result.data, user]);
+
 	return (
 		<>
 			<img src="background.svg" alt="background" className="absolute top-0 w-full -z-1 opacity-95" />
@@ -38,7 +63,7 @@ const Login = () => {
 						type="password"
 						className="mt-3"
 					/>
-					<Button onClick={() => {}} text="Sign up" className="block m-auto mt-8" />
+					<Button type="button" onClick={() => {}} text="Sign up" className="block m-auto mt-8" />
 					<p className="mt-4 text-center">
 						Already have an account?{' '}
 						<Link href="/login">
@@ -51,4 +76,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Register;
