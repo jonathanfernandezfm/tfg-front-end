@@ -1,12 +1,13 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/Card';
 import CardPlatform from '../components/CardPlatform';
 import HorizontalScroll from '../components/HorizontalScroll';
-import { SERIES } from '../graphql/queries';
-import { setSeries } from '../store/reducers/seriesReducer';
+import { DISCOVER_SERIES, POPULAR_SERIES, TOP_RATED_SERIES } from '../graphql/queries';
+import { setDiscoverSeries, setPopularSeries, setTopRatedSeries } from '../store/reducers/seriesReducer';
 
 const Platforms = [
 	{
@@ -46,18 +47,32 @@ const Home = () => {
 	const ref = useRef(null);
 
 	const dispatch = useDispatch();
-	const result = useQuery(SERIES);
+	const discoverResult = useQuery(DISCOVER_SERIES);
+	const popularResult = useQuery(POPULAR_SERIES);
+	const topRatedResult = useQuery(TOP_RATED_SERIES);
 
 	const user = useSelector((state: State) => state.user);
-	const series: any[] = useSelector((state: State) => {
+	const discoverSeries: any[] = useSelector((state: State) => {
 		return state.series.series_discover;
+	});
+	const popularSeries: any[] = useSelector((state: State) => {
+		return state.series.series_popular;
+	});
+	const topRatedSeries: any[] = useSelector((state: State) => {
+		return state.series.series_top_rated;
 	});
 
 	useEffect(() => {
-		if (result.data) {
-			dispatch(setSeries(result.data.discover));
+		if (discoverResult.data) {
+			dispatch(setDiscoverSeries(discoverResult.data.discover));
 		}
-	}, [result]);
+		if (popularResult.data) {
+			dispatch(setPopularSeries(popularResult.data.popular));
+		}
+		if (topRatedResult.data) {
+			dispatch(setTopRatedSeries(topRatedResult.data.topRated));
+		}
+	}, [discoverResult, popularResult]);
 
 	const handleScroll = () => {
 		if (ref.current) {
@@ -74,6 +89,7 @@ const Home = () => {
 	}, []);
 
 	console.log('HOME -> ', user);
+
 	return (
 		<>
 			<img
@@ -81,7 +97,12 @@ const Home = () => {
 				alt="background"
 				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
 			/>
-			<div className="px-8 mt-16 mb-24 ">
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="px-8 mt-16 mb-24 "
+			>
 				<h1
 					className={`text-4xl font-bold sticky top-0 transition-all bg-transparent ${
 						isSticky ? 'bg-white py-4 text-black z-20' : 'text-white'
@@ -90,33 +111,38 @@ const Home = () => {
 				>
 					Home
 				</h1>
-				<div className="flex items-end">
-					<h2 className="mt-8 text-2xl font-semibold">Popular</h2>
-					{/* <span className="px-2 ml-2 text-white rounded-lg bg-violet-800">more</span> */}
+				<div>
+					<div className="flex items-end">
+						<h2 className="mt-8 text-2xl font-semibold">Popular</h2>
+					</div>
+					<HorizontalScroll className="mt-4">
+						{popularSeries && popularSeries.map((serie) => <Card key={serie.id} serie={serie} />)}
+					</HorizontalScroll>
+					<h2 className="mt-6 text-2xl font-semibold">Recent updates</h2>
+					<HorizontalScroll className="mt-4">
+						{discoverSeries && discoverSeries.map((serie) => <Card key={serie.id} serie={serie} />)}
+					</HorizontalScroll>
+					<h2 className="mt-6 text-2xl font-semibold">Top rated</h2>
+					<HorizontalScroll className="mt-4">
+						{topRatedSeries && topRatedSeries.map((serie) => <Card key={serie.id} serie={serie} />)}
+					</HorizontalScroll>
+					<h2 className="mt-6 text-2xl font-semibold">Platforms</h2>
+					<HorizontalScroll className="mt-4">
+						{Platforms.map((platform) => (
+							<CardPlatform key={platform.id} platform={platform} />
+						))}
+					</HorizontalScroll>
+					{!user && (
+						<Link href="/register">
+							<a
+								className={`block m-auto mt-12 w-max px-20 py-3 rounded-md bg-gradient-to-r from-violet-400 to-indigo-800 focus:ring-4 ring-violet-300 focus:outline-none`}
+							>
+								<span className="font-bold text-white">{'Sign up'}</span>
+							</a>
+						</Link>
+					)}
 				</div>
-				<HorizontalScroll className="mt-4">
-					{series && series.map((serie) => <Card key={serie.id} serie={serie} />)}
-				</HorizontalScroll>
-				<h2 className="mt-6 text-2xl font-semibold">Recent updates</h2>
-				<HorizontalScroll className="mt-4">
-					{series && series.map((serie) => <Card key={serie.id} serie={serie} />)}
-				</HorizontalScroll>
-				<h2 className="mt-6 text-2xl font-semibold">Platforms</h2>
-				<HorizontalScroll className="mt-4">
-					{Platforms.map((platform) => (
-						<CardPlatform key={platform.id} platform={platform} />
-					))}
-				</HorizontalScroll>
-				{!user && (
-					<Link href="/register">
-						<a
-							className={`block m-auto mt-12 w-max px-20 py-3 rounded-md bg-gradient-to-r from-violet-400 to-indigo-800 focus:ring-4 ring-violet-300 focus:outline-none`}
-						>
-							<span className="font-bold text-white">{'Sign up'}</span>
-						</a>
-					</Link>
-				)}
-			</div>
+			</motion.div>
 		</>
 	);
 };

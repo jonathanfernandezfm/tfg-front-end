@@ -146,7 +146,6 @@ const Input = ({ className }: InputProps) => {
 	});
 
 	const series: any[] = useSelector((state: State) => {
-		console.log(state.series.series_search);
 		return state.series.series_search;
 	});
 
