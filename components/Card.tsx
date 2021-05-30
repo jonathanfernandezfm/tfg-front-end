@@ -1,7 +1,7 @@
 import { Star } from 'phosphor-react';
 import React from 'react';
 
-const imageUrl = 'https://image.tmdb.org/t/p/w500/';
+const imageUrl = 'https://image.tmdb.org/t/p/w500';
 
 interface CardProps {
 	serie: any;
@@ -10,7 +10,7 @@ interface CardProps {
 const Card = ({ serie }: CardProps) => {
 	return (
 		<div
-			className="relative flex-shrink-0 h-40 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md w-28 min-w-max"
+			className="relative flex-shrink-0 h-40 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md shadow-md w-28 min-w-max"
 			style={{ backgroundImage: `url(${imageUrl}${serie.backdrop_path})` }}
 		>
 			<div className="absolute flex items-center justify-start gap-1 text-white left-1">

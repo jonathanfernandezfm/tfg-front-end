@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { AnimateSharedLayout } from 'framer-motion';
+import Link from 'next/link';
 import {
 	Alarm,
 	Armchair,
@@ -81,7 +82,15 @@ const Lists = () => {
 						</div>
 						<div className="mt-10">
 							<h1 className="text-4xl font-bold text-center">This is just for members</h1>
-							<h2 className="mt-3 text-2xl text-center">join us</h2>
+							<h2 className="mt-3 text-2xl text-center">
+								<Link href="/register">
+									<span className="font-bold text-indigo-800">join us</span>
+								</Link>{' '}
+								or{' '}
+								<Link href="/login">
+									<span className="font-bold text-indigo-800">login</span>
+								</Link>
+							</h2>
 						</div>
 					</>
 				)}

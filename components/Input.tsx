@@ -6,12 +6,15 @@ interface InputProps {
 	type: string;
 	name?: string;
 	className?: string;
+	error?: boolean;
 }
 
-const Input = ({ icon, placeholder, type, name, className }: InputProps) => {
+const Input = ({ icon, placeholder, type, name, className, error }: InputProps) => {
 	return (
 		<div
-			className={`flex px-4 py-3 text-indigo-800 align-middle bg-white border-2 border-indigo-800 rounded-md focus-within:ring-4 ring-violet-300 ${className}`}
+			className={`flex px-4 py-3 text-indigo-800 align-middle bg-white border-2 ${
+				error ? 'border-red-500' : 'border-indigo-800'
+			} rounded-md focus-within:ring-4 ring-violet-300 ${className}`}
 		>
 			<div>{icon}</div>
 			<input

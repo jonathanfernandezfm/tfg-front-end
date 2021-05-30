@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { store } from '../store/store';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache, useQuery } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
+import AuthController from '../components/AuthController';
 
 const authLink = setContext((_, { headers }) => {
 	const token = localStorage.getItem('user-token');
@@ -31,9 +32,11 @@ const App = ({ Component, pageProps }: AppProps) => {
 	return (
 		<ApolloProvider client={client}>
 			<Provider store={store}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+				<AuthController>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</AuthController>
 			</Provider>
 		</ApolloProvider>
 	);

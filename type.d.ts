@@ -11,7 +11,14 @@ interface ListInput {
 	description: string;
 }
 
+interface Notification {
+	text: string;
+	type: 'success' | 'error' | 'info';
+}
+
 type State = {
 	lists: List[];
 	user: User;
+	notification: Notification;
+	series: any;
 };

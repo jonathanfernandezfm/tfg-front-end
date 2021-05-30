@@ -1,13 +1,14 @@
 import { Star } from 'phosphor-react';
 import React from 'react';
 
-const imageUrl = 'https://image.tmdb.org/t/p/w500/';
+const imageUrl = 'https://image.tmdb.org/t/p/w500';
 
 interface CardProps {
 	serie: any;
 }
 
 export const CardWide = ({ serie }: CardProps) => {
+	if (!serie.backdrop_path) return null;
 	return (
 		<div
 			className="relative flex-shrink-0 w-full h-24 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md min-w-max"

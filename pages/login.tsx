@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserPlus, LockKey } from 'phosphor-react';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -8,26 +8,28 @@ import { LOGIN } from '../graphql/mutations';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/reducers/userReducer';
+import { showNotification } from '../store/reducers/notificationsReducer';
 
 const Login = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
 	const user = useSelector((state: State) => state.user);
+	const [error, setError] = useState(false);
 
 	const [login, result] = useMutation(LOGIN, {
 		onCompleted: () => {
-			// setPage('authors');
+			setError(false);
 		},
 		onError: (error) => {
-			// setError(error.graphQLErrors[0].message);
+			setError(true);
+			dispatch(showNotification({ text: 'Invalid credentials', type: 'error' }));
 		},
 	});
 
 	useEffect(() => {
 		console.log(user);
 		if (user && user.token) router.replace(`/home`);
-
-		if (result.data) {
+		else if (result.data) {
 			const data = result.data.login;
 			const userObject = {
 				token: data.value,
@@ -62,19 +64,41 @@ const Login = () => {
 					<h2 className="mt-3 text-2xl text-center">updates are waiting for you</h2>
 				</div>
 				<div className="">
-					<form onSubmit={handleSubmit}>
+					<form
+						onSubmit={handleSubmit}
+						onBlur={() => {
+							setError(false);
+						}}
+						onFocus={() => {
+							setError(false);
+						}}
+					>
 						<Input
 							name="user"
-							icon={<UserPlus size={26} weight="bold" className="text-indigo-800" />}
+							icon={
+								<UserPlus
+									size={26}
+									weight="bold"
+									className={`${error ? 'text-red-500' : 'text-indigo-800'}`}
+								/>
+							}
 							placeholder={'User or email'}
 							type="text"
+							error={error}
 						/>
 						<Input
 							name="password"
-							icon={<LockKey size={26} weight="bold" className="text-indigo-800" />}
+							icon={
+								<LockKey
+									size={26}
+									weight="bold"
+									className={`${error ? 'text-red-500' : 'text-indigo-800'}`}
+								/>
+							}
 							placeholder={'Password'}
 							type="password"
 							className="mt-3"
+							error={error}
 						/>
 						<Button type="submit" text="Log in" className="block m-auto mt-16" />
 					</form>

@@ -1,6 +1,11 @@
+import { useLazyQuery } from '@apollo/client';
 import { Cube, MagnifyingGlass, X } from 'phosphor-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { setSeriesSearch } from '../store/reducers/seriesReducer';
 import { CardWide } from './CardWide';
+import { DebounceInput } from 'react-debounce-input';
+import { SEARCH_SERIES } from '../graphql/queries';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SeriesTest1: any[] = [];
 
@@ -133,9 +138,34 @@ interface InputProps {
 const Input = ({ className }: InputProps) => {
 	const [focused, setFocused] = useState(false);
 	const [searchInput, setSearchInput] = useState('');
+	const dispatch = useDispatch();
+
+	const [search, result] = useLazyQuery(SEARCH_SERIES, {
+		onCompleted: () => {},
+		onError: (error) => {},
+	});
+
+	const series: any[] = useSelector((state: State) => {
+		console.log(state.series.series_search);
+		return state.series.series_search;
+	});
+
+	useEffect(() => {
+		if (result.data) {
+			console.log(result.data);
+			dispatch(setSeriesSearch(result.data.searchSeries));
+		}
+	}, [result]);
 
 	const onFocusHandle = (value: boolean) => {
 		setFocused(value);
+	};
+
+	const onChange = (event: any) => {
+		if (event.target.value === '') return dispatch(setSeriesSearch([]));
+		setSearchInput(event.target.value);
+		search({ variables: { query: event.target.value } });
+		console.log(event.target.value);
 	};
 
 	return (
@@ -150,15 +180,15 @@ const Input = ({ className }: InputProps) => {
 				<div>
 					<MagnifyingGlass size={26} weight="bold" className="text-indigo-800" />
 				</div>
-				<input
+				<DebounceInput
+					minLength={2}
+					debounceTimeout={300}
+					onChange={onChange}
 					onFocus={() => {
 						onFocusHandle(true);
 					}}
 					onBlur={() => {
 						onFocusHandle(false);
-					}}
-					onChange={(e) => {
-						setSearchInput(e.target.value);
 					}}
 					value={searchInput}
 					className={`${
@@ -181,14 +211,14 @@ const Input = ({ className }: InputProps) => {
 			</div>
 			{(focused || searchInput) && (
 				<div className="flex flex-wrap h-full gap-4 pb-24 mt-10 overflow-y-scroll scrollbar-hide">
-					{!!SeriesTest1.length && (
-						<div>
-							{SeriesTest1.map((serie) => (
+					{series && (
+						<>
+							{series.map((serie) => (
 								<CardWide key={serie.id} serie={serie} />
 							))}
-						</div>
+						</>
 					)}
-					{!SeriesTest1.length && (
+					{!series?.length && (
 						<div className="flex items-center justify-center w-full h-full">
 							<div className="flex flex-col items-center gap-4 opacity-25">
 								<Cube size={120} />
