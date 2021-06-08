@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
 const SET_USER = 'SET_USER';
+const UPDATE_USER = 'UPDATE_USER';
 const REMOVE_USER = 'REMOVE_USER';
 const GET_USER = 'GET_USER';
 
@@ -10,7 +11,7 @@ type UserAction = {
 };
 
 interface User {
-	token: string;
+	token?: string;
 	username: string;
 	name: string;
 	surname: string;
@@ -28,6 +29,15 @@ const reducer = (state: User = null, action: UserAction): User => {
 			return state;
 		case REMOVE_USER:
 			return null;
+		case UPDATE_USER:
+			return {
+				...state,
+				name: action.user.name,
+				surname: action.user.surname,
+				gender: action.user.gender,
+				birthDate: action.user.birthDate,
+				city: action.user.city,
+			};
 		default:
 			return state;
 	}
@@ -50,6 +60,15 @@ export const removeUser = () => {
 
 		dispatch({
 			type: REMOVE_USER,
+		});
+	};
+};
+
+export const updateUser = (user: User) => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: UPDATE_USER,
+			user: user,
 		});
 	};
 };

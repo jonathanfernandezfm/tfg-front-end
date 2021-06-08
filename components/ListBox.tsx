@@ -5,19 +5,22 @@ interface ListBoxProps {
 	selected: ItemListBox;
 	items: ItemListBox[];
 	setIconSelected: any;
+	className?: string;
 }
 interface ItemListBox {
 	id: string;
 	value: string | ReactNode;
 }
 
-export const ListBox = ({ selected, items, setIconSelected }: ListBoxProps) => {
+export const ListBox = ({ selected, items, setIconSelected, className }: ListBoxProps) => {
 	return (
 		<div>
 			<Listbox value={selected} onChange={setIconSelected}>
 				{({ open }) => (
 					<div className="relative">
-						<Listbox.Button className="relative w-full py-2 pl-3 pr-3 text-left bg-white rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+						<Listbox.Button
+							className={`relative w-full py-2 pl-3 pr-3 text-left bg-white rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm ${className}`}
+						>
 							<span className="block truncate">{selected.value}</span>
 						</Listbox.Button>
 						<Transition

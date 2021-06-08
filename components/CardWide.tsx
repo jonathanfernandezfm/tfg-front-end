@@ -9,12 +9,17 @@ interface CardProps {
 }
 
 export const CardWide = ({ serie }: CardProps) => {
-	if (!serie.backdrop_path) return null;
 	return (
 		<Link href={`/series/${serie.id}`}>
 			<div
 				className="relative flex-shrink-0 w-full h-24 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md min-w-max"
-				style={{ backgroundImage: `url(${imageUrl}${serie.backdrop_path})` }}
+				style={{
+					backgroundImage: `${
+						serie.backdrop_path
+							? `url(${imageUrl}${serie.backdrop_path})`
+							: 'linear-gradient(#333b4a, #4d3d65)'
+					}`,
+				}}
 			>
 				<div className="absolute flex items-center justify-start gap-1 text-white left-1">
 					<Star size={16} color="yellow" weight="fill" />

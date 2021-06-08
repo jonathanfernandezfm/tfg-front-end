@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { AnimateSharedLayout } from 'framer-motion';
+import { AnimateSharedLayout, motion } from 'framer-motion';
 import Link from 'next/link';
 import {
 	Alarm,
@@ -10,6 +10,7 @@ import {
 	CalendarBlank,
 	CircleWavyCheck,
 	Eye,
+	Heart,
 	Plus,
 } from 'phosphor-react';
 import React, { useEffect } from 'react';
@@ -23,12 +24,13 @@ import { setLists } from '../../store/reducers/listsReducer';
 export const icons = [
 	{ id: '1', value: <Armchair size={26} className="text-violet-500" /> },
 	{ id: '2', value: <Eye size={26} className="text-violet-500" /> },
-	{ id: '3', value: <Alarm size={26} className="text-violet-500" /> },
-	{ id: '4', value: <Bell size={26} className="text-violet-500" /> },
-	{ id: '5', value: <BookBookmark size={26} className="text-violet-500" /> },
-	{ id: '6', value: <Bookmarks size={26} className="text-violet-500" /> },
-	{ id: '7', value: <CalendarBlank size={26} className="text-violet-500" /> },
-	{ id: '8', value: <CircleWavyCheck size={26} className="text-violet-500" /> },
+	{ id: '3', value: <Heart size={26} className="text-violet-500" /> },
+	{ id: '4', value: <Alarm size={26} className="text-violet-500" /> },
+	{ id: '5', value: <Bell size={26} className="text-violet-500" /> },
+	{ id: '6', value: <BookBookmark size={26} className="text-violet-500" /> },
+	{ id: '7', value: <Bookmarks size={26} className="text-violet-500" /> },
+	{ id: '8', value: <CalendarBlank size={26} className="text-violet-500" /> },
+	{ id: '9', value: <CircleWavyCheck size={26} className="text-violet-500" /> },
 ];
 
 const Lists = () => {
@@ -37,7 +39,7 @@ const Lists = () => {
 	const result = useQuery(ALL_LISTS);
 
 	const lists: List[] = useSelector((state: State) => {
-		return state.lists;
+		return state.lists.lists;
 	});
 
 	useEffect(() => {
@@ -47,16 +49,24 @@ const Lists = () => {
 		}
 	}, [result]);
 
+	if (!lists) return null;
 	console.log('LISTS -> ', user);
 	return (
 		<>
-			<img
+			<motion.img
+				layoutId="background"
 				src="/background.svg"
 				alt="background"
 				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
 			/>
-			<div className="px-8 mt-16 mb-24 ">
-				<h1 className="text-4xl font-bold ">Lists</h1>
+
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="px-8 mt-16 mb-24 "
+			>
+				<h1 className="text-4xl font-bold text-white">Lists</h1>
 				{user ? (
 					<>
 						<div className="flex flex-col gap-4 mt-8">
@@ -94,7 +104,7 @@ const Lists = () => {
 						</div>
 					</>
 				)}
-			</div>
+			</motion.div>
 		</>
 	);
 };

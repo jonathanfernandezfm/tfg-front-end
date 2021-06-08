@@ -37,6 +37,8 @@ const Register = () => {
 	});
 
 	useEffect(() => {
+		if (user && user.token) router.replace(`/home`);
+
 		if (result.data) {
 			console.log(result.data);
 			// const token = result.data.login.value;

@@ -25,3 +25,11 @@ a {
 .active > path {
 	fill: #e0e7ff;
 }
+.active-liked > circle,
+.active-liked > path {
+	fill: #f01d1d;
+}
+.active-seen > circle,
+.active-seen > path {
+	fill: #2d4bad;
+}

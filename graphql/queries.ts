@@ -7,6 +7,27 @@ export const ALL_LISTS = gql`
 			name
 			description
 			icon
+			locked
+			public
+		}
+	}
+`;
+
+export const GET_LIST = gql`
+	query lists($id: String!) {
+		lists(id: $id) {
+			id
+			name
+			icon
+			locked
+			description
+			series {
+				id
+				name
+				popularity
+				vote_average
+				backdrop_path
+			}
 		}
 	}
 `;
@@ -54,6 +75,18 @@ export const POPULAR_SERIES = gql`
 export const TOP_RATED_SERIES = gql`
 	query {
 		topRated {
+			id
+			name
+			popularity
+			vote_average
+			backdrop_path
+		}
+	}
+`;
+
+export const AIRING_TODAY_SERIES = gql`
+	query {
+		airingToday {
 			id
 			name
 			popularity
@@ -119,6 +152,10 @@ export const GET_SERIE = gql`
 			production_companies {
 				id
 				logo_path
+				name
+			}
+			lists {
+				id
 				name
 			}
 		}

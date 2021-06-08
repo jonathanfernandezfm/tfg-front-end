@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 
 const SET_SERIES_DISCOVER = 'SET_SERIES_DISCOVER';
 const SET_SERIES_POPULAR = 'SET_SERIES_POPULAR';
+const SET_SERIES_AIRING = 'SET_SERIES_AIRING';
 const SET_SERIES_TOP = 'SET_SERIES_TOP';
 const SET_SERIES_SEARCH = 'SET_SERIES_SEARCH';
 const SELECT_SERIE = 'SELECT_SERIE';
@@ -32,6 +33,8 @@ const reducer = (state: any = [], action: SeriesAction): any => {
 			return { ...state, serie_selected_cast: action.cast };
 		case SET_SERIE_RECOMENDATIONS:
 			return { ...state, serie_selected_recomendations: action.recomendations };
+		case SET_SERIES_AIRING:
+			return { ...state, series_airing: action.series };
 		default:
 			return state;
 	}
@@ -59,6 +62,15 @@ export const setTopRatedSeries = (series: any) => {
 	return async (dispatch: Dispatch) => {
 		dispatch({
 			type: SET_SERIES_TOP,
+			series: series,
+		});
+	};
+};
+
+export const setAiringTodaySeries = (series: any) => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: SET_SERIES_AIRING,
 			series: series,
 		});
 	};

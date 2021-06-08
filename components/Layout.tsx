@@ -1,3 +1,4 @@
+import { AnimateSharedLayout } from 'framer-motion';
 import React, { ReactNode } from 'react';
 import NavBar from './NavBar';
 import Notification from './Notification';
@@ -9,11 +10,11 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
 	console.log('LAYOUT');
 	return (
-		<div>
+		<AnimateSharedLayout>
 			{children}
 			<Notification></Notification>
 			<NavBar></NavBar>
-		</div>
+		</AnimateSharedLayout>
 	);
 };
 

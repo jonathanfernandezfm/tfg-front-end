@@ -3,6 +3,15 @@ interface List {
 	icon: string;
 	name: string;
 	description: string;
+	locked: boolean;
+	public: boolean;
+	series: any;
+}
+
+interface ListState {
+	lists: [];
+	list_seen: List;
+	list_liked: List;
 }
 
 interface ListInput {
@@ -17,7 +26,7 @@ interface Notification {
 }
 
 type State = {
-	lists: List[];
+	lists: any;
 	user: User;
 	notification: Notification;
 	series: any;

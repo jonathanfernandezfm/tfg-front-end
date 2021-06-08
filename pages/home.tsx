@@ -6,8 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/Card';
 import CardPlatform from '../components/CardPlatform';
 import HorizontalScroll from '../components/HorizontalScroll';
-import { DISCOVER_SERIES, POPULAR_SERIES, TOP_RATED_SERIES } from '../graphql/queries';
-import { setDiscoverSeries, setPopularSeries, setTopRatedSeries } from '../store/reducers/seriesReducer';
+import { AIRING_TODAY_SERIES, DISCOVER_SERIES, POPULAR_SERIES, TOP_RATED_SERIES } from '../graphql/queries';
+import {
+	setAiringTodaySeries,
+	setDiscoverSeries,
+	setPopularSeries,
+	setTopRatedSeries,
+} from '../store/reducers/seriesReducer';
 
 const Platforms = [
 	{
@@ -50,6 +55,7 @@ const Home = () => {
 	const discoverResult = useQuery(DISCOVER_SERIES);
 	const popularResult = useQuery(POPULAR_SERIES);
 	const topRatedResult = useQuery(TOP_RATED_SERIES);
+	const airedResult = useQuery(AIRING_TODAY_SERIES);
 
 	const user = useSelector((state: State) => state.user);
 	const discoverSeries: any[] = useSelector((state: State) => {
@@ -60,6 +66,9 @@ const Home = () => {
 	});
 	const topRatedSeries: any[] = useSelector((state: State) => {
 		return state.series.series_top_rated;
+	});
+	const airingSeries: any[] = useSelector((state: State) => {
+		return state.series.series_airing;
 	});
 
 	useEffect(() => {
@@ -72,7 +81,10 @@ const Home = () => {
 		if (topRatedResult.data) {
 			dispatch(setTopRatedSeries(topRatedResult.data.topRated));
 		}
-	}, [discoverResult, popularResult]);
+		if (airedResult.data) {
+			dispatch(setAiringTodaySeries(airedResult.data.airingToday));
+		}
+	}, [discoverResult, popularResult, topRatedResult, airedResult]);
 
 	const handleScroll = () => {
 		if (ref.current) {
@@ -101,22 +113,26 @@ const Home = () => {
 				exit={{ opacity: 0 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="px-8 mt-16 mb-24 "
+				className="mt-16 mb-24 "
 			>
 				<h1
-					className={`text-4xl font-bold sticky top-0 transition-all bg-transparent ${
-						isSticky ? 'bg-white py-4 text-black z-20' : 'text-white'
+					className={`font-bold sticky top-0 transition-all bg-transparent ${
+						isSticky ? 'bg-white py-4 text-black text-3xl z-20 shadow-lg px-8' : 'text-white text-4xl  px-8'
 					}`}
 					ref={ref}
 				>
 					Home
 				</h1>
-				<div>
+				<div className="px-8">
 					<div className="flex items-end">
 						<h2 className="mt-8 text-2xl font-semibold">Popular</h2>
 					</div>
 					<HorizontalScroll className="mt-4">
 						{popularSeries && popularSeries.map((serie) => <Card key={serie.id} serie={serie} />)}
+					</HorizontalScroll>
+					<h2 className="mt-6 text-2xl font-semibold">Airing today</h2>
+					<HorizontalScroll className="mt-4">
+						{airingSeries && airingSeries.map((serie) => <Card key={serie.id} serie={serie} />)}
 					</HorizontalScroll>
 					<h2 className="mt-6 text-2xl font-semibold">Recent updates</h2>
 					<HorizontalScroll className="mt-4">

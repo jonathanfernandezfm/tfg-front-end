@@ -27,11 +27,60 @@ export const REGISTER = gql`
 	}
 `;
 
+export const UPDATE_USER = gql`
+	mutation updateUser($name: String, $surname: String, $birthDate: String, $gender: String, $city: String) {
+		updateUser(name: $name, surname: $surname, birthDate: $birthDate, gender: $gender, city: $city) {
+			name
+			surname
+			username
+			email
+			birthDate
+			gender
+			city
+		}
+	}
+`;
+
 export const CREATE_LIST = gql`
 	mutation createList($name: String!, $description: String, $icon: String) {
 		addList(name: $name, description: $description, icon: $icon) {
 			id
 			name
+		}
+	}
+`;
+
+export const UPDATE_LIST = gql`
+	mutation updateList($id: ID!, $name: String, $public: Boolean, $description: String, $icon: String) {
+		updateList(id: $id, name: $name, description: $description, public: $public, icon: $icon) {
+			id
+			name
+			icon
+			locked
+			description
+			series {
+				id
+				name
+				popularity
+				vote_average
+				backdrop_path
+			}
+		}
+	}
+`;
+
+export const ADD_SERIE_TO_LIST = gql`
+	mutation addSerie($id: ID!, $series: [String]!) {
+		addSeriesToList(id: $id, serieIds: $series) {
+			id
+		}
+	}
+`;
+
+export const REMOVE_SERIE_TO_LIST = gql`
+	mutation removeSerie($id: ID!, $series: [String]!) {
+		removeSeriesFromList(id: $id, serieIds: $series) {
+			id
 		}
 	}
 `;

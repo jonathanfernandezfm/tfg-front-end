@@ -1,16 +1,20 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Disclosure } from '@headlessui/react';
-import { generateKeyPair } from 'crypto';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ArrowLeft, CaretDown, CaretRight, Heart, Star } from 'phosphor-react';
+import { ArrowLeft, CaretDown, CaretRight, Eye, Heart, Star } from 'phosphor-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../../components/Card';
 import CompanieCardPlatform from '../../components/CompanieCard';
+import FloatingButton from '../../components/FloatingButton';
 import HorizontalScroll from '../../components/HorizontalScroll';
 import PersonCard from '../../components/PersonCard';
-import { GET_CAST, GET_RECOMENDATIONS, GET_SERIE } from '../../graphql/queries';
+import { ADD_SERIE_TO_LIST, REMOVE_SERIE_TO_LIST } from '../../graphql/mutations';
+import { ALL_LISTS, GET_CAST, GET_RECOMENDATIONS, GET_SERIE } from '../../graphql/queries';
+import { setLists } from '../../store/reducers/listsReducer';
+import { showNotification } from '../../store/reducers/notificationsReducer';
 import { selectSerie, setSerieCast, setSerieRecomendations } from '../../store/reducers/seriesReducer';
 
 const imageUrl = 'https://image.tmdb.org/t/p/w500';
@@ -29,10 +33,33 @@ const Serie = () => {
 	const recomendationsResult = useQuery(GET_RECOMENDATIONS, {
 		variables: { id: serie },
 	});
+	const listsResult = useQuery(ALL_LISTS);
 
+	const [addSerie, resultAdd] = useMutation(ADD_SERIE_TO_LIST, {
+		refetchQueries: [{ query: GET_SERIE, variables: { id: serie } }],
+		onCompleted: () => {
+			dispatch(showNotification({ text: 'Added to list', type: 'success' }));
+		},
+		onError: (error) => {},
+	});
+
+	const [removeSerie, resultRemove] = useMutation(REMOVE_SERIE_TO_LIST, {
+		refetchQueries: [{ query: GET_SERIE, variables: { id: serie } }],
+		onCompleted: () => {
+			dispatch(showNotification({ text: 'Removed from list', type: 'success' }));
+		},
+		onError: (error) => {},
+	});
+
+	const lists: List[] = useSelector((state: State) => state.lists.lists);
 	const selectedSerie = useSelector((state: State) => state.series.serie_selected);
 	const selectedSerieCast = useSelector((state: State) => state.series.serie_selected_cast);
 	const selectedSerieRecomendations = useSelector((state: State) => state.series.serie_selected_recomendations);
+
+	const isSeen = selectedSerie?.lists?.find((l: any) => l.name === 'Seen');
+	const isLiked = selectedSerie?.lists?.find((l: any) => l.name === 'Liked');
+	const seenList = lists?.find((l) => l.name === 'Seen');
+	const likedList = lists?.find((l) => l.name === 'Liked');
 
 	useEffect(() => {
 		if (serieResult.data) {
@@ -49,55 +76,93 @@ const Serie = () => {
 			dispatch(setSerieRecomendations(recomendationsResult.data.getRecomendations));
 			console.log(recomendationsResult.data.getRecomendations);
 		}
+
+		if (listsResult.data) {
+			dispatch(setLists(listsResult.data.lists));
+		}
 	}, [serieResult, castResult, recomendationsResult]);
 
 	const onBack = () => {
 		router.back();
 	};
 
-	if (!selectedSerie) return null;
+	const likeSerie = () => {
+		if (likedList == null) return;
+		if (!isLiked) addSerie({ variables: { id: likedList.id, series: [selectedSerie.id.toString()] } });
+		else removeSerie({ variables: { id: likedList.id, series: [selectedSerie.id.toString()] } });
+	};
+
+	const seeSerie = () => {
+		if (seenList == null) return;
+		if (!isSeen) addSerie({ variables: { id: seenList.id, series: [selectedSerie.id.toString()] } });
+		else removeSerie({ variables: { id: seenList.id, series: [selectedSerie.id.toString()] } });
+	};
 
 	return (
 		<div className="mb-20">
 			<div
 				className="relative w-full bg-center bg-no-repeat bg-cover h-96"
-				style={{ backgroundImage: `url(${imageUrl}${selectedSerie.backdrop_path})` }}
+				// style={{
+				// 	backgroundImage: `${
+				// 		selectedSerie?.backdrop_path
+				// 			? `url(${imageUrl}${selectedSerie.backdrop_path})`
+				// 			: 'linear-gradient(#333b4a, #4d3d65)'
+				// 	}`,
+				// }}
 			>
+				{console.log(selectedSerie)}
+				<img src={`${imageUrl}${selectedSerie?.backdrop_path}`} className="absolute object-cover h-full" />
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
-				<div className="flex justify-between px-8 pt-16 mb-24">
+				<div className="relative flex justify-between px-8 pt-12 mb-24">
 					<div className="flex items-center gap-4">
 						<button onClick={onBack} className="focus:outline-none text-violet-50">
 							<ArrowLeft size={28} />
 						</button>
 					</div>
-					<div>
-						<button onClick={onBack} className="focus:outline-none text-violet-50">
-							<Heart size={28} />
+					<div className="flex gap-5">
+						<button
+							onClick={() => {
+								seeSerie();
+							}}
+							className="focus:outline-none"
+						>
+							<Eye size={28} className={`${isSeen ? 'active-seen text-indigo-400' : 'text-white'}`} />
+						</button>
+						<button
+							onClick={() => {
+								likeSerie();
+							}}
+							className="focus:outline-none"
+						>
+							<Heart size={28} className={`${isLiked ? 'active-liked text-red-400' : 'text-white'}`} />
 						</button>
 					</div>
 				</div>
+
 				<div className="absolute text-4xl font-black text-white bottom-6 left-8">
 					<div className="flex gap-2 mb-2">
-						{selectedSerie.networks.map((network: any) => (
+						{selectedSerie?.networks?.map((network: any) => (
 							<div key={network.name} className="flex items-center w-12 h-6 p-2 rounded-md bg-indigo-50">
 								<img src={`${imageUrl}${network.logo_path}`} alt="network_logo" />
 							</div>
 						))}
 					</div>
 					<div className="flex items-end">
-						<span>{selectedSerie.name}</span>
+						<span>{selectedSerie?.name}</span>
 						<span className="ml-2 text-xl font-semibold">
-							({new Date(selectedSerie.first_air_date).getFullYear()})
+							({new Date(selectedSerie?.first_air_date).getFullYear()})
 						</span>
 						<span className="flex items-center gap-1 mb-1 ml-2 text-white">
 							<Star size={16} color="yellow" weight="fill" />
-							<span className="text-sm font-normal">{selectedSerie.vote_average}</span>
+							<span className="text-sm font-normal">{selectedSerie?.vote_average.toFixed(1)}</span>
 						</span>
 					</div>
 				</div>
 			</div>
+			<FloatingButton addSerie={addSerie} removeSerie={removeSerie} />
+
 			<div className="flex gap-2 px-8 mt-6">
-				{selectedSerie.genres.map((genre: any) => (
+				{selectedSerie?.genres?.map((genre: any) => (
 					<div key={genre.id} className="px-2 py-1 text-sm font-semibold rounded-sm bg-violet-200">
 						{genre.name}
 					</div>
@@ -105,29 +170,33 @@ const Serie = () => {
 			</div>
 			<div className="px-8 mt-6">
 				<div className="font-semibold ">
-					{selectedSerie.number_of_seasons} seasons, {selectedSerie.number_of_episodes} episodes,
-					{selectedSerie.seasons.find((s: any) => s.season_number === 0) ? ' special content' : ''}
+					{selectedSerie?.number_of_seasons} seasons, {selectedSerie?.number_of_episodes} episodes,
+					{selectedSerie?.seasons?.find((s: any) => s.season_number === 0) ? ' special content' : ''}
 				</div>
 				<div className="mt-2 font-semibold">
-					Episode time: <span className="font-normal">{selectedSerie.episode_run_time.join(', ')} min.</span>
+					Episode time:{' '}
+					<span className="font-normal">{selectedSerie?.episode_run_time?.join(', ')} min.</span>
 				</div>
-				<div className="mt-2">{selectedSerie.overview}</div>
+				<div className="mt-2">{selectedSerie?.overview}</div>
 			</div>
 			<div className="px-8 mt-4 font-semibold">
-				Status: <span className="font-normal">{selectedSerie.status}</span>
+				Status: <span className="font-normal">{selectedSerie?.status}</span>
 			</div>
 			<div className="px-8 mt-2 font-semibold">
-				Last air date: <span className="font-normal">{selectedSerie.last_air_date}</span>
+				Last air date: <span className="font-normal">{selectedSerie?.last_air_date}</span>
 			</div>
 			<div className="px-8 mt-2 font-semibold">
-				In production: <span className="font-normal">{selectedSerie.in_production ? 'Yes' : 'No'}</span>
+				In production: <span className="font-normal">{selectedSerie?.in_production ? 'Yes' : 'No'}</span>
 			</div>
 			<div className="px-8 mt-2 font-semibold">
 				Created by:{' '}
 				<span className="font-normal">
-					{selectedSerie.created_by.map((creator: any) => (
+					{selectedSerie?.created_by?.map((creator: any, index: number) => (
 						<Link href="" key={creator.name}>
-							<span className="font-bold text-indigo-800">{creator.name}</span>
+							<span className="font-bold text-indigo-800">
+								{creator.name}
+								{`${index === selectedSerie?.created_by?.length - 1 ? '' : ', '}`}
+							</span>
 						</Link>
 					))}
 				</span>
@@ -135,7 +204,7 @@ const Serie = () => {
 
 			<h1 className="px-8 mt-6 text-xl font-semibold">Seasons</h1>
 			<div className="w-full px-8 mx-auto mt-4 bg-white rounded-2xl">
-				{selectedSerie.seasons.map((season: any, index: any) => (
+				{selectedSerie?.seasons?.map((season: any, index: any) => (
 					<Disclosure as="div" key={season.id} className="mt-2">
 						{({ open }) => (
 							<>
@@ -174,19 +243,20 @@ const Serie = () => {
 					</HorizontalScroll>
 				</div>
 			)}
-			{!!selectedSerie.production_companies.length && (
-				<div>
-					<h1 className="px-8 mt-6 text-xl font-semibold">Production</h1>
-					<HorizontalScroll className="px-8 mt-4 ">
-						{selectedSerie &&
-							selectedSerie.production_companies?.map((companie: any) =>
-								companie.logo_path ? (
-									<CompanieCardPlatform key={companie.id} companie={companie} />
-								) : null
-							)}
-					</HorizontalScroll>
-				</div>
-			)}
+			{!!selectedSerie?.production_companies?.length &&
+				!!selectedSerie?.production_companies?.filter((pr: any) => pr.logo_path !== null).length && (
+					<div>
+						<h1 className="px-8 mt-6 text-xl font-semibold">Production</h1>
+						<HorizontalScroll className="px-8 mt-4 ">
+							{selectedSerie &&
+								selectedSerie?.production_companies?.map((companie: any) =>
+									companie.logo_path ? (
+										<CompanieCardPlatform key={companie.id} companie={companie} />
+									) : null
+								)}
+						</HorizontalScroll>
+					</div>
+				)}
 			<hr className="mt-6"></hr>
 			{!!selectedSerieRecomendations && !!selectedSerieRecomendations.length && (
 				<div>
