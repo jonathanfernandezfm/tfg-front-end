@@ -5,6 +5,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { selectSerie } from '../store/reducers/seriesReducer';
 
+const imagesUrl = 'https://image.tmdb.org/t/p/w500';
 interface CardProps {
 	className?: string;
 	serie: any;
@@ -30,10 +31,7 @@ const Card = ({ className, serie }: CardProps) => {
 			}}
 		>
 			{serie.backdrop_path && (
-				<img
-					src={`${process.env.IMAGES_URL}${serie.backdrop_path}`}
-					className="absolute object-cover w-full h-full"
-				/>
+				<img src={`${imagesUrl}${serie.backdrop_path}`} className="absolute object-cover w-full h-full" />
 			)}
 			<div className="absolute flex items-center justify-start gap-1 text-white left-1">
 				<Star size={16} color="yellow" weight="fill" />

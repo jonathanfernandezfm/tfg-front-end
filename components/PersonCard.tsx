@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import React from 'react';
 
+const imagesUrl = 'https://image.tmdb.org/t/p/w500';
+
 interface PersonCardProps {
 	person: any;
 }
@@ -15,7 +17,7 @@ const PersonCard = ({ person }: PersonCardProps) => {
 				style={{
 					backgroundImage: `${
 						person.profile_path
-							? `url(${process.env.IMAGES_URL}${person.profile_path})`
+							? `url(${imagesUrl}${person.profile_path})`
 							: 'linear-gradient(#333b4a, #4d3d65)'
 					}`,
 				}}
