@@ -19,6 +19,8 @@ const authLink = setContext((_, { headers }) => {
 	};
 });
 
+console.log(process.env.API_URL);
+
 export const link = createHttpLink({
 	uri: process.env.API_URL,
 });
