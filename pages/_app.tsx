@@ -2,8 +2,8 @@ import '../styles/globals.css';
 
 import { AppProps } from 'next/app';
 import Layout from '../components/Layout';
-import { Provider, useSelector } from 'react-redux';
-import React, { useEffect } from 'react';
+import { Provider } from 'react-redux';
+import React from 'react';
 import { store } from '../store/store';
 import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache, useQuery } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
@@ -20,7 +20,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 export const link = createHttpLink({
-	uri: 'http://localhost:4000',
+	uri: process.env.API_URL,
 });
 
 const client = new ApolloClient({
