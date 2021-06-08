@@ -69,7 +69,7 @@ const Lists = () => {
 				{user ? (
 					<>
 						<div className="flex flex-col gap-4 mt-8">
-							{lists.map((list) => {
+							{lists?.map((list) => {
 								const icon = icons.find((i) => i.id === list.icon);
 								return (
 									<List id={list.id} icon={icon ? icon.value : null} name={list.name} key={list.id} />
