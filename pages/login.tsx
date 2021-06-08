@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../store/reducers/userReducer';
 import { showNotification } from '../store/reducers/notificationsReducer';
+import { motion } from 'framer-motion';
 
 const Login = () => {
 	const router = useRouter();
@@ -57,8 +58,19 @@ const Login = () => {
 
 	return (
 		<>
-			<img src="background.svg" alt="background" className="absolute top-0 w-full -z-1 opacity-95" />
-			<div className="grid px-8 mt-10 mb-24 gap-14 grid-rows-layout">
+			<motion.img
+				layoutId="background"
+				src="/background.svg"
+				alt="background"
+				className="absolute top-0 object-cover w-full -z-1 opacity-95"
+			/>
+
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="grid px-8 mt-10 mb-24 gap-14 grid-rows-layout"
+			>
 				<div className="flex flex-col justify-center">
 					<h1 className="text-4xl font-bold text-center">Welcome back</h1>
 					<h2 className="mt-3 text-2xl text-center">updates are waiting for you</h2>
@@ -109,7 +121,7 @@ const Login = () => {
 						</Link>
 					</p>
 				</div>
-			</div>
+			</motion.div>
 		</>
 	);
 };

@@ -13,11 +13,12 @@ const Profile = () => {
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!user) router.replace(`/login`);
+		// if (!user) router.replace(`/login`);
 	}, [user]);
 
 	const handleLogout = () => {
 		dispatch(removeUser());
+		router.replace(`/login`);
 	};
 
 	return (

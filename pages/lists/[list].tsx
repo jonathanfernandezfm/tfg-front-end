@@ -33,8 +33,17 @@ const List = () => {
 		onError: (error) => {},
 	});
 
-	const listResult = useQuery(GET_LIST, {
+	const { data, loading } = useQuery(GET_LIST, {
 		variables: { id: list },
+		onCompleted: (data) => {
+			console.log('completed', data);
+			dispatch(selectList(data.lists[0]));
+			if (!iconSelected) setIconSelected(icons.find((i) => i.id === data.lists[0].icon));
+		},
+		onError: (errors) => {
+			console.error('errors', errors);
+			router.replace('/lists');
+		},
 	});
 
 	const listSelected: List = useSelector((state: State) => state.lists.selected_list);
@@ -48,15 +57,10 @@ const List = () => {
 	useEffect(() => {
 		window.addEventListener('scroll', handleScroll);
 
-		if (listResult.data) {
-			dispatch(selectList(listResult.data.lists[0]));
-			if (!iconSelected) setIconSelected(icons.find((i) => i.id === listResult.data.lists[0].icon));
-		}
-
 		return () => {
 			window.removeEventListener('scroll', () => handleScroll);
 		};
-	}, [listResult, resultUpdated]);
+	}, []);
 
 	const onBack = () => {
 		router.back();
@@ -70,8 +74,6 @@ const List = () => {
 		updateList({ variables: { id: listSelected.id, name, description, icon: iconSelected.id } });
 	};
 
-	if (!listSelected) return null;
-
 	return (
 		<>
 			<motion.img
@@ -80,6 +82,7 @@ const List = () => {
 				alt="background"
 				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
 			/>
+
 			<div className="mt-16 mb-24 ">
 				<div
 					className={`font-bold px-8 sticky top-0 transition-all bg-transparent flex items-center gap-4 ${
@@ -90,75 +93,87 @@ const List = () => {
 					<button onClick={onBack} className="focus:outline-none">
 						<ArrowLeft size={28} />
 					</button>
-					<h1 className="font-semibold">{listSelected?.name}</h1>
-					{!listSelected.locked && (
-						<button
-							onClick={() => {
-								setModalOpen(true);
-							}}
-							className="m-auto mr-0 focus:outline-none"
-						>
-							<PencilSimple size={28} />
-						</button>
+					{!loading ? (
+						<h1 className="font-semibold">{listSelected?.name}</h1>
+					) : (
+						<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
 					)}
-					<Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
-						<Dialog.Title as="h3" className="text-xl font-semibold leading-6 text-gray-900">
-							Edit list
-						</Dialog.Title>
-						<div className="mt-2">
-							<form onSubmit={handleEdit}>
-								<div className="pt-3 pb-1">
-									<div className="flex gap-2">
-										<ListBox
-											selected={iconSelected}
-											items={icons}
-											setIconSelected={setIconSelected}
-											className="border-2 border-violet-500"
-										/>
+					{!loading && !listSelected?.locked && (
+						<>
+							<button
+								onClick={() => {
+									setModalOpen(true);
+								}}
+								className="m-auto mr-0 focus:outline-none"
+							>
+								<PencilSimple size={28} />
+							</button>
+							<Modal isOpen={modalOpen} setIsOpen={setModalOpen}>
+								<Dialog.Title as="h3" className="text-xl font-semibold leading-6 text-gray-900">
+									Edit list
+								</Dialog.Title>
+								<div className="mt-2">
+									<form onSubmit={handleEdit}>
+										<div className="pt-3 pb-1">
+											<div className="flex gap-2">
+												<ListBox
+													selected={iconSelected}
+													items={icons}
+													setIconSelected={setIconSelected}
+													className="border-2 border-violet-500"
+												/>
 
-										<input
-											name="name"
-											placeholder="Name"
-											defaultValue={listSelected.name}
-											className="w-full p-2 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
-										/>
-									</div>
-									<input
-										name="description"
-										placeholder="Description (Optional)"
-										defaultValue={listSelected.description}
-										className="w-full p-2 mt-2 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
-									/>
-									<div className="w-full gap-2 mt-4 text-right">
-										<button
-											type="button"
-											onClick={() => {
-												setModalOpen(false);
-											}}
-											className="items-end px-4 py-2 font-semibold text-indigo-900 rounded-md bg-indigo-50 focus:ring-4 focus:ring-violet-500 focus:outline-none"
-										>
-											Cancel
-										</button>
-										<button
-											type="submit"
-											className="items-end px-4 py-2 ml-2 font-semibold text-black rounded-md bg-violet-400 focus:ring-4 focus:ring-violet-500 focus:outline-none"
-										>
-											Save
-										</button>
-									</div>
+												<input
+													name="name"
+													placeholder="Name"
+													defaultValue={listSelected?.name}
+													className="w-full p-2 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
+												/>
+											</div>
+											<input
+												name="description"
+												placeholder="Description (Optional)"
+												defaultValue={listSelected?.description}
+												className="w-full p-2 mt-2 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
+											/>
+											<div className="w-full gap-2 mt-4 text-right">
+												<button
+													type="button"
+													onClick={() => {
+														setModalOpen(false);
+													}}
+													className="items-end px-4 py-2 font-semibold text-indigo-900 rounded-md bg-indigo-50 focus:ring-4 focus:ring-violet-500 focus:outline-none"
+												>
+													Cancel
+												</button>
+												<button
+													type="submit"
+													className="items-end px-4 py-2 ml-2 font-semibold text-black rounded-md bg-violet-400 focus:ring-4 focus:ring-violet-500 focus:outline-none"
+												>
+													Save
+												</button>
+											</div>
+										</div>
+									</form>
 								</div>
-							</form>
-						</div>
-					</Modal>
+							</Modal>
+						</>
+					)}
 				</div>
-				<p className="px-8 mt-2 text-lg font-semibold">{listSelected.description}</p>
-				{listSelected.series?.length ? (
+				{!loading ? (
+					<p className="px-8 mt-2 text-lg font-semibold">{listSelected?.description}</p>
+				) : (
+					<div className="h-6 mx-8 mt-2 rounded-md animate-pulse bg-violet-300"></div>
+				)}
+				{loading && <div className="mx-8 mt-6 rounded-md h-28 animate-pulse bg-violet-300"></div>}
+				{!loading && !!listSelected?.series?.length && (
 					<div className="flex flex-wrap gap-4 px-8 mt-6">
 						{listSelected.series.map((serie: any) => (
 							<Card className="flex-1" key={serie.id} serie={serie} />
 						))}
 					</div>
-				) : (
+				)}
+				{!loading && !listSelected?.series?.length && (
 					<div className="mt-16">
 						<h1 className="text-4xl font-bold text-center">
 							There are <br />

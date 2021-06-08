@@ -49,7 +49,6 @@ const Lists = () => {
 		}
 	}, [result]);
 
-	if (!lists) return null;
 	console.log('LISTS -> ', user);
 	return (
 		<>

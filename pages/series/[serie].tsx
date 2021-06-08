@@ -51,6 +51,7 @@ const Serie = () => {
 		onError: (error) => {},
 	});
 
+	const user = useSelector((state: State) => state.user);
 	const lists: List[] = useSelector((state: State) => state.lists.lists);
 	const selectedSerie = useSelector((state: State) => state.series.serie_selected);
 	const selectedSerieCast = useSelector((state: State) => state.series.serie_selected_cast);
@@ -100,17 +101,7 @@ const Serie = () => {
 
 	return (
 		<div className="mb-20">
-			<div
-				className="relative w-full bg-center bg-no-repeat bg-cover h-96"
-				// style={{
-				// 	backgroundImage: `${
-				// 		selectedSerie?.backdrop_path
-				// 			? `url(${imageUrl}${selectedSerie.backdrop_path})`
-				// 			: 'linear-gradient(#333b4a, #4d3d65)'
-				// 	}`,
-				// }}
-			>
-				{console.log(selectedSerie)}
+			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
 				<img src={`${imageUrl}${selectedSerie?.backdrop_path}`} className="absolute object-cover h-full" />
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
 				<div className="relative flex justify-between px-8 pt-12 mb-24">
@@ -119,24 +110,29 @@ const Serie = () => {
 							<ArrowLeft size={28} />
 						</button>
 					</div>
-					<div className="flex gap-5">
-						<button
-							onClick={() => {
-								seeSerie();
-							}}
-							className="focus:outline-none"
-						>
-							<Eye size={28} className={`${isSeen ? 'active-seen text-indigo-400' : 'text-white'}`} />
-						</button>
-						<button
-							onClick={() => {
-								likeSerie();
-							}}
-							className="focus:outline-none"
-						>
-							<Heart size={28} className={`${isLiked ? 'active-liked text-red-400' : 'text-white'}`} />
-						</button>
-					</div>
+					{user && (
+						<div className="flex gap-5">
+							<button
+								onClick={() => {
+									seeSerie();
+								}}
+								className="focus:outline-none"
+							>
+								<Eye size={28} className={`${isSeen ? 'active-seen text-indigo-400' : 'text-white'}`} />
+							</button>
+							<button
+								onClick={() => {
+									likeSerie();
+								}}
+								className="focus:outline-none"
+							>
+								<Heart
+									size={28}
+									className={`${isLiked ? 'active-liked text-red-400' : 'text-white'}`}
+								/>
+							</button>
+						</div>
+					)}
 				</div>
 
 				<div className="absolute text-4xl font-black text-white bottom-6 left-8">
@@ -159,7 +155,7 @@ const Serie = () => {
 					</div>
 				</div>
 			</div>
-			<FloatingButton addSerie={addSerie} removeSerie={removeSerie} />
+			{user && <FloatingButton addSerie={addSerie} removeSerie={removeSerie} />}
 
 			<div className="flex gap-2 px-8 mt-6">
 				{selectedSerie?.genres?.map((genre: any) => (

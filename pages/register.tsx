@@ -8,6 +8,7 @@ import { REGISTER } from '../graphql/mutations';
 import { useDispatch, useSelector } from 'react-redux';
 import { showNotification } from '../store/reducers/notificationsReducer';
 import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 
 const Register = () => {
 	const user = useSelector((state: State) => state.user);
@@ -85,8 +86,18 @@ const Register = () => {
 
 	return (
 		<>
-			<img src="background.svg" alt="background" className="absolute top-0 w-full -z-1 opacity-95" />
-			<div className="grid px-8 mb-10 grid-rows-layout">
+			<motion.img
+				layoutId="background"
+				src="/background.svg"
+				alt="background"
+				className="absolute top-0 object-cover w-full -z-1 opacity-95"
+			/>
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="grid px-8 mb-10 grid-rows-layout"
+			>
 				<div className="flex flex-col justify-center">
 					<h1 className="text-4xl font-bold text-center">Join the community</h1>
 					<h2 className="mt-3 text-2xl text-center">and share your passion</h2>
@@ -156,7 +167,7 @@ const Register = () => {
 						</Link>
 					</p>
 				</form>
-			</div>
+			</motion.div>
 		</>
 	);
 };

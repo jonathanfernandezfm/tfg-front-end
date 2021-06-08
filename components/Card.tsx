@@ -22,7 +22,8 @@ const Card = ({ className, serie }: CardProps) => {
 	};
 
 	return (
-		<div
+		<motion.div
+			whileTap={{ scale: 0.95 }}
 			onClick={handleClick}
 			className={`relative flex-shrink-0 h-40 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md shadow-md w-28 overflow-hidden min-w-max ${className}`}
 			style={{
@@ -39,7 +40,7 @@ const Card = ({ className, serie }: CardProps) => {
 			</div>
 			<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
 			<span className="absolute bottom-0 m-2 text-left text-white">{serie.name}</span>
-		</div>
+		</motion.div>
 	);
 };
 
