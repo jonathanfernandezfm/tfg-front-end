@@ -1,0 +1,10 @@
+{
+	"name": "TFG",
+	"short_name": "TFG",
+	"icons": [],
+	"theme_color": "#a78bfa",
+	"background_color": "#a78bfa",
+	"start_url": "/",
+	"display": "standalone",
+	"orientation": "portrait"
+}

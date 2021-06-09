@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { store } from '../store/store';
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache, useQuery } from '@apollo/client';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from 'apollo-link-context';
 import AuthController from '../components/AuthController';
 

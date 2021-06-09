@@ -45,10 +45,10 @@ const Input = ({ className }: InputProps) => {
 
 	return (
 		<div
-			className={`z-10 py-3 text-indigo-800 bg-white rounded-md ring-violet-300 ${className} ${
+			className={`z-10  py-3 text-indigo-800 bg-white rounded-md ring-violet-300 ${className} ${
 				focused || searchInput
 					? `px-8 pb-24 absolute top-0 left-0 w-full h-screen focus-within:ring-0 mb-14 overflow-hidden`
-					: `px-4 focus-within:ring-4`
+					: `px-4 mx-8 focus-within:ring-4`
 			}`}
 		>
 			<div className={`flex ${focused || searchInput ? `mt-10 ` : ``}`}>
@@ -77,6 +77,7 @@ const Input = ({ className }: InputProps) => {
 					onClick={() => {
 						setFocused(false);
 						setSearchInput('');
+						dispatch(setSeriesSearch([]));
 					}}
 					className="flex items-center focus:outline-none"
 				>

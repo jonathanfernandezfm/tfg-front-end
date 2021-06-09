@@ -17,8 +17,6 @@ import { setLists } from '../../store/reducers/listsReducer';
 import { showNotification } from '../../store/reducers/notificationsReducer';
 import { selectSerie, setSerieCast, setSerieRecomendations } from '../../store/reducers/seriesReducer';
 
-const imagesUrl = "https://image.tmdb.org/t/p/w500";
-
 const Serie = () => {
 	const router = useRouter();
 	const { serie } = router.query;
@@ -103,7 +101,7 @@ const Serie = () => {
 		<div className="mb-20">
 			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
 				<img
-					src={`${imagesUrl}${selectedSerie?.backdrop_path}`}
+					src={`${process.env.IMAGES_URL_ORIGINAL}${selectedSerie?.backdrop_path}`}
 					className="absolute object-cover h-full"
 				/>
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
@@ -142,7 +140,7 @@ const Serie = () => {
 					<div className="flex gap-2 mb-2">
 						{selectedSerie?.networks?.map((network: any) => (
 							<div key={network.name} className="flex items-center w-12 h-6 p-2 rounded-md bg-indigo-50">
-								<img src={`${imagesUrl}${network.logo_path}`} alt="network_logo" />
+								<img src={`${process.env.IMAGES_URL_500}${network.logo_path}`} alt="network_logo" />
 							</div>
 						))}
 					</div>

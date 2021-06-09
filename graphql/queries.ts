@@ -20,6 +20,7 @@ export const GET_LIST = gql`
 			name
 			icon
 			locked
+			public
 			description
 			series {
 				id
@@ -42,6 +43,7 @@ export const ME = gql`
 				email
 				birthDate
 				gender
+				public
 				city
 			}
 		}

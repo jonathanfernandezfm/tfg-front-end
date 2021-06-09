@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ImageSquare, PencilSimple } from 'phosphor-react';
+import { ImageSquare, LockSimple, PencilSimple } from 'phosphor-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button';
@@ -37,10 +37,13 @@ const Profile = () => {
 				className="relative px-8 mt-16 mb-24 "
 			>
 				<div className="relative flex items-center justify-center gap-4 text-2xl font-bold text-center text-white transition-all bg-transparent">
-					<h1 className="font-semibold">@{user?.username ? user.username : 'Username'}</h1>
+					<h1 className="flex items-center gap-2 font-semibold">
+						{user?.public ? '' : <LockSimple size={22} weight="bold" />}@
+						{user?.username ? user.username : 'Username'}
+					</h1>
 					<div className="absolute right-0">
 						<Link href="/profile/edit">
-							<PencilSimple size={28} className="text-white" />
+							<PencilSimple size={24} className="text-white" />
 						</Link>
 					</div>
 				</div>

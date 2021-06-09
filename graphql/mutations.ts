@@ -12,6 +12,7 @@ export const LOGIN = gql`
 					email
 					birthDate
 					gender
+					public
 					city
 				}
 			}
@@ -28,14 +29,29 @@ export const REGISTER = gql`
 `;
 
 export const UPDATE_USER = gql`
-	mutation updateUser($name: String, $surname: String, $birthDate: String, $gender: String, $city: String) {
-		updateUser(name: $name, surname: $surname, birthDate: $birthDate, gender: $gender, city: $city) {
+	mutation updateUser(
+		$name: String
+		$surname: String
+		$birthDate: String
+		$gender: String
+		$city: String
+		$public: Boolean
+	) {
+		updateUser(
+			name: $name
+			surname: $surname
+			birthDate: $birthDate
+			gender: $gender
+			city: $city
+			public: $public
+		) {
 			name
 			surname
 			username
 			email
 			birthDate
 			gender
+			public
 			city
 		}
 	}
@@ -57,6 +73,7 @@ export const UPDATE_LIST = gql`
 			name
 			icon
 			locked
+			public
 			description
 			series {
 				id
@@ -66,6 +83,12 @@ export const UPDATE_LIST = gql`
 				backdrop_path
 			}
 		}
+	}
+`;
+
+export const REMOVE_LIST = gql`
+	mutation removeList($id: ID!) {
+		deleteList(id: $id)
 	}
 `;
 

@@ -49,7 +49,6 @@ const Lists = () => {
 		}
 	}, [result]);
 
-	console.log('LISTS -> ', user);
 	return (
 		<>
 			<motion.img
@@ -63,7 +62,7 @@ const Lists = () => {
 				exit={{ opacity: 0 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="px-8 mt-16 mb-24 "
+				className="px-8 mb-20 mt-14"
 			>
 				<h1 className="text-4xl font-bold text-white">Lists</h1>
 				{user ? (

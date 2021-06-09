@@ -2,13 +2,16 @@ import { Dispatch } from 'redux';
 
 const SET_LISTS = 'SET_LISTS';
 const ADD_LIST = 'ADD_LIST';
+const REMOVE_LIST = 'REMOVE_LIST';
 const SET_SELECTED_LIST = 'SET_SELECTED_LIST';
 const REMOVE_SELECTED_LIST = 'REMOVE_SELECTED_LIST';
 const EDIT_LIST = 'EDIT_LIST';
 
 type ListsAction = {
 	type: string;
-	lists: List[];
+	lists?: List[];
+	list: List;
+	id?: string;
 };
 
 const reducer = (state: any = [], action: ListsAction): List[] => {
@@ -17,8 +20,10 @@ const reducer = (state: any = [], action: ListsAction): List[] => {
 			return { ...state, lists: action.lists };
 		case ADD_LIST:
 			return { ...state, lists: [...state.lists, ...action.lists] };
+		case REMOVE_LIST:
+			return { ...state, lists: state.lists.filter((l: any) => l.id !== action.id) };
 		case SET_SELECTED_LIST:
-			return { ...state, selected_list: action.lists[0] };
+			return { ...state, selected_list: action.list };
 		case REMOVE_SELECTED_LIST:
 			return { ...state, selected_list: null };
 		default:
@@ -36,6 +41,15 @@ export const create = (list: ListInput) => {
 	};
 };
 
+export const removeList = (id: any) => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: REMOVE_LIST,
+			id: id,
+		});
+	};
+};
+
 export const setLists = (lists: ListInput[]) => {
 	return async (dispatch: Dispatch) => {
 		dispatch({
@@ -49,7 +63,7 @@ export const selectList = (list: List) => {
 	return async (dispatch: Dispatch) => {
 		dispatch({
 			type: SET_SELECTED_LIST,
-			lists: [list],
+			list: list,
 		});
 	};
 };

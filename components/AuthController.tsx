@@ -27,6 +27,7 @@ const AuthController = ({ children }: AuthControllerProps) => {
 					email: dataUser.userInfo.email,
 					birthDate: dataUser.userInfo.birthDate,
 					gender: dataUser.userInfo.gender,
+					public: dataUser.userInfo.public,
 					city: dataUser.userInfo.city,
 				};
 
@@ -34,6 +35,7 @@ const AuthController = ({ children }: AuthControllerProps) => {
 			}
 		},
 		onError: (error) => {
+			localStorage.removeItem('user-token');
 			router.replace('/login');
 		},
 	});

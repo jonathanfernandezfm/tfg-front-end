@@ -1,8 +1,9 @@
 import { useMutation } from '@apollo/client';
+import { Switch } from '@headlessui/react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { ArrowLeft } from 'phosphor-react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import { UPDATE_USER } from '../../graphql/mutations';
@@ -12,6 +13,7 @@ import { updateUser } from '../../store/reducers/userReducer';
 const EditProfile = () => {
 	const router = useRouter();
 	const user = useSelector((state: State) => state.user);
+	const [enabled, setEnabled] = useState(false);
 	const dispatch = useDispatch();
 
 	const [updateUserData] = useMutation(UPDATE_USER, {
@@ -27,6 +29,10 @@ const EditProfile = () => {
 		router.back();
 	};
 
+	useEffect(() => {
+		if (user) setEnabled(user.public);
+	}, [user]);
+
 	const handleSubmit = (event: any) => {
 		event.preventDefault();
 		const name = event.target.name.value;
@@ -37,7 +43,7 @@ const EditProfile = () => {
 
 		if (!name || name === '') return;
 
-		updateUserData({ variables: { name, surname, birthDate, gender, city: location } });
+		updateUserData({ variables: { name, surname, birthDate, gender, city: location, public: enabled } });
 	};
 
 	return (
@@ -111,11 +117,31 @@ const EditProfile = () => {
 								name="location"
 								defaultValue={user?.location ? user.location : ''}
 								placeholder="Location"
-								className="w-full p-2 mt-1 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
+								className="w-full p-2 mt-1 mb-4 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
 							/>
-						</div>
-						<div className="flex justify-end mt-6">
-							<Button type="submit" text="Save" className="block " />
+							<div className="flex justify-between">
+								<div>
+									<label className="font-semibold">Public</label>
+									<div className="py-2">
+										<Switch
+											checked={enabled}
+											onChange={setEnabled}
+											className={`${enabled ? 'bg-violet-600' : 'bg-violet-400'}
+					relative inline-flex flex-shrink-0 h-7 w-12 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+										>
+											<span className="sr-only">Use setting</span>
+											<span
+												aria-hidden="true"
+												className={`${enabled ? 'translate-x-5' : 'translate-x-0'}
+					pointer-events-none inline-block h-6 w-6 rounded-full bg-white shadow-lg transform ring-0 transition ease-in-out duration-200`}
+											/>
+										</Switch>
+									</div>
+								</div>
+								<div className="mt-4">
+									<Button type="submit" text="Save" className="block " />
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>

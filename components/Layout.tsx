@@ -1,5 +1,6 @@
 import { AnimateSharedLayout } from 'framer-motion';
 import React, { ReactNode } from 'react';
+import useDevice from '../hooks/useDevice';
 import NavBar from './NavBar';
 import Notification from './Notification';
 
@@ -8,12 +9,14 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-	console.log('LAYOUT');
+	const { isMobile, isAndroid, isDesktop, isIos, isSSR } = useDevice();
+
+	console.log({ isMobile, isAndroid, isDesktop, isIos, isSSR });
 	return (
 		<AnimateSharedLayout>
 			{children}
 			<Notification></Notification>
-			<NavBar></NavBar>
+			{isMobile && <NavBar></NavBar>}
 		</AnimateSharedLayout>
 	);
 };

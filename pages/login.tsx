@@ -40,6 +40,7 @@ const Login = () => {
 				email: data.user.userInfo.email,
 				birthDate: data.user.userInfo.birthDate,
 				gender: data.user.userInfo.gender,
+				public: data.user.userInfo.public,
 				city: data.user.userInfo.city,
 			};
 
@@ -62,16 +63,16 @@ const Login = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full -z-1 opacity-95 xl:hidden"
 			/>
 
 			<motion.div
 				exit={{ opacity: 0 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="grid px-8 mt-10 mb-24 gap-14 grid-rows-layout"
+				className="grid px-8 mt-10 mb-24 gap-14 xl:grid-cols-2 grid-rows-layout"
 			>
-				<div className="flex flex-col justify-center">
+				<div className="flex flex-col justify-center md:block">
 					<h1 className="text-4xl font-bold text-center">Welcome back</h1>
 					<h2 className="mt-3 text-2xl text-center">updates are waiting for you</h2>
 				</div>

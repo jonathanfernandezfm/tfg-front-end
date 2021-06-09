@@ -7,7 +7,7 @@ const NavBar = () => {
 	const user = useSelector((state: State) => state.user);
 
 	return (
-		<div className="fixed bottom-0 left-0 z-40 flex justify-between w-full px-12 py-4 bg-white navbar shadow-upper">
+		<div className="fixed bottom-0 left-0 z-40 flex justify-between w-full px-12 py-4 bg-white navbar shadow-upper xl:hidden">
 			<ActiveLink href="/home">
 				<House size={26}></House>
 			</ActiveLink>

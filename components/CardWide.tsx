@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { Star } from 'phosphor-react';
 import React from 'react';
 
-const imagesUrl = 'https://image.tmdb.org/t/p/w500';
-
 interface CardProps {
 	serie: any;
 }
@@ -16,7 +14,7 @@ export const CardWide = ({ serie }: CardProps) => {
 				style={{
 					backgroundImage: `${
 						serie.backdrop_path
-							? `url(${imagesUrl}${serie.backdrop_path})`
+							? `url(${process.env.IMAGES_URL_500}${serie.backdrop_path})`
 							: 'linear-gradient(#333b4a, #4d3d65)'
 					}`,
 				}}

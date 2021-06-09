@@ -10,17 +10,15 @@ import { setDiscoverSeries } from '../store/reducers/seriesReducer';
 
 const Discover = () => {
 	const dispatch = useDispatch();
-	const result = useQuery(DISCOVER_SERIES);
+	const { loading: loadingSeries } = useQuery(DISCOVER_SERIES, {
+		onCompleted: (data) => {
+			dispatch(setDiscoverSeries(data.discover));
+		},
+	});
 
 	const series: any[] = useSelector((state: State) => {
 		return state.series.series_discover;
 	});
-
-	useEffect(() => {
-		if (result.data) {
-			dispatch(setDiscoverSeries(result.data.discover));
-		}
-	}, [result]);
 
 	return (
 		<>
@@ -29,16 +27,19 @@ const Discover = () => {
 				alt="background"
 				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
 			/>
-			<motion.div
-				exit={{ opacity: 0 }}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				className="px-8 mt-16 mb-24 "
-			>
+			<motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-20 mt-14">
 				<Search />
-				<h1 className="mt-8 text-4xl font-bold">Discover</h1>
-				<HorizontalScroll className="mt-4">
-					{series && series.map((serie) => <Card key={serie.id} serie={serie} />)}
+				<h1 className="px-8 mt-8 text-4xl font-bold">Discover</h1>
+				<HorizontalScroll className="px-8 mt-4">
+					{!loadingSeries && series ? (
+						series.map((serie) => <Card key={serie.id} serie={serie} />)
+					) : (
+						<>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+						</>
+					)}
 				</HorizontalScroll>
 			</motion.div>
 		</>

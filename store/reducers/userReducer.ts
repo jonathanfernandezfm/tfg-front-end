@@ -18,6 +18,7 @@ interface User {
 	email: string;
 	birthDate: string;
 	gender: string;
+	public: boolean;
 	city: string;
 }
 
@@ -37,6 +38,7 @@ const reducer = (state: User = null, action: UserAction): User => {
 				gender: action.user.gender,
 				birthDate: action.user.birthDate,
 				city: action.user.city,
+				public: action.user.public,
 			};
 		default:
 			return state;
