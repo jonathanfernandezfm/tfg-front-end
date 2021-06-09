@@ -20,7 +20,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 export const link = createHttpLink({
-	uri: 'https://tfg-back-end.herokuapp.com',
+	uri: process.env.API_URL,
 });
 
 const client = new ApolloClient({
