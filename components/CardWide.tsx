@@ -1,16 +1,28 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Star } from 'phosphor-react';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { selectSerie, setSeriesSearch } from '../store/reducers/seriesReducer';
 
 interface CardProps {
 	serie: any;
 }
 
 export const CardWide = ({ serie }: CardProps) => {
+	const router = useRouter();
+	const dispatch = useDispatch();
+
+	const handleClick = () => {
+		router.push(`/series/${serie.id}`);
+		dispatch(selectSerie(serie));
+		dispatch(setSeriesSearch([]));
+	};
+
 	return (
-		<Link href={`/series/${serie.id}`}>
+		<a onClick={handleClick}>
 			<div
-				className="relative flex-shrink-0 w-full h-24 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md min-w-max"
+				className="relative flex-shrink-0 w-full h-32 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md min-w-max"
 				style={{
 					backgroundImage: `${
 						serie.backdrop_path
@@ -26,6 +38,6 @@ export const CardWide = ({ serie }: CardProps) => {
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
 				<span className="absolute bottom-0 m-2 text-left text-white">{serie.name}</span>
 			</div>
-		</Link>
+		</a>
 	);
 };

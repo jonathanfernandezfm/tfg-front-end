@@ -18,6 +18,7 @@ const Input = ({ icon, placeholder, type, name, className, error }: InputProps) 
 		>
 			<div>{icon}</div>
 			<input
+				autoComplete="off"
 				name={name}
 				className="w-full ml-3 font-regular focus:outline-none"
 				placeholder={placeholder}

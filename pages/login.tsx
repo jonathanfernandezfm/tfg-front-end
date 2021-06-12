@@ -113,7 +113,7 @@ const Login = () => {
 							className="mt-3"
 							error={error}
 						/>
-						<Button type="submit" text="Log in" className="block m-auto mt-16" />
+						<Button loading={result.loading} type="submit" text="Log in" className="block m-auto mt-16" />
 					</form>
 					<p className="mt-4 text-center">
 						Don't have an account?{' '}

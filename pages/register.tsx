@@ -159,7 +159,13 @@ const Register = () => {
 						className="mt-3"
 						error={passwordsError}
 					/>
-					<Button type="submit" onClick={() => {}} text="Sign up" className="block m-auto mt-8" />
+					<Button
+						loading={result.loading}
+						type="submit"
+						onClick={() => {}}
+						text="Sign up"
+						className="block m-auto mt-8"
+					/>
 					<p className="mt-4 text-center">
 						Already have an account?{' '}
 						<Link href="/login">

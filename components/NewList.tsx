@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useMutation } from '@apollo/client';
 import { CREATE_LIST } from '../graphql/mutations';
 import { ALL_LISTS } from '../graphql/queries';
+import { motion } from 'framer-motion';
 
 interface NewListProps {
 	icon: ReactElement;
@@ -32,12 +33,14 @@ const NewList = ({ icon, name }: NewListProps) => {
 	};
 
 	return (
-		<div
-			className={`overflow-visible w-full px-6 py-3 text-white bg-indigo-800 rounded-md shadow-md focus:outline-none focus-within:ring-4 ring-violet-300 ${
+		<motion.div
+			layout
+			className={`overflow-hidden w-full px-6 py-3 text-white bg-indigo-800 rounded-md shadow-md focus:outline-none focus-within:ring-4 ring-violet-300 ${
 				newListForm ? 'ring-4' : ''
 			}`}
 		>
-			<button
+			<motion.button
+				layout="position"
 				onClick={() => {
 					setNewListForm(!newListForm);
 				}}
@@ -45,10 +48,10 @@ const NewList = ({ icon, name }: NewListProps) => {
 			>
 				{icon}
 				<span className="font-semibold">{name}</span>
-			</button>
+			</motion.button>
 			{newListForm && (
 				<form onSubmit={handleCreate}>
-					<div className="pt-3 pb-1">
+					<motion.div layout="position" className="pt-3 pb-1">
 						<div className="flex gap-2">
 							<ListBox selected={iconSelected} items={icons} setIconSelected={setIconSelected} />
 
@@ -80,10 +83,10 @@ const NewList = ({ icon, name }: NewListProps) => {
 								Save
 							</button>
 						</div>
-					</div>
+					</motion.div>
 				</form>
 			)}
-		</div>
+		</motion.div>
 	);
 };
 

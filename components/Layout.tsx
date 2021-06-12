@@ -11,12 +11,11 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
 	const { isMobile, isAndroid, isDesktop, isIos, isSSR } = useDevice();
 
-	console.log({ isMobile, isAndroid, isDesktop, isIos, isSSR });
 	return (
 		<AnimateSharedLayout>
 			{children}
 			<Notification></Notification>
-			{isMobile && <NavBar></NavBar>}
+			{isMobile() && <NavBar></NavBar>}
 		</AnimateSharedLayout>
 	);
 };
