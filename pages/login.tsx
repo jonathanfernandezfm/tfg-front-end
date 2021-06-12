@@ -70,13 +70,21 @@ const Login = () => {
 				exit={{ opacity: 0 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="grid px-8 mt-10 mb-24 gap-14 xl:grid-cols-2 grid-rows-layout"
+				className="grid px-8 mt-10 mb-24 xl:gap-48 gap-14 xl:m-auto xl:container xl:grid-cols-2 xl:grid-rows-none grid-rows-layout xl:my-16"
 			>
-				<div className="flex flex-col justify-center md:block">
-					<h1 className="text-4xl font-bold text-center">Welcome back</h1>
-					<h2 className="mt-3 text-2xl text-center">updates are waiting for you</h2>
+				<div className="flex flex-col justify-center xl:justify-center xl:items-center">
+					<img src="login_image.svg" alt="" className="hidden p-6 xl:block" />
+					<h1 className="text-4xl font-bold text-center xl:hidden">Welcome back</h1>
+					<h2 className="mt-3 text-2xl text-center xl:hidden">updates are waiting for you</h2>
 				</div>
-				<div className="">
+				<div className="h-full">
+					<h1 className="hidden text-4xl font-bold xl:block">Login</h1>
+					<h2 className="hidden mt-4 text-xl xl:block">
+						Access your account. If you don't have an account{' '}
+						<Link href="/register">
+							<a className="font-bold text-indigo-800">Register here</a>
+						</Link>
+					</h2>
 					<form
 						onSubmit={handleSubmit}
 						onBlur={() => {
@@ -85,7 +93,9 @@ const Login = () => {
 						onFocus={() => {
 							setError(false);
 						}}
+						className="xl:mt-10"
 					>
+						<label className="hidden text-xl font-bold xl:block">Username / Email</label>
 						<Input
 							name="user"
 							icon={
@@ -97,8 +107,10 @@ const Login = () => {
 							}
 							placeholder={'User or email'}
 							type="text"
+							className="xl:mt-2"
 							error={error}
 						/>
+						<label className="hidden mt-8 text-xl font-bold xl:block">Password</label>
 						<Input
 							name="password"
 							icon={
@@ -110,15 +122,20 @@ const Login = () => {
 							}
 							placeholder={'Password'}
 							type="password"
-							className="mt-3"
+							className="mt-3 xl:mt-2"
 							error={error}
 						/>
-						<Button loading={result.loading} type="submit" text="Log in" className="block m-auto mt-16" />
+						<Button
+							loading={result.loading}
+							type="submit"
+							text="Log in"
+							className="block m-auto mt-16 xl:mr-0"
+						/>
 					</form>
-					<p className="mt-4 text-center">
+					<p className="mt-4 text-center xl:hidden">
 						Don't have an account?{' '}
 						<Link href="/register">
-							<span className="font-bold text-indigo-800">Register</span>
+							<a className="font-bold text-indigo-800">Register</a>
 						</Link>
 					</p>
 				</div>

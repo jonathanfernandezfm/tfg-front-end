@@ -42,9 +42,6 @@ const Register = () => {
 
 		if (result.data) {
 			console.log(result.data);
-			// const token = result.data.login.value;
-			// setToken(token);
-			// localStorage.setItem('user-token', token);
 		}
 	}, [result.data, user]);
 
@@ -90,19 +87,28 @@ const Register = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full -z-1 opacity-95 xl:hidden"
 			/>
 			<motion.div
 				exit={{ opacity: 0 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="grid px-8 mb-10 grid-rows-layout"
+				className="grid px-8 m-auto mt-10 mb-10 gap-14 xl:gap-48 grid-rows-layout xl:container xl:grid-cols-2 xl:grid-rows-none xl:mb-24 xl:mt-16"
 			>
-				<div className="flex flex-col justify-center">
-					<h1 className="text-4xl font-bold text-center">Join the community</h1>
-					<h2 className="mt-3 text-2xl text-center">and share your passion</h2>
+				<div className="flex flex-col justify-center xl:order-last">
+					<img src="register_image.svg" alt="" className="hidden p-6 xl:block" />
+					<h1 className="text-4xl font-bold text-center xl:hidden">Join the community</h1>
+					<h2 className="mt-3 text-2xl text-center xl:hidden">and share your passion</h2>
 				</div>
-				<form onSubmit={handleSubmit} onBlur={hideErrors} onFocus={hideErrors}>
+				<form className="xl:mt-4" onSubmit={handleSubmit} onBlur={hideErrors} onFocus={hideErrors}>
+					<h1 className="hidden text-4xl font-bold xl:block">Register</h1>
+					<h2 className="hidden mt-4 text-xl xl:block">
+						Already have an account?{' '}
+						<Link href="/login">
+							<a className="font-bold text-indigo-800">Login here</a>
+						</Link>
+					</h2>
+					<label className="hidden mt-4 text-xl font-bold xl:block">Email</label>
 					<Input
 						name="email"
 						icon={
@@ -114,8 +120,11 @@ const Register = () => {
 						}
 						placeholder={'Email'}
 						type="email"
+						className="xl:mt-2"
 						error={emailError}
 					/>
+					<label className="hidden mt-4 text-xl font-bold xl:block">Username</label>
+
 					<Input
 						name="username"
 						icon={
@@ -130,6 +139,7 @@ const Register = () => {
 						className="mt-3"
 						error={usernameError}
 					/>
+					<label className="hidden mt-4 text-xl font-bold xl:block">Password</label>
 
 					<Input
 						name="password1"
@@ -145,6 +155,8 @@ const Register = () => {
 						className="mt-3"
 						error={passwordsError}
 					/>
+					<label className="hidden mt-4 text-xl font-bold xl:block">Repeat password</label>
+
 					<Input
 						name="password2"
 						icon={
@@ -164,9 +176,9 @@ const Register = () => {
 						type="submit"
 						onClick={() => {}}
 						text="Sign up"
-						className="block m-auto mt-8"
+						className="block m-auto mt-8 xl:mr-0"
 					/>
-					<p className="mt-4 text-center">
+					<p className="mt-4 text-center xl:hidden">
 						Already have an account?{' '}
 						<Link href="/login">
 							<span className="font-bold text-indigo-800">Log in</span>

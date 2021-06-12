@@ -6,9 +6,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/Card';
 import CardPlatform from '../components/CardPlatform';
 import HorizontalScroll from '../components/HorizontalScroll';
-import { AIRING_TODAY_SERIES, DISCOVER_SERIES, POPULAR_SERIES, TOP_RATED_SERIES } from '../graphql/queries';
+import Subtitle from '../components/Subtitle';
+import Title from '../components/Title';
+import { TrailerViewer } from '../components/TrailerViewer';
+import {
+	AIRING_TODAY_SERIES,
+	DISCOVER_GENRE,
+	DISCOVER_SERIES,
+	POPULAR_SERIES,
+	TOP_RATED_SERIES,
+} from '../graphql/queries';
 import {
 	setAiringTodaySeries,
+	setDiscoverByGenre,
 	setDiscoverSeries,
 	setPopularSeries,
 	setTopRatedSeries,
@@ -18,58 +28,72 @@ const Platforms = [
 	{
 		id: '1',
 		name: 'Amazon',
-		logo_path: '/ifhbNuuVnlwYy5oXA5VIb2YR8AZ.png',
+		logo_path: '/ifhbNuuVnlwYy5oXA5VIb2YR8AZ.svg',
 	},
 	{
 		id: '2',
 		name: 'Disney+',
-		logo_path: '/gJ8VX6JSu3ciXHuC2dDGAo2lvwM.png',
+		logo_path: '/gJ8VX6JSu3ciXHuC2dDGAo2lvwM.svg',
 	},
 	{
 		id: '3',
 		name: 'ABC',
-		logo_path: '/ndAvF4JLsliGreX87jAc9GdjmJY.png',
+		logo_path: '/ndAvF4JLsliGreX87jAc9GdjmJY.svg',
 	},
 	{
 		id: '4',
 		name: 'Amazon',
-		logo_path: '/ifhbNuuVnlwYy5oXA5VIb2YR8AZ.png',
+		logo_path: '/ifhbNuuVnlwYy5oXA5VIb2YR8AZ.svg',
 	},
 	{
 		id: '5',
 		name: 'Disney+',
-		logo_path: '/gJ8VX6JSu3ciXHuC2dDGAo2lvwM.png',
+		logo_path: '/gJ8VX6JSu3ciXHuC2dDGAo2lvwM.svg',
 	},
 	{
 		id: '6',
 		name: 'ABC',
-		logo_path: '/ndAvF4JLsliGreX87jAc9GdjmJY.png',
+		logo_path: '/ndAvF4JLsliGreX87jAc9GdjmJY.svg',
 	},
 ];
 
 const Home = () => {
-	const [isSticky, setSticky] = useState(false);
-	const ref = useRef(null);
-
 	const dispatch = useDispatch();
 	const { loading: loadingDiscover } = useQuery(DISCOVER_SERIES, {
 		onCompleted: (data) => {
 			dispatch(setDiscoverSeries(data.discover));
 		},
 	});
+
 	const { loading: loadingPopular } = useQuery(POPULAR_SERIES, {
 		onCompleted: (data) => {
 			dispatch(setPopularSeries(data.popular));
 		},
 	});
+
 	const { loading: loadingTopRated } = useQuery(TOP_RATED_SERIES, {
 		onCompleted: (data) => {
 			dispatch(setTopRatedSeries(data.topRated));
 		},
 	});
+
 	const { loading: loadingAired } = useQuery(AIRING_TODAY_SERIES, {
 		onCompleted: (data) => {
 			dispatch(setAiringTodaySeries(data.airingToday));
+		},
+	});
+
+	const { loading: loadingGenreAction } = useQuery(DISCOVER_GENRE, {
+		variables: { genres: ['10759'] },
+		onCompleted: (data) => {
+			dispatch(setDiscoverByGenre(data.discover, 'action'));
+		},
+	});
+
+	const { loading: loadingGenreDrama } = useQuery(DISCOVER_GENRE, {
+		variables: { genres: ['18'] },
+		onCompleted: (data) => {
+			dispatch(setDiscoverByGenre(data.discover, 'drama'));
 		},
 	});
 
@@ -86,20 +110,12 @@ const Home = () => {
 	const airingSeries: any[] = useSelector((state: State) => {
 		return state.series.series_airing;
 	});
-
-	const handleScroll = () => {
-		if (ref.current) {
-			setSticky(ref.current.getBoundingClientRect().top <= 0);
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener('scroll', handleScroll);
-
-		return () => {
-			window.removeEventListener('scroll', () => handleScroll);
-		};
-	}, []);
+	const actionSeries: any[] = useSelector((state: State) => {
+		return state.series.series_genre_action;
+	});
+	const dramaSeries: any[] = useSelector((state: State) => {
+		return state.series.series_genre_drama;
+	});
 
 	console.log('HOME -> ', user);
 
@@ -108,31 +124,18 @@ const Home = () => {
 			<img
 				src="background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95 xl:hidden"
 			/>
-			<motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-20 mt-14">
-				<h1
-					className={`font-bold sticky top-0 transition-all bg-transparent ${
-						isSticky ? 'bg-white py-4 text-black text-3xl z-20 shadow-lg px-8' : 'text-white text-4xl px-8'
-					}`}
-					ref={ref}
-				>
-					Home
-				</h1>
-				<h2 className="px-8 mt-8 text-2xl font-semibold">Popular</h2>
-				<HorizontalScroll className="px-8 mt-4">
-					{!loadingPopular && popularSeries ? (
-						popularSeries.map((serie) => <Card key={serie.id} serie={serie} />)
-					) : (
-						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-						</>
-					)}
-				</HorizontalScroll>
-				<h2 className="px-8 mt-6 text-2xl font-semibold">Airing today</h2>
-				<HorizontalScroll className="px-8 mt-4">
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="mb-20 mt-14 xl:mt-24"
+			>
+				<TrailerViewer />
+				<Title text={'Home'} className="xl:hidden" />
+				<Subtitle text={'Airing today'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
 					{!loadingAired && airingSeries ? (
 						airingSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -143,8 +146,20 @@ const Home = () => {
 						</>
 					)}
 				</HorizontalScroll>
-				<h2 className="px-8 mt-6 text-2xl font-semibold">Recent updates</h2>
-				<HorizontalScroll className="px-8 mt-4">
+				<Subtitle text={'Popular'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+					{!loadingPopular && popularSeries ? (
+						popularSeries.map((serie) => <Card key={serie.id} serie={serie} />)
+					) : (
+						<>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+						</>
+					)}
+				</HorizontalScroll>
+				<Subtitle text={'Recent updates'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
 					{!loadingDiscover && discoverSeries ? (
 						discoverSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -155,8 +170,33 @@ const Home = () => {
 						</>
 					)}
 				</HorizontalScroll>
-				<h2 className="px-8 mt-6 text-2xl font-semibold">Top rated</h2>
-				<HorizontalScroll className="px-8 mt-4">
+				<Subtitle text={'Drama'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+					{!loadingGenreDrama && dramaSeries ? (
+						dramaSeries.map((serie) => <Card key={serie.id} serie={serie} />)
+					) : (
+						<>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+						</>
+					)}
+				</HorizontalScroll>
+				<Subtitle text={'Action & Adventure'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+					{!loadingGenreAction && actionSeries ? (
+						actionSeries.map((serie) => <Card key={serie.id} serie={serie} />)
+					) : (
+						<>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+						</>
+					)}
+				</HorizontalScroll>
+
+				<Subtitle text={'Top rated'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
 					{!loadingTopRated && topRatedSeries ? (
 						topRatedSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -167,8 +207,8 @@ const Home = () => {
 						</>
 					)}
 				</HorizontalScroll>
-				<h2 className="px-8 mt-6 text-2xl font-semibold">Platforms</h2>
-				<HorizontalScroll className="px-8 mt-4">
+				<Subtitle text={'Platforms'} />
+				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
 					{Platforms.map((platform) => (
 						<CardPlatform key={platform.id} platform={platform} />
 					))}

@@ -17,14 +17,12 @@ module.exports = {
 			},
 			colors: {
 				violet: colors.violet,
+				'blue-gray': colors.blueGray,
 			},
 			boxShadow: {
 				upper: '0 -10px 20px -10px rgba(0, 0, 0, 0.25)',
 			},
 		},
-	},
-	variants: {
-		extend: {},
 	},
 	plugins: [require('tailwind-scrollbar-hide')],
 };

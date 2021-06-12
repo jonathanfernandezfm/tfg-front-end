@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { Switch } from '@headlessui/react';
 import { motion } from 'framer-motion';
+import moment from 'moment';
 import { useRouter } from 'next/router';
 import { ArrowLeft } from 'phosphor-react';
 import React, { useEffect, useState } from 'react';
@@ -100,8 +101,11 @@ const EditProfile = () => {
 						<div className="mt-4">
 							<label className="font-semibold">Birth date</label>
 							<input
+								type="date"
 								name="birth"
-								defaultValue={user?.birthDate ? user.birthDate : ''}
+								defaultValue={
+									user?.birthDate ? moment(Number(user.birthDate)).format('YYYY-MM-DD') : ''
+								}
 								placeholder="Birth date"
 								className="w-full p-2 mt-1 mb-4 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"
 							/>

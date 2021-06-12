@@ -98,6 +98,18 @@ export const AIRING_TODAY_SERIES = gql`
 	}
 `;
 
+export const DISCOVER_GENRE = gql`
+	query discover($genres: [String!]!) {
+		discover(genres: $genres) {
+			id
+			name
+			popularity
+			vote_average
+			backdrop_path
+		}
+	}
+`;
+
 export const SEARCH_SERIES = gql`
 	query searchSeries($query: String!) {
 		searchSeries(query: $query) {

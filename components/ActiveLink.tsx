@@ -21,10 +21,12 @@ const ActiveLink = ({ children, href, secondaryLinks }: ActiveLinkProps) => {
 	return (
 		<div className="relative">
 			<Link href={href}>
-				{React.cloneElement(children, {
-					className: className || null,
-					weight: weight,
-				})}
+				<a>
+					{React.cloneElement(children, {
+						className: className || null,
+						weight: weight,
+					})}
+				</a>
 			</Link>
 			{active ? (
 				<motion.img

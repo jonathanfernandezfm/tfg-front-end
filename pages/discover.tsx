@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/Card';
 import HorizontalScroll from '../components/HorizontalScroll';
 import Search from '../components/Search';
+import Title from '../components/Title';
 import { DISCOVER_SERIES } from '../graphql/queries';
 import { setDiscoverSeries } from '../store/reducers/seriesReducer';
 
@@ -29,10 +30,10 @@ const Discover = () => {
 			/>
 			<motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-20 mt-14">
 				<Search />
-				<h1 className="px-8 mt-8 text-4xl font-bold">Discover</h1>
-				<HorizontalScroll className="px-8 mt-4">
+				<Title text={'Discover'} className="mt-8" />
+				<div className="flex flex-wrap gap-4 px-8 mt-4">
 					{!loadingSeries && series ? (
-						series.map((serie) => <Card key={serie.id} serie={serie} />)
+						series.map((serie) => <Card className="flex-1" key={serie.id} serie={serie} />)
 					) : (
 						<>
 							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
@@ -40,7 +41,7 @@ const Discover = () => {
 							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
 						</>
 					)}
-				</HorizontalScroll>
+				</div>
 			</motion.div>
 		</>
 	);

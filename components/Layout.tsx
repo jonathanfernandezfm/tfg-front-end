@@ -1,6 +1,8 @@
 import { AnimateSharedLayout } from 'framer-motion';
 import React, { ReactNode } from 'react';
 import useDevice from '../hooks/useDevice';
+import { Footer } from './Footer';
+import { Header } from './Header';
 import NavBar from './NavBar';
 import Notification from './Notification';
 
@@ -13,9 +15,13 @@ const Layout = ({ children }: LayoutProps) => {
 
 	return (
 		<AnimateSharedLayout>
-			{children}
-			<Notification></Notification>
-			{isMobile() && <NavBar></NavBar>}
+			<div>
+				<Header />
+				{children}
+				<Notification />
+				<NavBar />
+				<Footer />
+			</div>
 		</AnimateSharedLayout>
 	);
 };

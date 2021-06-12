@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import moment from 'moment';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ImageSquare, LockSimple, PencilSimple } from 'phosphor-react';
@@ -82,7 +83,10 @@ const Profile = () => {
 					<div className="mt-4">
 						{user?.birthDate ? (
 							<span className="font-semibold">
-								Birth date: <span className="font-normal">{user.birthDate}</span>
+								Birth date:{' '}
+								<span className="font-normal">
+									{moment(Number(user.birthDate)).format('DD/MM/YYYY')}
+								</span>
 							</span>
 						) : (
 							<span className="font-semibold">

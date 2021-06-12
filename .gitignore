@@ -101,6 +101,8 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Service worker files
 public/sw.js
 public/sw.js.map
 public/workbox-*.js

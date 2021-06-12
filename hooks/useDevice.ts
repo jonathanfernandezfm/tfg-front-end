@@ -16,6 +16,7 @@ const getDevice = (userAgent: NavigatorID['userAgent']) => {
 		isSSR,
 	};
 };
+
 const useDevice = () => {
 	useEffect(() => {}, []);
 	const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;

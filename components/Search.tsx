@@ -84,7 +84,7 @@ const Input = ({ className }: InputProps) => {
 					placeholder="Search"
 					type="text"
 				/>
-				{searchInput ? (
+				{focused || searchInput ? (
 					<button
 						onClick={() => {
 							setFocused(false);

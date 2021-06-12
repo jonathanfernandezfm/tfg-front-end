@@ -9,6 +9,9 @@ const SELECT_SERIE = 'SELECT_SERIE';
 const SET_SERIE_CAST = 'SET_SERIE_CAST';
 const SET_SERIE_RECOMENDATIONS = 'SET_SERIE_RECOMENDATIONS';
 
+const SET_SERIES_GENRE_ACTION = 'SET_SERIES_GENRE_ACTION';
+const SET_SERIES_GENRE_DRAMA = 'SET_SERIES_GENRE_DRAMA';
+
 type SeriesAction = {
 	type: string;
 	series?: any[];
@@ -25,6 +28,10 @@ const reducer = (state: any = [], action: SeriesAction): any => {
 			return { ...state, series_popular: action.series };
 		case SET_SERIES_TOP:
 			return { ...state, series_top_rated: action.series };
+		case SET_SERIES_GENRE_ACTION:
+			return { ...state, series_genre_action: action.series };
+		case SET_SERIES_GENRE_DRAMA:
+			return { ...state, series_genre_drama: action.series };
 		case SET_SERIES_SEARCH:
 			return { ...state, series_search: action.series };
 		case SELECT_SERIE:
@@ -74,6 +81,25 @@ export const setAiringTodaySeries = (series: any) => {
 			series: series,
 		});
 	};
+};
+
+export const setDiscoverByGenre = (series: any, genre: string) => {
+	switch (genre) {
+		case 'action':
+			return async (dispatch: Dispatch) => {
+				dispatch({
+					type: SET_SERIES_GENRE_ACTION,
+					series: series,
+				});
+			};
+		case 'drama':
+			return async (dispatch: Dispatch) => {
+				dispatch({
+					type: SET_SERIES_GENRE_DRAMA,
+					series: series,
+				});
+			};
+	}
 };
 
 export const setSeriesSearch = (series: any) => {
