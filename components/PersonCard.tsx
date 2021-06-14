@@ -11,7 +11,8 @@ const PersonCard = ({ person }: PersonCardProps) => {
 		<Link href={`/persons/${person.id}`}>
 			<motion.div
 				whileTap={{ scale: 0.95 }}
-				className="relative flex-shrink-0 h-40 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md shadow-md w-28 min-w-max"
+				whileHover={{ scale: 1.02 }}
+				className="cursor-pointer relative flex-shrink-0 h-40 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md shadow-md w-28 min-w-max xl:w-36 xl:h-56"
 				style={{
 					backgroundImage: `${
 						person.profile_path

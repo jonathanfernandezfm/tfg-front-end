@@ -95,17 +95,21 @@ const Serie = () => {
 	};
 
 	return (
-		<div className="mb-20">
+		<div className="mb-20 xl:mb-6 xl:container xl:m-auto xl:px-40">
 			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
 				<img
 					src={`${process.env.IMAGES_URL_ORIGINAL}${selectedSerie?.backdrop_path}`}
-					className="absolute object-cover h-full"
+					className="absolute object-cover h-full xl:w-full "
 				/>
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
 				<div className="relative flex justify-between px-8 pt-12 mb-24">
 					<div className="flex items-center gap-4">
-						<button onClick={onBack} className="focus:outline-none text-violet-50">
+						<button
+							onClick={onBack}
+							className="focus:outline-none text-violet-50 xl:flex xl:gap-2 xl:text-lg"
+						>
 							<ArrowLeft size={28} />
+							<span className="hidden font-bold xl:block">Back</span>
 						</button>
 					</div>
 					{user && (
@@ -114,19 +118,26 @@ const Serie = () => {
 								onClick={() => {
 									seeSerie();
 								}}
-								className="focus:outline-none"
+								className="focus:outline-none xl:bg-violet-100 xl:p-2 xl:rounded-full"
 							>
-								<Eye size={28} className={`${isSeen ? 'active-seen text-indigo-400' : 'text-white'}`} />
+								<Eye
+									size={28}
+									className={`${
+										isSeen ? 'active-seen text-indigo-400' : 'text-white xl:text-blue-gray-800'
+									}`}
+								/>
 							</button>
 							<button
 								onClick={() => {
 									likeSerie();
 								}}
-								className="focus:outline-none"
+								className="focus:outline-none xl:bg-violet-100 xl:p-2 xl:rounded-full"
 							>
 								<Heart
 									size={28}
-									className={`${isLiked ? 'active-liked text-red-400' : 'text-white'}`}
+									className={`${
+										isLiked ? 'active-liked text-red-400' : 'text-white xl:text-blue-gray-800'
+									}`}
 								/>
 							</button>
 						</div>
@@ -138,7 +149,7 @@ const Serie = () => {
 							selectedSerie?.networks?.map((network: any) => (
 								<div
 									key={network.name}
-									className="flex items-center w-12 h-6 p-2 rounded-md bg-indigo-50"
+									className="flex items-center w-12 h-6 p-2 rounded-md xl:w-20 xl:h-10 xl:p-4 bg-indigo-50"
 								>
 									<img
 										src={`${process.env.IMAGES_URL_500}${network.logo_path.split('.')[0] + '.svg'}`}
@@ -152,7 +163,7 @@ const Serie = () => {
 					<div className="flex flex-wrap items-end">
 						<span className="mr-2">{selectedSerie?.name}</span>
 						<div className="flex items-end">
-							<span className="text-xl font-semibold ">
+							<span className="text-xl font-semibold xl:text-2xl ">
 								{!serieResult.loading
 									? `(${new Date(selectedSerie?.first_air_date).getFullYear()})`
 									: ''}
@@ -162,7 +173,9 @@ const Serie = () => {
 							</span>
 							<span className="flex items-center gap-1 mb-0.5 ml-2 mr-4 text-white">
 								<Star size={16} color="yellow" weight="fill" />
-								<span className="text-sm font-normal">{selectedSerie?.vote_average.toFixed(1)}</span>
+								<span className="text-sm font-normal xl:text-xl">
+									{selectedSerie?.vote_average.toFixed(1)}
+								</span>
 							</span>
 						</div>
 					</div>
@@ -184,15 +197,15 @@ const Serie = () => {
 			)}
 
 			{!serieResult.loading && (
-				<div>
-					<div className="flex flex-wrap gap-2 px-8 mt-6">
+				<div className="px-8 xl:px-2">
+					<div className="flex flex-wrap gap-2 mt-6 xl:px-0">
 						{selectedSerie?.genres?.map((genre: any) => (
 							<div key={genre.id} className="px-2 py-1 text-sm font-semibold rounded-sm bg-violet-200">
 								{genre.name}
 							</div>
 						))}
 					</div>
-					<div className="px-8 mt-6">
+					<div className="mt-6 xl:px-0">
 						<div className="font-semibold ">
 							{selectedSerie?.number_of_seasons} seasons, {selectedSerie?.number_of_episodes} episodes
 							{selectedSerie?.seasons?.find((s: any) => s.season_number === 0) ? ', special content' : ''}
@@ -204,17 +217,17 @@ const Serie = () => {
 
 						<div className="mt-2">{selectedSerie?.overview}</div>
 					</div>
-					<div className="px-8 mt-4 font-semibold">
+					<div className="mt-4 font-semibold xl:px-0">
 						Status: <span className="font-normal">{selectedSerie?.status}</span>
 					</div>
-					<div className="px-8 mt-2 font-semibold">
+					<div className="mt-2 font-semibold xl:px-0">
 						Last air date: <span className="font-normal">{selectedSerie?.last_air_date}</span>
 					</div>
-					<div className="px-8 mt-2 font-semibold">
+					<div className="mt-2 font-semibold xl:px-0">
 						In production:{' '}
 						<span className="font-normal">{selectedSerie?.in_production ? 'Yes' : 'No'}</span>
 					</div>
-					<div className="px-8 mt-2 font-semibold">
+					<div className="mt-2 font-semibold">
 						Created by:{' '}
 						<span className="font-normal">
 							{selectedSerie?.created_by?.map((creator: any, index: number) => (
@@ -228,13 +241,13 @@ const Serie = () => {
 						</span>
 					</div>
 
-					<h1 className="px-8 mt-6 text-xl font-semibold">Seasons</h1>
-					<div className="w-full px-8 mx-auto mt-4 bg-white rounded-2xl">
+					<h1 className="mt-6 text-xl font-semibold">Seasons</h1>
+					<div className="w-full mx-auto mt-4 bg-white rounded-2xl">
 						{selectedSerie?.seasons?.map((season: any, index: any) => (
 							<Disclosure as="div" key={season.id} className="mt-2">
 								{({ open }) => (
 									<>
-										<Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left rounded-lg text-violet-900 bg-violet-200 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+										<Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left rounded-lg xl:text-base text-violet-900 bg-violet-200 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
 											<span className="font-semibold">
 												{season.season_number === 0 ? 'Specials' : `Season ${index}`}
 											</span>
@@ -248,7 +261,7 @@ const Serie = () => {
 											{!season.overview && <CaretRight className="w-5 h-5 text-violet-500" />}
 										</Disclosure.Button>
 										{season.overview && (
-											<Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black">
+											<Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black xl:text-base">
 												{season.overview}
 												<div className="mt-1">
 													<Link href="">
@@ -264,8 +277,8 @@ const Serie = () => {
 					</div>
 					{!!selectedSerieCast && !!selectedSerieCast.length && (
 						<div>
-							<h1 className="px-8 mt-6 text-xl font-semibold">Cast</h1>
-							<HorizontalScroll className="px-8 mt-4 ">
+							<h1 className="mt-6 text-xl font-semibold">Cast</h1>
+							<HorizontalScroll>
 								{selectedSerieCast &&
 									selectedSerieCast.map((person: any) => (
 										<PersonCard key={person.id} person={person} />
@@ -276,8 +289,8 @@ const Serie = () => {
 					{!!selectedSerie?.production_companies?.length &&
 						!!selectedSerie?.production_companies?.filter((pr: any) => pr.logo_path !== null).length && (
 							<div>
-								<h1 className="px-8 mt-6 text-xl font-semibold">Production</h1>
-								<HorizontalScroll className="px-8 mt-4 ">
+								<h1 className="mt-6 text-xl font-semibold">Production</h1>
+								<HorizontalScroll>
 									{selectedSerie &&
 										selectedSerie?.production_companies?.map((companie: any) =>
 											companie.logo_path ? (
@@ -290,8 +303,8 @@ const Serie = () => {
 					<hr className="mt-6"></hr>
 					{!!selectedSerieRecomendations && !!selectedSerieRecomendations.length && (
 						<div>
-							<h1 className="px-8 mt-6 text-xl font-semibold">Recomendations</h1>
-							<HorizontalScroll className="px-8 mt-4">
+							<h1 className="mt-6 text-xl font-semibold">Recomendations</h1>
+							<HorizontalScroll>
 								{selectedSerieRecomendations &&
 									selectedSerieRecomendations.map((serie: any) => (
 										<Card key={serie.id} serie={serie} />

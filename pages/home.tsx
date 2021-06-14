@@ -134,8 +134,8 @@ const Home = () => {
 			>
 				<TrailerViewer />
 				<Title text={'Home'} className="xl:hidden" />
-				<Subtitle text={'Airing today'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<Subtitle text={'Airing today'} className="mt-6" />
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{!loadingAired && airingSeries ? (
 						airingSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -147,7 +147,7 @@ const Home = () => {
 					)}
 				</HorizontalScroll>
 				<Subtitle text={'Popular'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{!loadingPopular && popularSeries ? (
 						popularSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -159,7 +159,7 @@ const Home = () => {
 					)}
 				</HorizontalScroll>
 				<Subtitle text={'Recent updates'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{!loadingDiscover && discoverSeries ? (
 						discoverSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -171,7 +171,7 @@ const Home = () => {
 					)}
 				</HorizontalScroll>
 				<Subtitle text={'Drama'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{!loadingGenreDrama && dramaSeries ? (
 						dramaSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -183,7 +183,7 @@ const Home = () => {
 					)}
 				</HorizontalScroll>
 				<Subtitle text={'Action & Adventure'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{!loadingGenreAction && actionSeries ? (
 						actionSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -196,7 +196,7 @@ const Home = () => {
 				</HorizontalScroll>
 
 				<Subtitle text={'Top rated'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{!loadingTopRated && topRatedSeries ? (
 						topRatedSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
@@ -208,7 +208,7 @@ const Home = () => {
 					)}
 				</HorizontalScroll>
 				<Subtitle text={'Platforms'} />
-				<HorizontalScroll className="px-8 mt-4 xl:px-12 xl:py-4">
+				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
 					{Platforms.map((platform) => (
 						<CardPlatform key={platform.id} platform={platform} />
 					))}

@@ -30,7 +30,7 @@ export const Footer = () => {
 							<Link href="/tos">
 								<a className="text-lg text-center text-white">Terms of use</a>
 							</Link>
-							<a className="text-lg text-center text-white">Season list</a>
+							<a className="text-lg text-center text-white">TMDB</a>
 							<a className="text-lg text-center text-white">Season list</a>
 						</div>
 					</div>

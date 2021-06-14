@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import React from 'react';
 
 interface CompanieCardProps {
@@ -6,8 +7,10 @@ interface CompanieCardProps {
 
 const CompanieCard = ({ companie }: CompanieCardProps) => {
 	return (
-		<div
-			className="relative flex-shrink-0 p-4 bg-center bg-no-repeat bg-contain rounded-md bg-violet-200 h-28 w-28 min-w-max"
+		<motion.div
+			whileTap={{ scale: 0.95 }}
+			whileHover={{ scale: 1.02 }}
+			className="relative flex-shrink-0 p-4 bg-center bg-no-repeat bg-contain rounded-md bg-violet-200 h-28 w-28 min-w-max xl:w-36 xl:h-28 cursor-pointer"
 			style={{
 				backgroundImage: `${
 					companie.logo_path
@@ -16,7 +19,7 @@ const CompanieCard = ({ companie }: CompanieCardProps) => {
 				}`,
 				backgroundOrigin: 'content-box',
 			}}
-		></div>
+		></motion.div>
 	);
 };
 
