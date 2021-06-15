@@ -1,42 +1,47 @@
 import { useLazyQuery } from '@apollo/client';
-import { Cube, MagnifyingGlass, SmileySad, X } from 'phosphor-react';
+import { MagnifyingGlass, SmileySad, X } from 'phosphor-react';
 import React, { useEffect, useState } from 'react';
-import { setSeriesSearch } from '../store/reducers/seriesReducer';
 import { CardWide } from './CardWide';
 import { DebounceInput } from 'react-debounce-input';
-import { SEARCH_SERIES } from '../graphql/queries';
+import { SEARCH_SERIES, SEARCH_USERS } from '../graphql/queries';
 import { useDispatch, useSelector } from 'react-redux';
-import Chip from './Chip';
 import { motion } from 'framer-motion';
+import { clearSeach, setSeriesSearch, setUsersSearch } from '../store/reducers/searchReducer';
+import CardUser from './CardUser';
+
 interface InputProps {
 	className?: string;
 }
-
-const visibility = {
-	visible: { opacity: 1 },
-	hidden: { opacity: 0 },
-};
 
 const Input = ({ className }: InputProps) => {
 	const [focused, setFocused] = useState(false);
 	const [searchInput, setSearchInput] = useState('');
 	const dispatch = useDispatch();
 
-	const [search, result] = useLazyQuery(SEARCH_SERIES, {
-		onCompleted: () => {},
+	const [searchSeries] = useLazyQuery(SEARCH_SERIES, {
+		fetchPolicy: 'network-only',
+		onCompleted: (data) => {
+			dispatch(setSeriesSearch(data.searchSeries));
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
+
+	const [searchUsers] = useLazyQuery(SEARCH_USERS, {
+		fetchPolicy: 'network-only',
+		onCompleted: (data) => {
+			dispatch(setUsersSearch(data.searchUsers));
+		},
 		onError: (error) => {},
 	});
 
 	const series: any[] = useSelector((state: State) => {
-		return state.series.series_search;
+		return state.search.series_search;
 	});
-
-	useEffect(() => {
-		if (result.data) {
-			console.log(result.data);
-			dispatch(setSeriesSearch(result.data.searchSeries));
-		}
-	}, [result]);
+	const users: any[] = useSelector((state: State) => {
+		return state.search.users_search;
+	});
 
 	const onFocusHandle = (value: boolean) => {
 		setFocused(value);
@@ -44,9 +49,31 @@ const Input = ({ className }: InputProps) => {
 
 	const onChange = (event: any) => {
 		setSearchInput(event.target.value);
-		if (event.target.value.length <= 2) return dispatch(setSeriesSearch([]));
-		search({ variables: { query: event.target.value } });
+		if (event.target.value[0] === '@') {
+			if (event.target.value.length <= 1) {
+				dispatch(clearSeach());
+				return;
+			}
+			const search = event.target.value.substring(1);
+			dispatch(setSeriesSearch([]));
+			searchUsers({ variables: { query: search } });
+		} else {
+			if (event.target.value.length <= 2) {
+				dispatch(clearSeach());
+				return;
+			}
+			dispatch(setUsersSearch([]));
+			searchSeries({ variables: { query: event.target.value } });
+		}
 	};
+
+	useEffect(() => {
+		if (focused || searchInput) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = 'unset';
+		}
+	}, [focused, searchInput]);
 
 	return (
 		<motion.div
@@ -89,7 +116,7 @@ const Input = ({ className }: InputProps) => {
 						onClick={() => {
 							setFocused(false);
 							setSearchInput('');
-							dispatch(setSeriesSearch([]));
+							dispatch(clearSeach());
 						}}
 						className="flex items-center focus:outline-none"
 					>
@@ -104,12 +131,21 @@ const Input = ({ className }: InputProps) => {
 				>
 					{series && (
 						<>
+							{!!series.length && <h2 className="text-lg text-black">Series</h2>}
 							{series.map((serie) => (
 								<CardWide key={serie.id} serie={serie} />
 							))}
 						</>
 					)}
-					{!series?.length && searchInput === '' && (
+					{users && (
+						<>
+							{!!users.length && <h2 className="text-lg text-black">Users</h2>}
+							{users.map((user) => (
+								<CardUser key={user.id} user={user} />
+							))}
+						</>
+					)}
+					{!series?.length && searchInput?.length <= 1 && (
 						<div className="flex items-center justify-center w-full h-full">
 							<div className="flex flex-col items-center gap-4 opacity-25">
 								<MagnifyingGlass size={120} />
@@ -117,7 +153,7 @@ const Input = ({ className }: InputProps) => {
 							</div>
 						</div>
 					)}
-					{!series?.length && searchInput !== '' && (
+					{!series?.length && !users?.length && searchInput?.length > 1 && (
 						<div className="flex items-center justify-center w-full h-full">
 							<div className="flex flex-col items-center gap-4 opacity-25">
 								<SmileySad size={120} />

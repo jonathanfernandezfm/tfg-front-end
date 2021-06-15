@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ME } from '../graphql/queries';
-import { setUser } from '../store/reducers/userReducer';
+import { setUser } from '../store/reducers/authReducer';
 import LoadingSpinner from './LoadingSpinner';
 
 interface AuthControllerProps {
@@ -21,6 +21,7 @@ const AuthController = ({ children }: AuthControllerProps) => {
 				const dataUser = data.me;
 				const userObject = {
 					token: token,
+					id: dataUser.id,
 					name: dataUser.userInfo.name,
 					username: dataUser.userInfo.username,
 					surname: dataUser.userInfo.surname,
@@ -29,6 +30,8 @@ const AuthController = ({ children }: AuthControllerProps) => {
 					gender: dataUser.userInfo.gender,
 					public: dataUser.userInfo.public,
 					city: dataUser.userInfo.city,
+					followsCount: dataUser.followsCount,
+					followersCount: dataUser.followersCount,
 				};
 
 				dispatch(setUser(userObject));

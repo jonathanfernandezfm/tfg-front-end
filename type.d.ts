@@ -6,6 +6,7 @@ interface List {
 	locked: boolean;
 	public: boolean;
 	series: any;
+	user: any;
 }
 
 interface ListState {
@@ -30,4 +31,6 @@ type State = {
 	user: User;
 	notification: Notification;
 	series: any;
+	search: any;
+	users: any;
 };

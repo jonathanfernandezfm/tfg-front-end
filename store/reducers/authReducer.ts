@@ -4,6 +4,7 @@ const SET_USER = 'SET_USER';
 const UPDATE_USER = 'UPDATE_USER';
 const REMOVE_USER = 'REMOVE_USER';
 const GET_USER = 'GET_USER';
+const SELECT_USER = 'SELECT_USER';
 
 type UserAction = {
 	type: string;
@@ -12,6 +13,7 @@ type UserAction = {
 
 interface User {
 	token?: string;
+	id: string;
 	username: string;
 	name: string;
 	surname: string;
@@ -20,6 +22,8 @@ interface User {
 	gender: string;
 	public: boolean;
 	city: string;
+	followsCount: number;
+	followersCount: number;
 }
 
 const reducer = (state: User = null, action: UserAction): User => {
@@ -30,6 +34,7 @@ const reducer = (state: User = null, action: UserAction): User => {
 			return state;
 		case REMOVE_USER:
 			return null;
+
 		case UPDATE_USER:
 			return {
 				...state,

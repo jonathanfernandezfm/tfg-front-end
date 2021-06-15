@@ -16,7 +16,7 @@ const List = ({ icon, name, id }: ListProps) => {
 
 	const onClick = () => {
 		dispatch(removeSelectedList());
-		if (id) router.push(`lists/${id}`);
+		if (id) router.push(`/lists/${id}`);
 	};
 
 	return (

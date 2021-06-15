@@ -58,6 +58,7 @@ const List = () => {
 	});
 
 	const listSelected: List = useSelector((state: State) => state.lists.selected_list);
+	const user = useSelector((state: State) => state.user);
 
 	const handleScroll = () => {
 		if (ref.current) {
@@ -115,7 +116,7 @@ const List = () => {
 					) : (
 						<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
 					)}
-					{!!listSelected && !loading && !listSelected?.locked && (
+					{!!listSelected && !loading && !listSelected?.locked && listSelected?.user.id === user.id && (
 						<>
 							<div className="flex gap-2 m-auto mr-0">
 								<button
@@ -226,6 +227,18 @@ const List = () => {
 				</div>
 				{!loading ? (
 					<p className="px-8 mt-2 text-lg font-semibold">{listSelected?.description}</p>
+				) : (
+					<div className="h-6 mx-8 mt-2 rounded-md animate-pulse bg-violet-300"></div>
+				)}
+				{!loading ? (
+					<>
+						{console.log(user.id, listSelected?.user.id)}
+						{listSelected?.user.id !== user.id ? (
+							<p className="px-8 mt-2 text-lg font-semibold">
+								Creator: {listSelected?.user.userInfo.username}
+							</p>
+						) : null}
+					</>
 				) : (
 					<div className="h-6 mx-8 mt-2 rounded-md animate-pulse bg-violet-300"></div>
 				)}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeUser } from '../store/reducers/userReducer';
+import { removeUser } from '../store/reducers/authReducer';
 
 export const Header = () => {
 	const user = useSelector((state: State) => state.user);

@@ -4,7 +4,6 @@ const SET_SERIES_DISCOVER = 'SET_SERIES_DISCOVER';
 const SET_SERIES_POPULAR = 'SET_SERIES_POPULAR';
 const SET_SERIES_AIRING = 'SET_SERIES_AIRING';
 const SET_SERIES_TOP = 'SET_SERIES_TOP';
-const SET_SERIES_SEARCH = 'SET_SERIES_SEARCH';
 const SELECT_SERIE = 'SELECT_SERIE';
 const SET_SERIE_CAST = 'SET_SERIE_CAST';
 const SET_SERIE_RECOMENDATIONS = 'SET_SERIE_RECOMENDATIONS';
@@ -32,8 +31,6 @@ const reducer = (state: any = [], action: SeriesAction): any => {
 			return { ...state, series_genre_action: action.series };
 		case SET_SERIES_GENRE_DRAMA:
 			return { ...state, series_genre_drama: action.series };
-		case SET_SERIES_SEARCH:
-			return { ...state, series_search: action.series };
 		case SELECT_SERIE:
 			return { ...state, serie_selected: action.serie };
 		case SET_SERIE_CAST:
@@ -100,15 +97,6 @@ export const setDiscoverByGenre = (series: any, genre: string) => {
 				});
 			};
 	}
-};
-
-export const setSeriesSearch = (series: any) => {
-	return async (dispatch: Dispatch) => {
-		dispatch({
-			type: SET_SERIES_SEARCH,
-			series: series,
-		});
-	};
 };
 
 export const selectSerie = (serie: any) => {

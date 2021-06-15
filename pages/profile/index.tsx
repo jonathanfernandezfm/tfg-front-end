@@ -6,16 +6,12 @@ import { ImageSquare, LockSimple, PencilSimple } from 'phosphor-react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button';
-import { removeUser } from '../../store/reducers/userReducer';
+import { removeUser } from '../../store/reducers/authReducer';
 
 const Profile = () => {
 	const user = useSelector((state: State) => state.user);
 	const dispatch = useDispatch();
 	const router = useRouter();
-
-	useEffect(() => {
-		// if (!user) router.replace(`/login`);
-	}, [user]);
 
 	const handleLogout = () => {
 		dispatch(removeUser());
@@ -67,11 +63,11 @@ const Profile = () => {
 					<div className="flex justify-evenly">
 						<div className="p-2 text-center rounded-sm shadow-md bg-violet-100">
 							<div className="text-lg font-bold">Followers</div>
-							<div>{2}</div>
+							<div>{user?.followersCount}</div>
 						</div>
 						<div className="p-2 text-center rounded-sm shadow-md bg-violet-100">
 							<div className="text-lg font-bold">Following</div>
-							<div>{2}</div>
+							<div>{user?.followsCount}</div>
 						</div>
 					</div>
 					<h2 className="mt-6 text-xl font-semibold">Information</h2>

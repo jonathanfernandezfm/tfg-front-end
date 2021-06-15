@@ -5,6 +5,9 @@ export const LOGIN = gql`
 		login(username: $username, password: $password) {
 			value
 			user {
+				id
+				followersCount
+				followsCount
 				userInfo {
 					name
 					surname

@@ -7,7 +7,7 @@ import { useMutation } from '@apollo/client';
 import { LOGIN } from '../graphql/mutations';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser } from '../store/reducers/userReducer';
+import { setUser } from '../store/reducers/authReducer';
 import { showNotification } from '../store/reducers/notificationsReducer';
 import { motion } from 'framer-motion';
 
@@ -34,6 +34,7 @@ const Login = () => {
 			const data = result.data.login;
 			const userObject = {
 				token: data.value,
+				id: data.user.id,
 				name: data.user.userInfo.name,
 				username: data.user.userInfo.username,
 				surname: data.user.userInfo.surname,
@@ -42,6 +43,8 @@ const Login = () => {
 				gender: data.user.userInfo.gender,
 				public: data.user.userInfo.public,
 				city: data.user.userInfo.city,
+				followsCount: data.user.followsCount,
+				followersCount: data.user.followersCount,
 			};
 
 			console.log(userObject);

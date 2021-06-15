@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/Button';
 import { UPDATE_USER } from '../../graphql/mutations';
 import { showNotification } from '../../store/reducers/notificationsReducer';
-import { updateUser } from '../../store/reducers/userReducer';
+import { updateUser } from '../../store/reducers/authReducer';
 
 const EditProfile = () => {
 	const router = useRouter();

@@ -29,6 +29,12 @@ export const GET_LIST = gql`
 				vote_average
 				backdrop_path
 			}
+			user {
+				id
+				userInfo {
+					username
+				}
+			}
 		}
 	}
 `;
@@ -36,6 +42,9 @@ export const GET_LIST = gql`
 export const ME = gql`
 	query {
 		me {
+			id
+			followsCount
+			followersCount
 			userInfo {
 				name
 				surname
@@ -200,6 +209,38 @@ export const GET_RECOMENDATIONS = gql`
 			popularity
 			vote_average
 			backdrop_path
+		}
+	}
+`;
+
+export const SEARCH_USERS = gql`
+	query searchusers($query: String!) {
+		searchUsers(query: $query) {
+			id
+			followersCount
+			followsCount
+			platforms {
+				name
+				logo_path
+			}
+			lists {
+				id
+				icon
+				name
+				series {
+					name
+					vote_average
+				}
+			}
+			userInfo {
+				name
+				id
+				surname
+				username
+				gender
+				birthDate
+				city
+			}
 		}
 	}
 `;
