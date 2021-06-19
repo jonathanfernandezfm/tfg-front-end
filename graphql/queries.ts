@@ -59,6 +59,97 @@ export const ME = gql`
 	}
 `;
 
+export const GET_USER = gql`
+	query getUser($id: ID!) {
+		getUser(id: $id) {
+			id
+			followersCount
+			followsCount
+			isFollowed
+			platforms {
+				name
+				logo_path
+			}
+			lists {
+				id
+				icon
+				name
+				series {
+					name
+					vote_average
+				}
+			}
+			userInfo {
+				name
+				id
+				surname
+				username
+				gender
+				birthDate
+				city
+			}
+		}
+	}
+`;
+
+export const GET_FOLLOWERS = gql`
+	query getFollowers($id: ID) {
+		getFollowers(id: $id) {
+			id
+			followersCount
+			userInfo {
+				name
+				username
+				surname
+			}
+		}
+	}
+`;
+
+export const GET_FOLLOWS = gql`
+	query getFollows($id: ID) {
+		getFollows(id: $id) {
+			id
+			followersCount
+			userInfo {
+				name
+				username
+				surname
+			}
+		}
+	}
+`;
+
+export const GET_PERSON_SERIES = gql`
+	query getPersonSeries($id: ID!) {
+		getPersonSeries(id: $id) {
+			id
+			backdrop_path
+			name
+			vote_average
+		}
+	}
+`;
+
+export const GET_PERSON = gql`
+	query getPersonDetails($id: ID!) {
+		getPersonDetails(id: $id) {
+			id
+			gender
+			known_for_department
+			also_known_as
+			biography
+			popularity
+			place_of_birth
+			profile_path
+			imdb_id
+			homepage
+			name
+			deathday
+		}
+	}
+`;
+
 export const DISCOVER_SERIES = gql`
 	query {
 		discover {
@@ -185,6 +276,17 @@ export const GET_SERIE = gql`
 	}
 `;
 
+export const GET_RATING = gql`
+	query ratings($serie: String!) {
+		ratings(serie: $serie) {
+			id
+			rating
+			date
+			serie
+		}
+	}
+`;
+
 export const GET_CAST = gql`
 	query getCast($id: String!) {
 		getCast(id: $id) {
@@ -219,6 +321,7 @@ export const SEARCH_USERS = gql`
 			id
 			followersCount
 			followsCount
+			isFollowed
 			platforms {
 				name
 				logo_path

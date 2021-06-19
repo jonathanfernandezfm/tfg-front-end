@@ -50,7 +50,7 @@ const Profile = () => {
 							layoutId="profile-picture"
 							className="relative w-32 h-32 bg-gray-600 rounded-full shadow-md ring-8 ring-violet-500"
 						>
-							<img src="avatar1.png" alt="" />
+							<img src="/avatar1.png" alt="" />
 							<button className="absolute right-0 p-2 bg-white rounded-full shadow-md focus:ring-2 hover:bg-violet-100 ring-violet-600 focus:outline-none bottom-1">
 								<ImageSquare size={16} />
 							</button>

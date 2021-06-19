@@ -46,6 +46,8 @@ const FloatingButton = ({ addSerie, removeSerie }: FloatingButtonProps) => {
 		else addSerie({ variables: { id: list.id, series: [selectedSerie.id.toString()] } });
 	};
 
+	if (!lists?.filter((l: List) => l.name !== 'Seen' && l.name !== 'Liked').length) return null;
+
 	return (
 		<div className="fixed z-50 w-56 text-right bottom-40 right-8">
 			<Menu as="div" className="relative text-left">

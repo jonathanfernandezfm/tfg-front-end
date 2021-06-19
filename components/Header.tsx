@@ -55,7 +55,7 @@ export const Header = () => {
 						<div className="flex items-center gap-4">
 							<span className="text-lg text-white">@{user.username}</span>
 							<div className="relative w-8 h-8 bg-gray-600 rounded-full shadow-md ring-2 ring-violet-500">
-								<img src="avatar1.png" alt="" />
+								<img src="/avatar1.png" alt="" />
 							</div>
 							<button
 								onClick={handleLogout}

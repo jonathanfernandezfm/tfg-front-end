@@ -33,3 +33,10 @@ a {
 .active-seen > path {
 	fill: #2d4bad;
 }
+.active-seen > circle,
+.active-seen > path {
+	fill: #2d4bad;
+}
+.start-rating > path {
+	fill: #ffe345;
+}

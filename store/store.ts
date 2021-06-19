@@ -7,6 +7,7 @@ import notificationReducer from './reducers/notificationsReducer';
 import seriesReducer from './reducers/seriesReducer';
 import searchReducer from './reducers/searchReducer';
 import usersReducer from './reducers/usersReducer';
+import personsReducer from './reducers/personsReducer';
 
 const reducer = combineReducers({
 	lists: listsReducer,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
 	series: seriesReducer,
 	search: searchReducer,
 	users: usersReducer,
+	persons: personsReducer,
 });
 
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

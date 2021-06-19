@@ -5,6 +5,8 @@ const SET_SERIES_POPULAR = 'SET_SERIES_POPULAR';
 const SET_SERIES_AIRING = 'SET_SERIES_AIRING';
 const SET_SERIES_TOP = 'SET_SERIES_TOP';
 const SELECT_SERIE = 'SELECT_SERIE';
+const SET_RATING = 'SET_RATING';
+const REMOVE_RATING = 'REMOVE_RATING';
 const SET_SERIE_CAST = 'SET_SERIE_CAST';
 const SET_SERIE_RECOMENDATIONS = 'SET_SERIE_RECOMENDATIONS';
 
@@ -17,6 +19,7 @@ type SeriesAction = {
 	serie?: any;
 	cast?: any[];
 	recomendations?: any[];
+	rating?: any;
 };
 
 const reducer = (state: any = [], action: SeriesAction): any => {
@@ -33,6 +36,10 @@ const reducer = (state: any = [], action: SeriesAction): any => {
 			return { ...state, series_genre_drama: action.series };
 		case SELECT_SERIE:
 			return { ...state, serie_selected: action.serie };
+		case SET_RATING:
+			return { ...state, serie_selected_rating: action.rating };
+		case REMOVE_RATING:
+			return { ...state, serie_selected_rating: null };
 		case SET_SERIE_CAST:
 			return { ...state, serie_selected_cast: action.cast };
 		case SET_SERIE_RECOMENDATIONS:
@@ -104,6 +111,23 @@ export const selectSerie = (serie: any) => {
 		dispatch({
 			type: SELECT_SERIE,
 			serie: serie,
+		});
+	};
+};
+
+export const setRatingSelected = (rating: any) => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: SET_RATING,
+			rating: rating,
+		});
+	};
+};
+
+export const removeRatingSelected = () => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: REMOVE_RATING,
 		});
 	};
 };

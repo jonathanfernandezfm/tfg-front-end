@@ -12,10 +12,6 @@ const Modal = ({ isOpen, setIsOpen, children }: ModalProps) => {
 		setIsOpen(false);
 	}
 
-	function openModal() {
-		setIsOpen(true);
-	}
-
 	return (
 		<>
 			<Transition appear show={isOpen} as={Fragment}>

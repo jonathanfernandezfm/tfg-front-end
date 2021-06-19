@@ -218,7 +218,7 @@ const List = () => {
 										onClick={handleDelete}
 										className="items-end px-4 py-2 font-semibold text-white bg-red-500 rounded-md focus:ring-4 focus:ring-red-300 focus:outline-none"
 									>
-										Save
+										Remove
 									</button>
 								</div>
 							</Modal>

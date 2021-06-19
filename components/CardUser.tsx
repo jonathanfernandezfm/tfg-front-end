@@ -25,10 +25,10 @@ const CardUser = ({ user }: CardUserProps) => {
 			whileTap={{ scale: 0.95 }}
 			whileHover={{ scale: 1.02 }}
 			onClick={handleClick}
-			className="flex gap-6 p-4 m-2 mt-0 rounded-sm shadow-lg cursor-pointer bg-violet-50 "
+			className="flex items-center gap-6 p-4 px-6 m-2 mt-0 rounded-md shadow-lg cursor-pointer bg-violet-50 "
 		>
 			<div className="relative w-16 h-16 bg-gray-600 rounded-full shadow-md ring-2 ring-violet-500">
-				<img src="avatar1.png" alt="" />
+				<img src="/avatar1.png" alt="" />
 			</div>
 			<div className="">
 				<div className="font-bold">@{user.userInfo.username}</div>

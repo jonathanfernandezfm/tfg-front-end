@@ -1,5 +1,5 @@
 import React from 'react';
-import { House, MagnifyingGlass, ListDashes, User } from 'phosphor-react';
+import { House, MagnifyingGlass, ListDashes, User, ChatCircleDots } from 'phosphor-react';
 import ActiveLink from './ActiveLink';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +17,11 @@ const NavBar = () => {
 			<ActiveLink href="/lists">
 				<ListDashes size={26}></ListDashes>
 			</ActiveLink>
+			{user ? (
+				<ActiveLink href="/conversations">
+					<ChatCircleDots size={26}></ChatCircleDots>
+				</ActiveLink>
+			) : null}
 			{user ? (
 				<ActiveLink href="/profile" secondaryLinks={['/register']}>
 					<User size={26}></User>

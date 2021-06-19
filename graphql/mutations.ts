@@ -110,3 +110,52 @@ export const REMOVE_SERIE_TO_LIST = gql`
 		}
 	}
 `;
+
+export const GIVE_RATING = gql`
+	mutation addRating($serie: String!, $rating: Int!) {
+		addRating(serie: $serie, rating: $rating) {
+			id
+			user {
+				id
+				userInfo {
+					name
+				}
+			}
+			rating
+		}
+	}
+`;
+
+export const REMOVE_RATING = gql`
+	mutation removeRating($serie: String!) {
+		removeRating(serie: $serie)
+	}
+`;
+
+export const FOLLOW = gql`
+	mutation follow($id: ID!) {
+		follow(id: $id) {
+			id
+			followersCount
+			userInfo {
+				name
+				username
+				surname
+			}
+		}
+	}
+`;
+
+export const UNFOLLOW = gql`
+	mutation unfollow($id: ID!) {
+		unfollow(id: $id) {
+			id
+			followersCount
+			userInfo {
+				name
+				username
+				surname
+			}
+		}
+	}
+`;

@@ -33,4 +33,5 @@ type State = {
 	series: any;
 	search: any;
 	users: any;
+	persons: any;
 };

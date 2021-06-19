@@ -1,29 +1,43 @@
 import { useMutation, useQuery } from '@apollo/client';
-import { Disclosure } from '@headlessui/react';
+import { Dialog, Disclosure } from '@headlessui/react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ArrowLeft, CaretDown, CaretRight, Eye, Heart, Star } from 'phosphor-react';
-import React, { useEffect } from 'react';
+import { ArrowLeft, CaretDown, CaretRight, Eye, Heart, Star, TrashSimple } from 'phosphor-react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../../components/Card';
 import CompanieCardPlatform from '../../components/CompanieCard';
 import FloatingButton from '../../components/FloatingButton';
 import HorizontalScroll from '../../components/HorizontalScroll';
+import Modal from '../../components/Modal';
 import PersonCard from '../../components/PersonCard';
-import { ADD_SERIE_TO_LIST, REMOVE_SERIE_TO_LIST } from '../../graphql/mutations';
-import { ALL_LISTS, GET_CAST, GET_RECOMENDATIONS, GET_SERIE } from '../../graphql/queries';
+import { ADD_SERIE_TO_LIST, GIVE_RATING, REMOVE_RATING, REMOVE_SERIE_TO_LIST } from '../../graphql/mutations';
+import { ALL_LISTS, GET_CAST, GET_RATING, GET_RECOMENDATIONS, GET_SERIE } from '../../graphql/queries';
 import { setLists } from '../../store/reducers/listsReducer';
 import { showNotification } from '../../store/reducers/notificationsReducer';
-import { selectSerie, setSerieCast, setSerieRecomendations } from '../../store/reducers/seriesReducer';
+import {
+	removeRatingSelected,
+	selectSerie,
+	setRatingSelected,
+	setSerieCast,
+	setSerieRecomendations,
+} from '../../store/reducers/seriesReducer';
 
 const Serie = () => {
 	const router = useRouter();
 	const { serie } = router.query;
+	const [modalRatingOpen, setModalRatingOpen] = useState(false);
 
 	const dispatch = useDispatch();
 	const serieResult = useQuery(GET_SERIE, {
 		variables: { id: serie },
+	});
+	useQuery(GET_RATING, {
+		variables: { serie: serie },
+		onCompleted: (data) => {
+			dispatch(setRatingSelected(data.ratings[0]?.rating));
+		},
 	});
 	const castResult = useQuery(GET_CAST, {
 		variables: { id: serie },
@@ -49,9 +63,28 @@ const Serie = () => {
 		onError: (error) => {},
 	});
 
+	const [giveRating] = useMutation(GIVE_RATING, {
+		refetchQueries: [{ query: GET_RATING, variables: { serie: serie } }],
+		onCompleted: (data) => {
+			dispatch(setRatingSelected(data.addRating.rating));
+			dispatch(showNotification({ text: 'Rated', type: 'success' }));
+		},
+		onError: (error) => {},
+	});
+
+	const [removeRating] = useMutation(REMOVE_RATING, {
+		refetchQueries: [{ query: GET_RATING, variables: { serie: serie } }],
+		onCompleted: (data) => {
+			dispatch(removeRatingSelected());
+			dispatch(showNotification({ text: 'Rating deleted', type: 'success' }));
+		},
+		onError: (error) => {},
+	});
+
 	const user = useSelector((state: State) => state.user);
 	const lists: List[] = useSelector((state: State) => state.lists.lists);
 	const selectedSerie = useSelector((state: State) => state.series.serie_selected);
+	const selectedSerieRating = useSelector((state: State) => state.series.serie_selected_rating);
 	const selectedSerieCast = useSelector((state: State) => state.series.serie_selected_cast);
 	const selectedSerieRecomendations = useSelector((state: State) => state.series.serie_selected_recomendations);
 
@@ -94,6 +127,10 @@ const Serie = () => {
 		else removeSerie({ variables: { id: seenList.id, series: [selectedSerie.id.toString()] } });
 	};
 
+	const giveRatingHandle = (index: number) => {
+		giveRating({ variables: { serie, rating: index + 1 } });
+	};
+
 	return (
 		<div className="mb-20 xl:mb-6 xl:container xl:m-auto xl:px-40">
 			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
@@ -106,7 +143,7 @@ const Serie = () => {
 					<div className="flex items-center gap-4">
 						<button
 							onClick={onBack}
-							className="focus:outline-none text-violet-50 xl:flex xl:gap-2 xl:text-lg"
+							className="focus:outline-none text-violet-50 xl:flex xl:gap-2 xl:text-lg mix-blend-hard-light"
 						>
 							<ArrowLeft size={28} />
 							<span className="hidden font-bold xl:block">Back</span>
@@ -164,7 +201,7 @@ const Serie = () => {
 						<span className="mr-2">{selectedSerie?.name}</span>
 						<div className="flex items-end">
 							<span className="text-xl font-semibold xl:text-2xl ">
-								{!serieResult.loading
+								{!serieResult.loading && selectedSerie?.first_air_date
 									? `(${new Date(selectedSerie?.first_air_date).getFullYear()})`
 									: ''}
 								{serieResult.loading && (
@@ -191,6 +228,7 @@ const Serie = () => {
 						<div className="w-12 h-3 mb-2 rounded-md animate-pulse bg-violet-300"></div>
 					</div>
 					<div className="w-12 h-3 mt-4 rounded-md animate-pulse bg-violet-300"></div>
+					<div className="w-12 h-3 mt-4 rounded-md animate-pulse bg-violet-300"></div>
 					<div className="w-full h-6 mt-4 rounded-md animate-pulse bg-violet-300"></div>
 					<div className="w-full h-20 mt-2 rounded-md animate-pulse bg-violet-300"></div>
 				</div>
@@ -205,7 +243,71 @@ const Serie = () => {
 							</div>
 						))}
 					</div>
-					<div className="mt-6 xl:px-0">
+					{user && (
+						<button
+							className="flex gap-1 p-2 mt-4 bg-yellow-100 rounded-sm"
+							onClick={() => {
+								setModalRatingOpen(true);
+							}}
+						>
+							{selectedSerieRating ? (
+								<span className="font-bold text-yellow-900">{selectedSerieRating}</span>
+							) : null}
+
+							<Star size={24} className="text-yellow-400 start-rating" weight="bold" />
+						</button>
+					)}
+					<Modal isOpen={modalRatingOpen} setIsOpen={setModalRatingOpen}>
+						<Dialog.Title as="h3" className="text-xl font-semibold leading-6 text-gray-900">
+							Give rating
+						</Dialog.Title>
+						<div className="mt-4">
+							<div className="flex justify-center gap-2 mt-6">
+								{Array(5)
+									.fill(0)
+									.map((_, index) => (
+										<button
+											onClick={() => {
+												setModalRatingOpen(false);
+												giveRatingHandle(index);
+											}}
+										>
+											<Star
+												size={32}
+												className={`text-yellow-400 ${
+													selectedSerieRating > index ? 'start-rating' : ''
+												}`}
+												weight="bold"
+											/>
+										</button>
+									))}
+							</div>
+							<div className="flex justify-end gap-2 mt-6 ">
+								{selectedSerieRating ? (
+									<button
+										onClick={() => {
+											removeRating({ variables: { serie } });
+											setModalRatingOpen(false);
+										}}
+										className="p-2 font-semibold text-white bg-red-500 rounded-md focus:ring-4 focus:ring-red-300 focus:outline-none"
+									>
+										<TrashSimple size={24} />
+									</button>
+								) : null}
+								<button
+									tabIndex={0}
+									type="button"
+									onClick={() => {
+										setModalRatingOpen(false);
+									}}
+									className="items-end px-4 py-2 font-semibold text-indigo-900 bg-indigo-100 rounded-md focus:ring-4 focus:ring-violet-500 focus:outline-none"
+								>
+									Cancel
+								</button>
+							</div>
+						</div>
+					</Modal>
+					<div className="mt-4 xl:px-0">
 						<div className="font-semibold ">
 							{selectedSerie?.number_of_seasons} seasons, {selectedSerie?.number_of_episodes} episodes
 							{selectedSerie?.seasons?.find((s: any) => s.season_number === 0) ? ', special content' : ''}
