@@ -18,7 +18,6 @@ const Person = () => {
 	const { loading } = useQuery(GET_PERSON_SERIES, {
 		variables: { id: person },
 		onCompleted: (data) => {
-			console.log('completed', data);
 			dispatch(setPersonSeries(data.getPersonSeries));
 		},
 		onError: (errors) => {
@@ -27,10 +26,9 @@ const Person = () => {
 		},
 	});
 
-	const { loading: loadingPerson } = useQuery(GET_PERSON, {
+	useQuery(GET_PERSON, {
 		variables: { id: person },
 		onCompleted: (data) => {
-			console.log('completed', data);
 			dispatch(selectPerson(data.getPersonDetails));
 		},
 		onError: (errors) => {

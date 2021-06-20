@@ -24,7 +24,9 @@
 		"react-transition-group": "^4.4.2",
 		"redux": "^4.1.0",
 		"redux-thunk": "^2.3.0",
-		"tailwind-scrollbar-hide": "^1.0.3"
+		"subscriptions-transport-ws": "^0.9.19",
+		"tailwind-scrollbar-hide": "^1.0.3",
+		"ws": "^7.5.0"
 	},
 	"devDependencies": {
 		"@types/node": "^15.0.2",

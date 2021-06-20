@@ -28,7 +28,6 @@ const Login = () => {
 	});
 
 	useEffect(() => {
-		console.log(user);
 		if (user && user.token) router.replace(`/home`);
 		else if (result.data) {
 			const data = result.data.login;
@@ -47,7 +46,6 @@ const Login = () => {
 				followersCount: data.user.followersCount,
 			};
 
-			console.log(userObject);
 			dispatch(setUser(userObject));
 		}
 	}, [result.data, user]);

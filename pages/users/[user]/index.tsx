@@ -179,7 +179,7 @@ const User = () => {
 						<h2 className="mt-6 text-xl font-semibold">Platforms</h2>
 					</>
 				)}
-				{userSelected?.lists?.length && (
+				{!!userSelected?.lists?.length && (
 					<>
 						<h2 className="mt-6 text-xl font-semibold">Lists</h2>
 						<div className="mt-4">

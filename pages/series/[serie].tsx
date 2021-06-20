@@ -6,14 +6,22 @@ import { useRouter } from 'next/router';
 import { ArrowLeft, CaretDown, CaretRight, Eye, Heart, Star, TrashSimple } from 'phosphor-react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AddComment } from '../../components/AddComment';
 import Card from '../../components/Card';
+import CardComment from '../../components/CardComment';
 import CompanieCardPlatform from '../../components/CompanieCard';
 import FloatingButton from '../../components/FloatingButton';
 import HorizontalScroll from '../../components/HorizontalScroll';
 import Modal from '../../components/Modal';
 import PersonCard from '../../components/PersonCard';
-import { ADD_SERIE_TO_LIST, GIVE_RATING, REMOVE_RATING, REMOVE_SERIE_TO_LIST } from '../../graphql/mutations';
-import { ALL_LISTS, GET_CAST, GET_RATING, GET_RECOMENDATIONS, GET_SERIE } from '../../graphql/queries';
+import {
+	ADD_COMMENT,
+	ADD_SERIE_TO_LIST,
+	GIVE_RATING,
+	REMOVE_RATING,
+	REMOVE_SERIE_TO_LIST,
+} from '../../graphql/mutations';
+import { ALL_LISTS, GET_CAST, GET_COMMENTS, GET_RATING, GET_RECOMENDATIONS, GET_SERIE } from '../../graphql/queries';
 import { setLists } from '../../store/reducers/listsReducer';
 import { showNotification } from '../../store/reducers/notificationsReducer';
 import {
@@ -21,6 +29,7 @@ import {
 	selectSerie,
 	setRatingSelected,
 	setSerieCast,
+	setSerieComments,
 	setSerieRecomendations,
 } from '../../store/reducers/seriesReducer';
 
@@ -28,6 +37,7 @@ const Serie = () => {
 	const router = useRouter();
 	const { serie } = router.query;
 	const [modalRatingOpen, setModalRatingOpen] = useState(false);
+	const [showAddComment, setShowAddComment] = useState(false);
 
 	const dispatch = useDispatch();
 	const serieResult = useQuery(GET_SERIE, {
@@ -47,12 +57,18 @@ const Serie = () => {
 	});
 	const listsResult = useQuery(ALL_LISTS);
 
+	useQuery(GET_COMMENTS, {
+		variables: { serie: serie },
+		onCompleted: (data) => {
+			dispatch(setSerieComments(data.comments));
+		},
+	});
+
 	const [addSerie, resultAdd] = useMutation(ADD_SERIE_TO_LIST, {
 		refetchQueries: [{ query: GET_SERIE, variables: { id: serie } }],
 		onCompleted: () => {
 			dispatch(showNotification({ text: 'Added to list', type: 'success' }));
 		},
-		onError: (error) => {},
 	});
 
 	const [removeSerie, resultRemove] = useMutation(REMOVE_SERIE_TO_LIST, {
@@ -60,7 +76,6 @@ const Serie = () => {
 		onCompleted: () => {
 			dispatch(showNotification({ text: 'Removed from list', type: 'success' }));
 		},
-		onError: (error) => {},
 	});
 
 	const [giveRating] = useMutation(GIVE_RATING, {
@@ -69,7 +84,6 @@ const Serie = () => {
 			dispatch(setRatingSelected(data.addRating.rating));
 			dispatch(showNotification({ text: 'Rated', type: 'success' }));
 		},
-		onError: (error) => {},
 	});
 
 	const [removeRating] = useMutation(REMOVE_RATING, {
@@ -78,7 +92,6 @@ const Serie = () => {
 			dispatch(removeRatingSelected());
 			dispatch(showNotification({ text: 'Rating deleted', type: 'success' }));
 		},
-		onError: (error) => {},
 	});
 
 	const user = useSelector((state: State) => state.user);
@@ -87,6 +100,7 @@ const Serie = () => {
 	const selectedSerieRating = useSelector((state: State) => state.series.serie_selected_rating);
 	const selectedSerieCast = useSelector((state: State) => state.series.serie_selected_cast);
 	const selectedSerieRecomendations = useSelector((state: State) => state.series.serie_selected_recomendations);
+	const comments = useSelector((state: State) => state.series.serie_selected_comments);
 
 	const isSeen = selectedSerie?.lists?.find((l: any) => l.name === 'Seen');
 	const isLiked = selectedSerie?.lists?.find((l: any) => l.name === 'Liked');
@@ -96,15 +110,12 @@ const Serie = () => {
 	useEffect(() => {
 		if (serieResult.data) {
 			dispatch(selectSerie(serieResult.data.getSerie));
-			console.log(serieResult.data.getSerie);
 		}
 		if (castResult.data) {
 			dispatch(setSerieCast(castResult.data.getCast));
-			console.log(castResult.data.getCast);
 		}
 		if (recomendationsResult.data) {
 			dispatch(setSerieRecomendations(recomendationsResult.data.getRecomendations));
-			console.log(recomendationsResult.data.getRecomendations);
 		}
 		if (listsResult.data) {
 			dispatch(setLists(listsResult.data.lists));
@@ -132,7 +143,7 @@ const Serie = () => {
 	};
 
 	return (
-		<div className="mb-20 xl:mb-6 xl:container xl:m-auto xl:px-40">
+		<div className="mb-28 xl:mb-6 xl:container xl:m-auto xl:px-40">
 			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
 				<img
 					src={`${process.env.IMAGES_URL_ORIGINAL}${selectedSerie?.backdrop_path}`}
@@ -267,6 +278,7 @@ const Serie = () => {
 									.fill(0)
 									.map((_, index) => (
 										<button
+											key={index}
 											onClick={() => {
 												setModalRatingOpen(false);
 												giveRatingHandle(index);
@@ -404,7 +416,7 @@ const Serie = () => {
 						)}
 					<hr className="mt-6"></hr>
 					{!!selectedSerieRecomendations && !!selectedSerieRecomendations.length && (
-						<div>
+						<>
 							<h1 className="mt-6 text-xl font-semibold">Recomendations</h1>
 							<HorizontalScroll>
 								{selectedSerieRecomendations &&
@@ -412,8 +424,35 @@ const Serie = () => {
 										<Card key={serie.id} serie={serie} />
 									))}
 							</HorizontalScroll>
-						</div>
+						</>
 					)}
+					<div className="flex items-end gap-4 mt-6">
+						<h1 className="text-xl font-semibold">Comments</h1>
+						<button
+							onClick={() => {
+								setShowAddComment(!showAddComment);
+							}}
+							className="px-2 py-1 font-semibold text-white bg-indigo-600 rounded-lg focus:outline-none focus-within:ring-4 ring-violet-300"
+						>
+							{!showAddComment ? 'Add comment' : 'Close'}
+						</button>
+					</div>
+					{showAddComment && (
+						<motion.div className="mt-4">
+							<AddComment serie={serie.toString()} setShowAddComment={setShowAddComment} />
+						</motion.div>
+					)}
+					<div className="mt-4">
+						{comments && comments.length ? (
+							<div className="flex flex-col gap-4">
+								{comments.map((comment: any) => (
+									<CardComment key={comment.id} comment={comment} />
+								))}
+							</div>
+						) : (
+							<h2 className="text-lg font-semibold text-gray-600">No comments</h2>
+						)}
+					</div>
 				</div>
 			)}
 		</div>

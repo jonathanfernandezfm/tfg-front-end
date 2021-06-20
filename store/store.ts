@@ -8,6 +8,7 @@ import seriesReducer from './reducers/seriesReducer';
 import searchReducer from './reducers/searchReducer';
 import usersReducer from './reducers/usersReducer';
 import personsReducer from './reducers/personsReducer';
+import messagesReducer from './reducers/messagesReducer';
 
 const reducer = combineReducers({
 	lists: listsReducer,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
 	search: searchReducer,
 	users: usersReducer,
 	persons: personsReducer,
+	messages: messagesReducer,
 });
 
 export const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));

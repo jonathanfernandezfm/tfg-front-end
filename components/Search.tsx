@@ -141,7 +141,7 @@ const Input = ({ className }: InputProps) => {
 						<>
 							{!!users.length && <h2 className="text-lg text-black">Users</h2>}
 							{users.map((user) => (
-								<CardUser key={user.id} user={user} />
+								<CardUser key={user.id} user={user} type={'user'} href="/users" />
 							))}
 						</>
 					)}

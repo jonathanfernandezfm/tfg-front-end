@@ -33,7 +33,6 @@ const reducer = (state: any = [], action: ListsAction): List[] => {
 
 export const create = (list: ListInput) => {
 	return async (dispatch: Dispatch) => {
-		console.log(list);
 		dispatch({
 			type: ADD_LIST,
 			lists: [list],

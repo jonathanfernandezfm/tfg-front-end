@@ -31,27 +31,17 @@ const Discover = () => {
 			<motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-20 mt-14">
 				<Search />
 				<Title text={'Discover'} className="mt-8" />
-				<div className="flex flex-wrap gap-4 px-8 mt-4">
-					{loadingSeries && series ? (
+				<div className="flex flex-wrap justify-center gap-4 px-8 mt-4">
+					{!loadingSeries && series ? (
 						series.map((serie) => <Card className="flex-1" key={serie.id} serie={serie} />)
 					) : (
 						<>
-							{/* <div className="relative flex-1 flex-shrink-0 h-40 rounded-md shadow-md w-28 min-w-max bg-violet-300 animate-pulse"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 min-w-max w-28 animate-pulse"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 min-w-max w-28 animate-pulse"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 rounded-md shadow-md w-28 min-w-max bg-violet-300 animate-pulse"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 min-w-max w-28 animate-pulse"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 min-w-max w-28 animate-pulse"></div> */}
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48">
-								<div className="w-full h-full bg-transparent"></div>
-							</div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
-							<div className="relative flex-1 flex-shrink-0 h-40 overflow-hidden bg-center bg-no-repeat bg-cover rounded-md shadow-md cursor-pointer bg-violet-300 xl:shadow-lg w-28 min-w-max xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 w-24 h-40 rounded-md shadow-md bg-violet-300 animate-pulse"></div>
+							<div className="relative flex-shrink-0 w-24 h-40 rounded-md shadow-md bg-violet-300 min-w-max animate-pulse"></div>
+							<div className="relative flex-shrink-0 w-24 h-40 rounded-md shadow-md bg-violet-300 min-w-max animate-pulse"></div>
+							<div className="relative flex-shrink-0 w-24 h-40 rounded-md shadow-md bg-violet-300 animate-pulse"></div>
+							<div className="relative flex-shrink-0 w-24 h-40 rounded-md shadow-md bg-violet-300 min-w-max animate-pulse"></div>
+							<div className="relative flex-shrink-0 w-24 h-40 rounded-md shadow-md bg-violet-300 min-w-max animate-pulse"></div>
 						</>
 					)}
 				</div>

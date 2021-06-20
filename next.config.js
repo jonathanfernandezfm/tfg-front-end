@@ -20,6 +20,7 @@ module.exports = withPWA({
 	},
 	env: {
 		API_URL: process.env.API_URL,
+		WS_URL: process.env.WS_URL,
 		IMAGES_URL_500: process.env.IMAGES_URL_500,
 		IMAGES_URL_ORIGINAL: process.env.IMAGES_URL_ORIGINAL,
 	},

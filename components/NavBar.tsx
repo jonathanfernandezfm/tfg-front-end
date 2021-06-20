@@ -18,7 +18,7 @@ const NavBar = () => {
 				<ListDashes size={26}></ListDashes>
 			</ActiveLink>
 			{user ? (
-				<ActiveLink href="/conversations">
+				<ActiveLink href="/conversations" secondaryLinks={['/conversations']}>
 					<ChatCircleDots size={26}></ChatCircleDots>
 				</ActiveLink>
 			) : null}

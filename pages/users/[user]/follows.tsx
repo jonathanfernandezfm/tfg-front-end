@@ -16,7 +16,6 @@ const Follows = () => {
 	const [getFollows, { loading: loading }] = useLazyQuery(GET_FOLLOWS, {
 		variables: { id: user },
 		onCompleted: (data) => {
-			console.log(data);
 			dispatch(setFollows(data.getFollows));
 		},
 	});
@@ -25,10 +24,7 @@ const Follows = () => {
 		return state.users.follows;
 	});
 
-	const userSelected = useSelector((state: State) => state.users.selected_user);
-
 	useEffect(() => {
-		console.log(user);
 		if (user) getFollows();
 	}, [user]);
 
@@ -56,10 +52,7 @@ const Follows = () => {
 					</button>
 					{!loading ? (
 						<>
-							<h1 className="text-3xl font-semibold">
-								Following{' '}
-								{/* <span className="text-xl text-violet-200">@{userSelected?.userInfo?.username}</span> */}
-							</h1>
+							<h1 className="text-3xl font-semibold">Following </h1>
 						</>
 					) : (
 						<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
@@ -67,7 +60,7 @@ const Follows = () => {
 				</div>
 				<div className="px-8 mt-8">
 					{follows?.map((f) => (
-						<CardUser key={f.id} user={f} />
+						<CardUser key={f.id} user={f} type="user" href="/users" />
 					))}
 
 					{!follows?.length && (

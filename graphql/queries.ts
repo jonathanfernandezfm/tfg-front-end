@@ -347,3 +347,68 @@ export const SEARCH_USERS = gql`
 		}
 	}
 `;
+
+export const GET_COMMENTS = gql`
+	query comments($serie: String!) {
+		comments(serie: $serie) {
+			id
+			message
+			spoiler
+			date
+			user {
+				userInfo {
+					name
+					username
+					surname
+				}
+			}
+		}
+	}
+`;
+
+export const GET_CONVERSATION_MESSAGES = gql`
+	query conversation($user: ID!) {
+		conversation(user: $user) {
+			user1 {
+				id
+			}
+			user2 {
+				id
+			}
+			messages {
+				id
+				message
+				type
+				to {
+					id
+				}
+				from {
+					id
+				}
+				date
+				read
+				sent
+			}
+		}
+	}
+`;
+export const GET_CONVERSATIONS = gql`
+	query conversations {
+		conversations {
+			user1 {
+				id
+				userInfo {
+					id
+					username
+				}
+			}
+			user2 {
+				id
+				userInfo {
+					id
+					username
+				}
+			}
+		}
+	}
+`;

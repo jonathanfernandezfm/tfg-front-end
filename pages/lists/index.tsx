@@ -45,7 +45,6 @@ const Lists = () => {
 
 	useEffect(() => {
 		if (result.data) {
-			console.log(result.data);
 			dispatch(setLists(result.data.lists));
 		}
 	}, [result]);

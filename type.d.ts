@@ -34,4 +34,5 @@ type State = {
 	search: any;
 	users: any;
 	persons: any;
+	messages: any;
 };

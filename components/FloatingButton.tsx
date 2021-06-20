@@ -51,7 +51,7 @@ const FloatingButton = ({ addSerie, removeSerie }: FloatingButtonProps) => {
 	return (
 		<div className="fixed z-50 w-56 text-right bottom-40 right-8">
 			<Menu as="div" className="relative text-left">
-				<Menu.Button className="fixed p-3 text-white rounded-full focus:outline-none right-6 bottom-20 bg-violet-400 focus:ring-4 ">
+				<Menu.Button className="fixed p-3 text-white bg-indigo-600 rounded-full focus:outline-none right-6 bottom-20 focus:ring-4 ">
 					<Plus size={26} weight="bold" className="text-white" />
 				</Menu.Button>
 				<Transition

@@ -13,7 +13,8 @@ interface ActiveLinkProps {
 const ActiveLink = ({ children, href, secondaryLinks }: ActiveLinkProps) => {
 	const { asPath } = useRouter();
 
-	const active = asPath === href || secondaryLinks?.includes(asPath);
+	const active =
+		asPath === href || secondaryLinks?.includes(asPath) || secondaryLinks?.find((path) => asPath.includes(path));
 
 	const className = active ? 'active text-indigo-800' : '';
 	const weight = active ? 'bold' : 'regular';

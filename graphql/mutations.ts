@@ -159,3 +159,40 @@ export const UNFOLLOW = gql`
 		}
 	}
 `;
+
+export const ADD_COMMENT = gql`
+	mutation addComment($serie: String!, $message: String!, $spoiler: Boolean) {
+		addComment(serie: $serie, message: $message, spoiler: $spoiler) {
+			id
+			message
+			spoiler
+			date
+			user {
+				userInfo {
+					name
+					username
+					surname
+				}
+			}
+		}
+	}
+`;
+
+export const SEND_MESSAGE = gql`
+	mutation sendMessage($user: ID!, $message: String!) {
+		sendMessage(user: $user, message: $message) {
+			id
+			message
+			type
+			to {
+				id
+			}
+			from {
+				id
+			}
+			date
+			read
+			sent
+		}
+	}
+`;

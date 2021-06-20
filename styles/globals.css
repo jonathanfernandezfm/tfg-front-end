@@ -40,3 +40,24 @@ a {
 .start-rating > path {
 	fill: #ffe345;
 }
+
+.blurry-text {
+	text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.message-bubble-sent {
+}
+
+.message-bubble-sent::before {
+	border-bottom-left-radius: 0.8rem 0.7rem;
+	border-right: 1rem solid #248bf5;
+	right: -0.35rem;
+	transform: translate(0, -0.1rem);
+}
+
+.message-bubble-received::before {
+	border-bottom-right-radius: 0.8rem 0.7rem;
+	border-left: 1rem solid #e5e5ea;
+	left: -0.35rem;
+	transform: translate(0, -0.1rem);
+}

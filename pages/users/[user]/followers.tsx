@@ -16,7 +16,6 @@ const Followers = () => {
 	const [getFollowers, { loading: loading }] = useLazyQuery(GET_FOLLOWERS, {
 		variables: { id: user },
 		onCompleted: (data) => {
-			console.log(data);
 			dispatch(setFollowers(data.getFollowers));
 		},
 	});
@@ -28,7 +27,6 @@ const Followers = () => {
 	const userSelected = useSelector((state: State) => state.users.selected_user);
 
 	useEffect(() => {
-		console.log(user);
 		if (user) getFollowers();
 	}, [user]);
 
@@ -67,7 +65,7 @@ const Followers = () => {
 				</div>
 				<div className="px-8 mt-8">
 					{followers?.map((f) => (
-						<CardUser key={f.id} user={f} />
+						<CardUser key={f.id} user={f} type="user" href="/users" />
 					))}
 				</div>
 			</div>

@@ -9,6 +9,8 @@ const SET_RATING = 'SET_RATING';
 const REMOVE_RATING = 'REMOVE_RATING';
 const SET_SERIE_CAST = 'SET_SERIE_CAST';
 const SET_SERIE_RECOMENDATIONS = 'SET_SERIE_RECOMENDATIONS';
+const SET_COMMENTS = 'SET_COMMENTS';
+const ADD_COMMENT = 'ADD_COMMENT';
 
 const SET_SERIES_GENRE_ACTION = 'SET_SERIES_GENRE_ACTION';
 const SET_SERIES_GENRE_DRAMA = 'SET_SERIES_GENRE_DRAMA';
@@ -20,6 +22,8 @@ type SeriesAction = {
 	cast?: any[];
 	recomendations?: any[];
 	rating?: any;
+	comments?: any;
+	comment?: any;
 };
 
 const reducer = (state: any = [], action: SeriesAction): any => {
@@ -46,6 +50,10 @@ const reducer = (state: any = [], action: SeriesAction): any => {
 			return { ...state, serie_selected_recomendations: action.recomendations };
 		case SET_SERIES_AIRING:
 			return { ...state, series_airing: action.series };
+		case SET_COMMENTS:
+			return { ...state, serie_selected_comments: action.comments };
+		case ADD_COMMENT:
+			return { ...state, serie_selected_comments: [...state.serie_selected_comments, action.comment] };
 		default:
 			return state;
 	}
@@ -146,6 +154,24 @@ export const setSerieRecomendations = (recomendations: any) => {
 		dispatch({
 			type: SET_SERIE_RECOMENDATIONS,
 			recomendations: recomendations,
+		});
+	};
+};
+
+export const setSerieComments = (comments: any) => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: SET_COMMENTS,
+			comments: comments,
+		});
+	};
+};
+
+export const addNewComment = (comment: any) => {
+	return async (dispatch: Dispatch) => {
+		dispatch({
+			type: ADD_COMMENT,
+			comment: comment,
 		});
 	};
 };

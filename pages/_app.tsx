@@ -5,29 +5,10 @@ import Layout from '../components/Layout';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { store } from '../store/store';
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
-import { setContext } from 'apollo-link-context';
+import { ApolloProvider } from '@apollo/client';
 import AuthController from '../components/AuthController';
 import Head from 'next/head';
-
-const authLink = setContext((_, { headers }) => {
-	const token = localStorage.getItem('user-token');
-	return {
-		headers: {
-			...headers,
-			authorization: token ? `Bearer ${token}` : null,
-		},
-	};
-});
-
-export const link = createHttpLink({
-	uri: process.env.API_URL,
-});
-
-const client = new ApolloClient({
-	cache: new InMemoryCache(),
-	link: authLink.concat(link as any) as any,
-});
+import client from '../apollo-client';
 
 const App = ({ Component, pageProps }: AppProps) => {
 	return (
@@ -47,8 +28,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 							<title>TFG</title>
 
 							<link rel="manifest" href="/manifest.json" />
-							{/* <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
-							<link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" /> */}
 							<link rel="apple-touch-icon" href="/apple-icon.png"></link>
 							<meta name="theme-color" content="#a78bfa" />
 						</Head>

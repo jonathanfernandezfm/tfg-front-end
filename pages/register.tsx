@@ -39,10 +39,6 @@ const Register = () => {
 
 	useEffect(() => {
 		if (user && user.token) router.replace(`/home`);
-
-		if (result.data) {
-			console.log(result.data);
-		}
 	}, [result.data, user]);
 
 	const handleSubmit = (event: any) => {
@@ -51,9 +47,6 @@ const Register = () => {
 		const username = event.target.username.value;
 		const password1 = event.target.password1.value;
 		const password2 = event.target.password2.value;
-
-		console.log(email, username, password1, password2);
-		console.log(!username || username === '');
 
 		if (!email || email === '') {
 			setEmailError(true);

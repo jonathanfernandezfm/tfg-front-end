@@ -47,7 +47,6 @@ const List = () => {
 	const { data, loading } = useQuery(GET_LIST, {
 		variables: { id: list },
 		onCompleted: (data) => {
-			console.log('completed', data);
 			dispatch(selectList(data.lists[0]));
 			if (!iconSelected) setIconSelected(icons.find((i) => i.id === data.lists[0].icon));
 		},
@@ -232,7 +231,6 @@ const List = () => {
 				)}
 				{!loading ? (
 					<>
-						{console.log(user.id, listSelected?.user.id)}
 						{listSelected?.user.id !== user.id ? (
 							<p className="px-8 mt-2 text-lg font-semibold">
 								Creator: {listSelected?.user.userInfo.username}
