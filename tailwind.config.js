@@ -7,6 +7,13 @@ module.exports = {
 		fontFamily: {
 			titillium: ['"Titillium Web"'],
 		},
+		minWidth: {
+			7: '7rem',
+			18: '18rem',
+		},
+		maxHeight: {
+			50: '50rem',
+		},
 		extend: {
 			zIndex: {
 				'-1': '-1',
