@@ -26,12 +26,17 @@ const Discover = () => {
 			<img
 				src="background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full h-3/4 -z-1 xl:hidden opacity-95"
 			/>
-			<motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-20 mt-14">
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="mb-20 mt-14 xl:container xl:m-auto xl:my-20"
+			>
 				<Search />
-				<Title text={'Discover'} className="mt-8" />
-				<div className="flex flex-wrap justify-center gap-4 px-8 mt-4">
+				<Title text={'Discover'} className="mt-8 xl:hidden" />
+				<div className="flex flex-wrap justify-center gap-4 px-8 mt-4 xl:mt-10">
 					{!loadingSeries && series ? (
 						series.map((serie) => <Card className="flex-1" key={serie.id} serie={serie} />)
 					) : (

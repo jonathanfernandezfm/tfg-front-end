@@ -25,7 +25,7 @@ export const CardWide = ({ serie }: CardProps) => {
 	return (
 		<motion.a whileTap={{ scale: 0.95 }} whileHover={{ scale: 1.02 }} onClick={handleClick}>
 			<div
-				className="relative flex-shrink-0 w-full h-32 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md min-w-max"
+				className="relative flex-shrink-0 w-full h-32 bg-gray-300 bg-center bg-no-repeat bg-cover rounded-md cursor-pointer xl:h-40 xl:mr-auto xl:ml-auto min-w-max"
 				style={{
 					backgroundImage: `${
 						serie.backdrop_path
@@ -36,10 +36,10 @@ export const CardWide = ({ serie }: CardProps) => {
 			>
 				<div className="absolute flex items-center justify-start gap-1 text-white left-1">
 					<Star size={16} color="yellow" weight="fill" />
-					<span>{serie.vote_average}</span>
+					<span className="xl:text-xl">{serie.vote_average}</span>
 				</div>
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
-				<span className="absolute bottom-0 m-2 text-left text-white">{serie.name}</span>
+				<span className="absolute bottom-0 m-2 text-left text-white xl:text-xl">{serie.name}</span>
 			</div>
 		</motion.a>
 	);

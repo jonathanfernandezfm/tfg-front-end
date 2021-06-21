@@ -4,7 +4,7 @@ import React from 'react';
 export const Footer = () => {
 	return (
 		<footer className="bottom-0 justify-center hidden w-full bg-blue-gray-800 h-80 xl:flex">
-			<div className="container grid-cols-3 xl:grid">
+			<div className="grid-cols-3 2xl:container xl:grid">
 				<div className="flex items-center justify-center">
 					<img src="/icons/icon144_2.png" alt="logo" className="w-28 h-28" />
 				</div>

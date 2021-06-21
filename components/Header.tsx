@@ -28,7 +28,7 @@ export const Header = () => {
 							<Link href="/home">
 								<a className="text-lg text-white">Home</a>
 							</Link>
-							<Link href="/home">
+							<Link href="/discover">
 								<a className="text-lg text-white">Discover</a>
 							</Link>
 							<Link href="/home">

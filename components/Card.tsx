@@ -24,10 +24,9 @@ const Card = ({ className, serie }: CardProps) => {
 			whileTap={{ scale: 0.95 }}
 			whileHover={{ scale: 1.02 }}
 			onClick={handleClick}
-			className={`relative cursor-pointer flex-shrink-0 h-40 bg-violet-300 bg-center bg-no-repeat bg-cover rounded-md shadow-md xl:shadow-lg w-28 overflow-hidden min-w-max xl:w-80 xl:h-48 ${className}`}
+			className={`relative cursor-pointer flex-shrink-0 h-40 bg-violet-300 bg-center bg-no-repeat xl:min-w-18 min-w-7 bg-cover rounded-md shadow-md xl:rounded-sm xl:shadow-lg w-28 overflow-hidden min-w-max xl:w-80 xl:h-48 ${className}`}
 			style={{
 				backgroundImage: `${serie.backdrop_path ? '' : 'linear-gradient(#333b4a, #4d3d65)'}`,
-				minWidth: '7rem',
 			}}
 		>
 			{serie.backdrop_path && (
@@ -40,7 +39,7 @@ const Card = ({ className, serie }: CardProps) => {
 				<Star size={16} color="yellow" weight="fill" />
 				<span className="xl:text-xl">{serie.vote_average.toFixed(1)}</span>
 			</div>
-			<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
+			<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md xl:rounded-b-sm"></div>
 			<span className="absolute bottom-0 m-2 text-left text-white xl:text-2xl xl:m-4 xl:font-semibold">
 				{serie.name}
 			</span>
