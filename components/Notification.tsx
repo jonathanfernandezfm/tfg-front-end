@@ -36,11 +36,13 @@ const Notification = () => {
 
 	if (!notification) return null;
 	return (
-		<div className="fixed z-50 flex justify-center w-full bottom-4">
+		<div className="fixed z-30 flex justify-center w-full bottom-4">
 			<motion.div
 				onClick={handleClick}
 				className={`flex opacity-0 bg-white items-center gap-2 px-5 py-2 font-semibold text-center border-2  rounded-md shadow-md ${borderColor()}`}
-				animate={{ y: -50, opacity: 1 }}
+				exit={{ y: -60, opacity: 1 }}
+				initial={{ y: 0, opacity: 0 }}
+				animate={{ y: -60, opacity: 1 }}
 				transition={{
 					type: 'spring',
 					damping: 12,

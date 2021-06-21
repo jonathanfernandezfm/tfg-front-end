@@ -151,6 +151,7 @@ const List = () => {
 												/>
 
 												<input
+													autoComplete="off"
 													name="name"
 													placeholder="Name"
 													defaultValue={listSelected?.name}
@@ -159,6 +160,7 @@ const List = () => {
 											</div>
 											<input
 												name="description"
+												autoComplete="off"
 												placeholder="Description (Optional)"
 												defaultValue={listSelected?.description}
 												className="w-full p-2 mt-2 text-black border-2 rounded-md border-violet-500 focus:outline-none focus-within:ring-4 ring-violet-300"

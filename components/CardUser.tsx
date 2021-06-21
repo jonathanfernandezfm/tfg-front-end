@@ -17,9 +17,11 @@ const CardUser = ({ user, type, href }: CardUserProps) => {
 
 	const handleClick = () => {
 		router.push(`${href}/${user.id}`);
-		dispatch(selectUser(user));
-		dispatch(clearSeach());
-		document.body.style.overflow = 'unset';
+		if (type === 'user') {
+			dispatch(selectUser(user));
+			dispatch(clearSeach());
+			document.body.style.overflow = 'unset';
+		}
 	};
 
 	return (

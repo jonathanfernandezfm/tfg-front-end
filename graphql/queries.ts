@@ -97,10 +97,15 @@ export const GET_FOLLOWERS = gql`
 		getFollowers(id: $id) {
 			id
 			followersCount
+			followsCount
 			userInfo {
 				name
-				username
+				id
 				surname
+				username
+				gender
+				birthDate
+				city
 			}
 		}
 	}
@@ -111,10 +116,15 @@ export const GET_FOLLOWS = gql`
 		getFollows(id: $id) {
 			id
 			followersCount
+			followsCount
 			userInfo {
 				name
-				username
+				id
 				surname
+				username
+				gender
+				birthDate
+				city
 			}
 		}
 	}

@@ -85,6 +85,12 @@ export const UPDATE_LIST = gql`
 				vote_average
 				backdrop_path
 			}
+			user {
+				id
+				userInfo {
+					username
+				}
+			}
 		}
 	}
 `;

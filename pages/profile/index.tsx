@@ -61,14 +61,27 @@ const Profile = () => {
 				</div>
 				<div className="mt-20">
 					<div className="flex justify-evenly">
-						<div className="p-2 text-center rounded-sm shadow-md bg-violet-100">
-							<div className="text-lg font-bold">Followers</div>
-							<div>{user?.followersCount}</div>
-						</div>
-						<div className="p-2 text-center rounded-sm shadow-md bg-violet-100">
-							<div className="text-lg font-bold">Following</div>
-							<div>{user?.followsCount}</div>
-						</div>
+						<Link href={`/users/${user?.id}/followers`}>
+							<motion.a
+								whileTap={{ scale: 0.95 }}
+								whileHover={{ scale: 1.02 }}
+								className="p-2 text-center bg-indigo-100 rounded-sm shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-400"
+							>
+								<div className="text-lg font-bold">Followers</div>
+								<div>{user?.followersCount}</div>
+							</motion.a>
+						</Link>
+
+						<Link href={`/users/${user?.id}/follows`}>
+							<motion.a
+								whileTap={{ scale: 0.95 }}
+								whileHover={{ scale: 1.02 }}
+								className="p-2 text-center bg-indigo-100 rounded-sm shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-400"
+							>
+								<div className="text-lg font-bold">Following</div>
+								<div>{user?.followsCount}</div>
+							</motion.a>
+						</Link>
 					</div>
 					<h2 className="mt-6 text-xl font-semibold">Information</h2>
 					<div className="mt-4">
