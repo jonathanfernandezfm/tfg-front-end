@@ -33,6 +33,7 @@ export const GET_LIST = gql`
 				id
 				userInfo {
 					username
+					img
 				}
 			}
 		}
@@ -54,6 +55,7 @@ export const ME = gql`
 				gender
 				public
 				city
+				img
 			}
 		}
 	}
@@ -87,6 +89,7 @@ export const GET_USER = gql`
 				gender
 				birthDate
 				city
+				img
 			}
 		}
 	}
@@ -106,6 +109,7 @@ export const GET_FOLLOWERS = gql`
 				gender
 				birthDate
 				city
+				img
 			}
 		}
 	}
@@ -125,6 +129,7 @@ export const GET_FOLLOWS = gql`
 				gender
 				birthDate
 				city
+				img
 			}
 		}
 	}
@@ -353,6 +358,7 @@ export const SEARCH_USERS = gql`
 				gender
 				birthDate
 				city
+				img
 			}
 		}
 	}
@@ -370,6 +376,7 @@ export const GET_COMMENTS = gql`
 					name
 					username
 					surname
+					img
 				}
 			}
 		}
@@ -410,6 +417,7 @@ export const GET_CONVERSATIONS = gql`
 				userInfo {
 					id
 					username
+					img
 				}
 			}
 			user2 {
@@ -417,6 +425,7 @@ export const GET_CONVERSATIONS = gql`
 				userInfo {
 					id
 					username
+					img
 				}
 			}
 		}

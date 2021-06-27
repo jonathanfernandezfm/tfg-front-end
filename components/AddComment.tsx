@@ -34,7 +34,7 @@ export const AddComment = ({ serie, setShowAddComment }: AddCommentProps) => {
 	return (
 		<>
 			<div
-				className={`p-4 gap-4 bg-violet-50 bg-center items-center rounded-md shadow-md xl:shadow-lg overflow-hidden xl:w-80 xl:h-48`}
+				className={`p-4 gap-4 bg-violet-50 bg-center items-center rounded-md shadow-md xl:shadow-lg overflow-hidden`}
 			>
 				<form onSubmit={handleCreate}>
 					<motion.div layout="position" className="">

@@ -97,13 +97,15 @@ const List = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full xl:hidden h-3/4 -z-1 opacity-95"
 			/>
 
-			<div className="mt-16 mb-24 ">
+			<div className="mt-16 mb-24 xl:container xl:m-auto xl:my-20">
 				<div
-					className={`font-bold px-8 sticky top-0 transition-all bg-transparent flex items-center gap-4 ${
-						isSticky ? 'bg-white py-4 text-black text-3xl z-20 shadow-lg' : ' text-white text-4xl'
+					className={`font-bold px-8 sticky xl:text-black xl:relative top-0 transition-all bg-transparent flex items-center gap-4 ${
+						isSticky
+							? 'bg-white py-4 text-black text-3xl xl:text-4xl z-20 shadow-lg'
+							: ' text-white xl:text-black text-4xl '
 					}`}
 					ref={ref}
 				>

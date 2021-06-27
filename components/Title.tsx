@@ -25,10 +25,10 @@ export const Title = ({ text, className }: TitleProps) => {
 
 	return (
 		<h1
-			className={`font-bold bg-transparent ${className} ${
+			className={`font-bold sticky bg-transparent  ${className} ${
 				isSticky
 					? 'bg-white py-4 text-black text-3xl z-20 shadow-lg px-8 sticky top-0 transition-all'
-					: 'text-white text-4xl px-8'
+					: 'text-white text-4xl px-8 xl:text-black'
 			}`}
 			ref={ref}
 		>

@@ -17,6 +17,7 @@ export const LOGIN = gql`
 					gender
 					public
 					city
+					img
 				}
 			}
 		}
@@ -147,6 +148,7 @@ export const FOLLOW = gql`
 				name
 				username
 				surname
+				img
 			}
 		}
 	}
@@ -161,6 +163,7 @@ export const UNFOLLOW = gql`
 				name
 				username
 				surname
+				img
 			}
 		}
 	}
@@ -178,6 +181,7 @@ export const ADD_COMMENT = gql`
 					name
 					username
 					surname
+					img
 				}
 			}
 		}

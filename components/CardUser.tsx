@@ -38,7 +38,10 @@ const CardUser = ({ user, type, href }: CardUserProps) => {
 					type === 'chat' ? 'w-8 h-8' : 'w-16 h-16'
 				}`}
 			>
-				<img src="/avatar1.png" alt="" />
+				<img
+					src={`${user?.img ? `/profile-img/avatar_m_${user?.img}.png` : '/profile-img/avatar_m_1.png'}`}
+					alt=""
+				/>
 			</div>
 			<div className="">
 				<div className={`font-bold ${type === 'chat' ? 'text-lg' : ''}`}>@{user.userInfo.username}</div>
@@ -47,12 +50,8 @@ const CardUser = ({ user, type, href }: CardUserProps) => {
 				</div>
 				<div>
 					{type === 'user' && <span className="font-semibold">Followers: </span>}
-					{/* {type === 'chat' && <span className="text-sm font-semibold text-gray-500">Hi how are you? </span>} */}
 					{user.followersCount}
 				</div>
-				{/* {type === 'chat' && (
-					<div className="absolute w-2 h-2 bg-indigo-800 rounded-full top-4 right-4 animate-ping"></div>
-				)} */}
 			</div>
 		</motion.a>
 	);

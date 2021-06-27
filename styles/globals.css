@@ -45,9 +45,6 @@ a {
 	text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-.message-bubble-sent {
-}
-
 .message-bubble-sent::before {
 	border-bottom-left-radius: 0.8rem 0.7rem;
 	border-right: 1rem solid #248bf5;

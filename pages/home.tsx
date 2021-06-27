@@ -24,39 +24,6 @@ import {
 	setTopRatedSeries,
 } from '../store/reducers/seriesReducer';
 
-const Platforms = [
-	{
-		id: '1',
-		name: 'Amazon',
-		logo_path: '/ifhbNuuVnlwYy5oXA5VIb2YR8AZ.svg',
-	},
-	{
-		id: '2',
-		name: 'Disney+',
-		logo_path: '/gJ8VX6JSu3ciXHuC2dDGAo2lvwM.svg',
-	},
-	{
-		id: '3',
-		name: 'ABC',
-		logo_path: '/ndAvF4JLsliGreX87jAc9GdjmJY.svg',
-	},
-	{
-		id: '4',
-		name: 'Amazon',
-		logo_path: '/ifhbNuuVnlwYy5oXA5VIb2YR8AZ.svg',
-	},
-	{
-		id: '5',
-		name: 'Disney+',
-		logo_path: '/gJ8VX6JSu3ciXHuC2dDGAo2lvwM.svg',
-	},
-	{
-		id: '6',
-		name: 'ABC',
-		logo_path: '/ndAvF4JLsliGreX87jAc9GdjmJY.svg',
-	},
-];
-
 const Home = () => {
 	const dispatch = useDispatch();
 	const { loading: loadingDiscover } = useQuery(DISCOVER_SERIES, {
@@ -118,7 +85,6 @@ const Home = () => {
 	});
 
 	console.log('HOME -> ', user);
-
 	return (
 		<>
 			<img
@@ -132,7 +98,6 @@ const Home = () => {
 				animate={{ opacity: 1 }}
 				className="mb-20 mt-14 xl:mt-24"
 			>
-				<TrailerViewer />
 				<Title text={'Home'} className="xl:hidden" />
 				<Subtitle text={'Airing today'} className="mt-6" />
 				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
@@ -140,9 +105,9 @@ const Home = () => {
 						airingSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
 						</>
 					)}
 				</HorizontalScroll>
@@ -152,9 +117,9 @@ const Home = () => {
 						popularSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
 						</>
 					)}
 				</HorizontalScroll>
@@ -164,9 +129,9 @@ const Home = () => {
 						discoverSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
 						</>
 					)}
 				</HorizontalScroll>
@@ -176,9 +141,9 @@ const Home = () => {
 						dramaSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
 						</>
 					)}
 				</HorizontalScroll>
@@ -188,9 +153,9 @@ const Home = () => {
 						actionSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
 						</>
 					)}
 				</HorizontalScroll>
@@ -201,17 +166,11 @@ const Home = () => {
 						topRatedSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
-							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
+							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
 						</>
 					)}
-				</HorizontalScroll>
-				<Subtitle text={'Platforms'} />
-				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
-					{Platforms.map((platform) => (
-						<CardPlatform key={platform.id} platform={platform} />
-					))}
 				</HorizontalScroll>
 				{!user && (
 					<Link href="/register">

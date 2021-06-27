@@ -55,10 +55,15 @@ const Lists = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full h-3/4 -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full xl:hidden h-3/4 -z-1 opacity-95"
 			/>
 
-			<motion.div exit={{ opacity: 0 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-20 mt-14">
+			<motion.div
+				exit={{ opacity: 0 }}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				className="mb-20 mt-14 xl:container xl:m-auto xl:px-36 xl:my-20"
+			>
 				<Title text={'Lists'} />
 				<div className="px-8">
 					{user ? (
@@ -93,11 +98,11 @@ const Lists = () => {
 								<h1 className="text-4xl font-bold text-center">This is just for members</h1>
 								<h2 className="mt-3 text-2xl text-center">
 									<Link href="/register">
-										<span className="font-bold text-indigo-800">join us</span>
+										<span className="font-bold text-indigo-800 cursor-pointer">join us</span>
 									</Link>{' '}
 									or{' '}
 									<Link href="/login">
-										<span className="font-bold text-indigo-800">login</span>
+										<span className="font-bold text-indigo-800 cursor-pointer">login</span>
 									</Link>
 								</h2>
 							</div>

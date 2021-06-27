@@ -11,10 +11,17 @@ const CardComment = ({ comment }: CardCommentProps) => {
 
 	return (
 		<div
-			className={`flex p-4 gap-4 bg-violet-200 bg-center items-center rounded-md shadow-md xl:shadow-lg overflow-hidden xl:w-80 xl:h-48`}
+			className={`flex p-4 gap-4 bg-violet-200 bg-center items-center rounded-md shadow-md xl:shadow-lg overflow-hidden xl:gap-6`}
 		>
-			<div className="w-16 h-16 bg-gray-600 rounded-full shadow-md ring-2 ring-violet-500">
-				<img src="/avatar1.png" alt="" />
+			<div className="w-16 h-16 bg-gray-600 rounded-full shadow-md ring-2 ring-violet-500 xl:w-14 xl:h-14">
+				<img
+					src={`${
+						comment.user.userInfo.img
+							? `/profile-img/avatar_m_${comment.user.userInfo.img}.png`
+							: '/profile-img/avatar_m_1.png'
+					}`}
+					alt=""
+				/>
 			</div>
 			<div className="flex-1">
 				<div className="flex items-end gap-2">

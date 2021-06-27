@@ -143,7 +143,7 @@ const Serie = () => {
 	};
 
 	return (
-		<div className="mb-28 xl:mb-6 xl:container xl:m-auto xl:px-40">
+		<div className="mb-28 xl:container xl:m-auto xl:px-40 xl:mb-28">
 			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
 				<img
 					src={`${process.env.IMAGES_URL_ORIGINAL}${selectedSerie?.backdrop_path}`}

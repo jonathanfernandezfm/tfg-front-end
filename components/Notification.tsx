@@ -36,7 +36,8 @@ const Notification = () => {
 
 	if (!notification) return null;
 	return (
-		<div className="fixed z-30 flex justify-center w-full bottom-4">
+		<div className="fixed z-30 flex justify-center w-full bottom-4 xl:bottom-72">
+			{/** MOBILE NOTIFICATION */}
 			<motion.div
 				onClick={handleClick}
 				className={`flex opacity-0 bg-white items-center gap-2 px-5 py-2 font-semibold text-center border-2  rounded-md shadow-md ${borderColor()}`}

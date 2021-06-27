@@ -77,26 +77,26 @@ const ConversationUser = () => {
 	};
 
 	return (
-		<div className="mb-20 ">
+		<div className="mb-20 xl:container xl:m-auto xl:mb-20 xl:px-56 xl:flex xl:flex-col">
 			<motion.img
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="fixed top-0 items-center object-cover w-full -z-1 opacity-95"
+				className="fixed top-0 items-center object-cover w-full -z-1 opacity-95 xl:hidden"
 			/>
-			<motion.div className="sticky top-0 z-20 flex items-center w-full gap-4 px-8 py-3 text-3xl font-bold text-black transition-all bg-transparent bg-white shadow-lg">
+			<motion.div className="sticky top-0 z-20 flex items-center w-full gap-4 px-8 py-3 text-3xl font-bold text-black transition-all bg-transparent bg-white shadow-lg xl:shadow-none xl:mt-6 ">
 				<button className="focus:outline-none" onClick={onBack}>
 					<ArrowLeft size={28} />
 				</button>
 				{!loading ? (
-					<h1 className="text-xl font-semibold">{userSelected?.userInfo.username}</h1>
+					<h1 className="text-xl font-semibold xl:text-2xl">{userSelected?.userInfo.username}</h1>
 				) : (
 					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
 				)}
 			</motion.div>
 
 			{!loadingMessages ? (
-				<ul className="flex flex-col gap-2 px-8 pb-4 mt-8 mb-40 overflow-scroll overflow-x-hidden">
+				<ul className="flex flex-col gap-2 px-8 pb-4 mt-8 mb-40 overflow-scroll overflow-x-hidden xl:text-lg xl:mb-2 xl:h-96">
 					{messages?.map((m: any) => (
 						<motion.li
 							exit={{ x: 0 }}
@@ -126,15 +126,12 @@ const ConversationUser = () => {
 					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
 					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
 					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
-					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
-					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
-					<div className="w-full h-10 rounded-md animate-pulse bg-violet-300"></div>
 				</div>
 			)}
 
 			<div>
 				<form onSubmit={handleSubmit}>
-					<div className="fixed left-0 w-full p-4 pb-8 bg-white bottom-12">
+					<div className="fixed left-0 w-full p-4 pb-8 bg-white bottom-12 xl:container xl:m-auto xl:bg-transparent xl:static xl:p-0">
 						<div className="flex items-center text-lg rounded-md shadow-md focus-within:ring-4 ring-violet-400 ring-2 ">
 							<input
 								autoComplete="off"

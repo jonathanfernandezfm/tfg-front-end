@@ -25,15 +25,15 @@ const Conversations = () => {
 	}, [me]);
 
 	return (
-		<div className="mb-20 mt-14">
+		<div className="mb-20 mt-14 xl:container xl:m-auto xl:mb-20 xl:mt-14 xl:px-52">
 			<motion.img
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 items-center object-cover w-full h-1/2 -z-1 opacity-95"
+				className="absolute top-0 items-center object-cover w-full h-1/2 -z-1 opacity-95 xl:hidden"
 			/>
 
-			<Title text={'Messages'} className="xl:hidden" />
+			<Title text={'Messages'} />
 			{!loadingConversations ? (
 				<div className="px-8 mt-6">
 					{conversations?.map((conv: any, index: any) => (

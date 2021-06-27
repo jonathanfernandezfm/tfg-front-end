@@ -53,7 +53,7 @@ const reducer = (state: any = [], action: SeriesAction): any => {
 		case SET_COMMENTS:
 			return { ...state, serie_selected_comments: action.comments };
 		case ADD_COMMENT:
-			return { ...state, serie_selected_comments: [...state.serie_selected_comments, action.comment] };
+			return { ...state, serie_selected_comments: [action.comment, ...state.serie_selected_comments] };
 		default:
 			return state;
 	}

@@ -53,23 +53,26 @@ const EditProfile = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full h-1/2 -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full h-1/2 -z-1 opacity-95 xl:hidden"
 			/>
 
 			<motion.div
 				exit={{ opacity: 0 }}
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				className="relative px-8 mt-16 mb-24 "
+				className="relative px-8 mt-16 mb-24 xl:container xl:m-auto xl:mt-16 xl:mb-24 xl:flex xl:justify-center"
 			>
-				<div className="flex items-center gap-4 text-4xl font-bold text-white transition-all bg-transparent">
+				<div className="flex items-center gap-4 text-4xl font-bold text-white transition-all bg-transparent xl:hidden">
 					<button onClick={onBack} className="focus:outline-none">
 						<ArrowLeft size={28} />
 					</button>
 					<h1 className="font-semibold">Edit profile</h1>
 				</div>
 
-				<div className="mt-6">
+				<div className="mt-6 xl:bg-blue-gray-100 xl:px-10 xl:py-4 xl:rounded-md">
+					<button onClick={onBack} className="hidden focus:outline-none xl:block xl:mt-4">
+						<ArrowLeft size={28} />
+					</button>
 					<form onSubmit={handleSubmit}>
 						<div className="absolute right-0 mx-8 -top-2 focus:outline-none"></div>
 						<div className="flex gap-6">
@@ -78,7 +81,14 @@ const EditProfile = () => {
 									layoutId="profile-picture"
 									className="relative w-20 h-20 bg-gray-600 rounded-full shadow-md ring-4 ring-violet-500"
 								>
-									<img src="/avatar1.png" alt="" />
+									<img
+										src={`${
+											user?.img
+												? `/profile-img/avatar_m_${user?.img}.png`
+												: '/profile-img/avatar_m_1.png'
+										}`}
+										alt=""
+									/>
 								</motion.div>
 							</div>
 							<div className="">
@@ -149,35 +159,6 @@ const EditProfile = () => {
 						</div>
 					</form>
 				</div>
-				{/* <div className="mt-24">
-					<div className="flex justify-evenly">
-						<div className="p-2 text-center rounded-sm shadow-md bg-violet-100">
-							<div className="text-lg font-bold">Followers</div>
-							<div>{2}</div>
-						</div>
-						<div className="p-2 text-center rounded-sm shadow-md bg-violet-100">
-							<div className="text-lg font-bold">Following</div>
-							<div>{2}</div>
-						</div>
-					</div>
-					<div className="mt-6 text-xl font-semibold">Information</div>
-					<div className="mt-4">
-						<span className="mt-4 font-semibold">
-							Email: <span className="font-normal">{user?.email}</span>
-						</span>
-					</div>
-					<div className="mt-4">
-						<span className="font-semibold">
-							Birth date: <span className="font-normal">{'jonathanfernandezfm@gmail.com'}</span>
-						</span>
-					</div>
-					<div className="mt-4">
-						<span className="font-semibold">
-							Gender: <span className="font-normal">{'jonathanfernandezfm@gmail.com'}</span>
-						</span>
-					</div>
-				</div>
-				<Button onClick={handleLogout} type="button" text="Log out" className="block m-auto mt-12" /> */}
 			</motion.div>
 		</div>
 	);

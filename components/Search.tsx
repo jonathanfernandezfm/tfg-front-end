@@ -81,6 +81,7 @@ const Input = ({ className }: InputProps) => {
 				<div className="xl:absolute xl:left-0 xl:top-0 xl:bg-black xl:bg-opacity-70 xl:w-screen xl:h-screen xl:z-10"></div>
 			)}
 
+			<div className={`${focused || searchInput ? `h-10 w-full` : `hidden`}`}></div>
 			<motion.div
 				transition={{ ease: 'easeOut', duration: 0.3 }}
 				layout

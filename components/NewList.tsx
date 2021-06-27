@@ -35,7 +35,7 @@ const NewList = ({ icon, name }: NewListProps) => {
 	return (
 		<motion.div
 			layout
-			className={`overflow-hidden w-full px-6 py-3 text-white bg-indigo-800 rounded-md shadow-md focus:outline-none focus-within:ring-4 ring-violet-300 ${
+			className={`overflow-hidden w-full  text-white bg-indigo-800 xl:rounded-sm rounded-md xl:shadow-lg shadow-md focus:outline-none focus-within:ring-4 ring-violet-100  ${
 				newListForm ? 'ring-4' : ''
 			}`}
 		>
@@ -44,14 +44,14 @@ const NewList = ({ icon, name }: NewListProps) => {
 				onClick={() => {
 					setNewListForm(!newListForm);
 				}}
-				className="flex items-center w-full gap-4 focus:outline-none"
+				className="flex items-center w-full gap-4 px-6 py-3 focus:outline-none xl:rounded-sm xl:px-10 xl:py-6 xl:text-xl"
 			>
 				{icon}
 				<span className="font-semibold">{name}</span>
 			</motion.button>
 			{newListForm && (
 				<form onSubmit={handleCreate}>
-					<motion.div layout="position" className="pt-3 pb-1">
+					<motion.div layout="position" className="px-6 py-3 ">
 						<div className="flex gap-2">
 							<ListBox selected={iconSelected} items={icons} setIconSelected={setIconSelected} />
 
