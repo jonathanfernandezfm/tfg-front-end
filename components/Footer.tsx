@@ -8,38 +8,43 @@ export const Footer = () => {
 				<div className="flex items-center justify-center">
 					<img src="/icons/icon144_2.png" alt="logo" className="w-28 h-28" />
 				</div>
-				<div className="mt-10 ml-10 ">
+				<div className="mx-10 mt-10 ">
 					<h1 className="text-4xl font-bold text-white">Seasons list</h1>
 					<div className="flex mt-6 gap-14">
-						<div className="flex flex-col gap-2">
-							<a className="text-lg text-center text-white">About {'{page}'}</a>
-							<a className="text-lg text-center text-white">Season list</a>
-							<a className="text-lg text-center text-white">Season list</a>
-							<a className="text-lg text-center text-white">Season list</a>
+						<div className="flex flex-col items-start gap-2">
+							<a className="text-lg text-center text-white cursor-pointer hover:font-semibold hover:text-violet-300">
+								About us
+							</a>
+							<a className="text-lg text-center text-white cursor-pointer hover:font-semibold hover:text-violet-300">
+								Contact us
+							</a>
 						</div>
-						<div className="flex flex-col gap-2">
-							<a className="text-lg text-center text-white">Season list</a>
-							<a className="text-lg text-center text-white">Season list</a>
-							<a className="text-lg text-center text-white">Season list</a>
-							<a className="text-lg text-center text-white">Season list</a>
-						</div>
-						<div className="flex flex-col gap-2">
+						<div className="flex flex-col items-start gap-2">
 							<Link href="/privacy">
-								<a className="text-lg text-center text-white">Privacy policy</a>
+								<a className="text-lg text-center text-white cursor-pointer hover:font-semibold hover:text-violet-300">
+									Privacy policy
+								</a>
 							</Link>
 							<Link href="/tos">
-								<a className="text-lg text-center text-white">Terms of use</a>
+								<a className="text-lg text-center text-white cursor-pointer hover:font-semibold hover:text-violet-300">
+									Terms of use
+								</a>
 							</Link>
-							<a className="text-lg text-center text-white">TMDB</a>
-							<a className="text-lg text-center text-white">Season list</a>
+							<Link href="https://www.themoviedb.org/">
+								<a className="text-lg text-center text-white cursor-pointer hover:font-semibold hover:text-violet-300">
+									TMDB
+								</a>
+							</Link>
 						</div>
 					</div>
 				</div>
 				<div className="flex items-center justify-center">
-					<div className="flex flex-col items-center justify-center gap-8">
-						<img src="/icons/icon144_2.png" alt="logo" className="w-10 h-10" />
-						<div className="text-lg text-white">Seasons list</div>
-					</div>
+					<Link href="https://www.themoviedb.org/">
+						<div className="flex flex-col items-center justify-center gap-8 cursor-pointer">
+							<img src="/tmdb.svg" alt="logo" className="w-10 h-10" />
+							<div className="text-lg text-white">The movie DB</div>
+						</div>
+					</Link>
 				</div>
 			</div>
 		</footer>

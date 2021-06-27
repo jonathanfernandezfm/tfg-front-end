@@ -152,6 +152,24 @@ const Profile = () => {
 						)}
 					</div>
 				</div>
+				<div className="mt-2 xl:hidden">
+					<h2 className="mt-6 text-xl font-semibold xl:text-3xl">Legal</h2>
+					<div className="mt-2">
+						<Link href="/privacy">
+							<span className="text-lg font-bold text-indigo-800 cursor-pointer">Privacy policy</span>
+						</Link>
+					</div>
+					<div className="mt-2">
+						<Link href="/tos">
+							<span className="text-lg font-bold text-indigo-800 cursor-pointer">Terms of use</span>
+						</Link>
+					</div>
+					<div className="mt-2">
+						<Link href="https://www.themoviedb.org/">
+							<span className="text-lg font-bold text-indigo-800 cursor-pointer">TMDB</span>
+						</Link>
+					</div>
+				</div>
 				<Button onClick={handleLogout} type="button" text="Log out" className="block m-auto mt-12 xl:hidden" />
 			</motion.div>
 		</>

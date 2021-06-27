@@ -42,8 +42,6 @@ const EditProfile = () => {
 		const gender = event.target.gender.value;
 		const location = event.target.location.value;
 
-		if (!name || name === '') return;
-
 		updateUserData({ variables: { name, surname, birthDate, gender, city: location, public: enabled } });
 	};
 
