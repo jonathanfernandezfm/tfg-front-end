@@ -23,9 +23,6 @@ const Input = ({ className }: InputProps) => {
 		onCompleted: (data) => {
 			dispatch(setSeriesSearch(data.searchSeries));
 		},
-		onError: (error) => {
-			console.log(error);
-		},
 	});
 
 	const [searchUsers] = useLazyQuery(SEARCH_USERS, {

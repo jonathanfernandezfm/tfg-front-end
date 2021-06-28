@@ -84,7 +84,6 @@ const Home = () => {
 		return state.series.series_genre_drama;
 	});
 
-	console.log('HOME -> ', user);
 	return (
 		<>
 			<img

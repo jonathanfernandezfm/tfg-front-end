@@ -32,8 +32,6 @@ const Register = () => {
 				setEmailError(true);
 				dispatch(showNotification({ text: 'Email already in use', type: 'error' }));
 			}
-
-			console.log(error.graphQLErrors[0]);
 		},
 	});
 

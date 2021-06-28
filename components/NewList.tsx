@@ -18,9 +18,6 @@ const NewList = ({ icon, name }: NewListProps) => {
 
 	const [create] = useMutation(CREATE_LIST, {
 		refetchQueries: [{ query: ALL_LISTS }],
-		onError: (error) => {
-			console.log(error.graphQLErrors[0].message);
-		},
 	});
 
 	const handleCreate = (event: any) => {

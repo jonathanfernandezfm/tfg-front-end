@@ -42,6 +42,7 @@ const Login = () => {
 				gender: data.user.userInfo.gender,
 				public: data.user.userInfo.public,
 				city: data.user.userInfo.city,
+				img: data.user.userInfo.img,
 				followsCount: data.user.followsCount,
 				followersCount: data.user.followersCount,
 			};

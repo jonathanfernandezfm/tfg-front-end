@@ -30,6 +30,7 @@ const AuthController = ({ children }: AuthControllerProps) => {
 					gender: dataUser.userInfo.gender,
 					public: dataUser.userInfo.public,
 					city: dataUser.userInfo.city,
+					img: dataUser.userInfo.img,
 					followsCount: dataUser.followsCount,
 					followersCount: dataUser.followersCount,
 				};
@@ -49,7 +50,6 @@ const AuthController = ({ children }: AuthControllerProps) => {
 		const token = localStorage.getItem('user-token');
 
 		if (!data && !user && token) {
-			console.log('EXECUTING ME TO REFETCH USER');
 			me();
 		}
 	}, [data]);
