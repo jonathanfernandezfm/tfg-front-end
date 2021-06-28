@@ -50,22 +50,25 @@ const Person = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 items-center object-cover w-full h-1/2 -z-1 opacity-95"
+				className="absolute top-0 items-center object-cover w-full h-1/2 -z-1 opacity-95 xl:hidden"
 			/>
 
-			<div className="mt-12 mb-20 rounded-md">
+			<div className="mt-12 mb-20 rounded-md xl:container xl:m-auto xl:mt-12 xl:mb-20 xl:px-40">
 				<div className="flex items-center gap-4 px-8">
-					<button onClick={onBack} className="focus:outline-none text-violet-50 xl:flex xl:gap-2 xl:text-lg">
+					<button
+						onClick={onBack}
+						className="focus:outline-none text-violet-50 xl:flex xl:gap-2 xl:text-lg xl:text-black"
+					>
 						<ArrowLeft size={28} />
 						<span className="hidden font-bold xl:block">Back</span>
 					</button>
 				</div>
 				<img
 					src={`${process.env.IMAGES_URL_ORIGINAL}${personSelected?.profile_path}`}
-					className="object-cover m-auto mt-8 shadow-lg rounded-xl w-44 ring-2 ring-indigo-500 xl:w-full "
+					className="object-cover m-auto mt-8 shadow-lg rounded-xl w-44 ring-2 ring-indigo-500 xl:w-52"
 				/>
 
-				<div className="px-8 ">
+				<div className="px-8 xl:text-lg">
 					<h2 className="mt-10 text-4xl font-bold text-center xl:text-4xl xl:mt-8">{personSelected?.name}</h2>
 					{personSelected?.imdb_id && (
 						<div className="flex justify-center mt-4 font-semibold">
@@ -100,7 +103,7 @@ const Person = () => {
 									/>
 								</Disclosure.Button>
 
-								<Disclosure.Panel className="pt-4 pb-2 text-base text-black xl:text-base">
+								<Disclosure.Panel className="pt-4 pb-2 text-base text-black xl:text-lg">
 									{personSelected?.biography}
 								</Disclosure.Panel>
 							</>
