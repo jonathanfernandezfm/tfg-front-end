@@ -21,10 +21,8 @@
 		"react-debounce-input": "^3.2.3",
 		"react-dom": "17.0.2",
 		"react-redux": "^7.2.4",
-		"react-transition-group": "^4.4.2",
 		"redux": "^4.1.0",
 		"redux-thunk": "^2.3.0",
-		"subscriptions-transport-ws": "^0.9.19",
 		"tailwind-scrollbar-hide": "^1.0.3",
 		"ws": "^7.5.0"
 	},
@@ -32,7 +30,6 @@
 		"@types/node": "^15.0.2",
 		"@types/react": "^17.0.5",
 		"@types/react-redux": "^7.1.16",
-		"@types/react-transition-group": "^4.4.1",
 		"@types/redux": "^3.6.0",
 		"@types/redux-thunk": "^2.1.0",
 		"autoprefixer": "^10.2.5",

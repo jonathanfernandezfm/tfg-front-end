@@ -426,33 +426,37 @@ const Serie = () => {
 							</HorizontalScroll>
 						</>
 					)}
-					<div className="flex items-end gap-4 mt-6">
-						<h1 className="text-xl font-semibold">Comments</h1>
-						<button
-							onClick={() => {
-								setShowAddComment(!showAddComment);
-							}}
-							className="px-2 py-1 font-semibold text-white bg-indigo-600 rounded-lg focus:outline-none focus-within:ring-4 ring-violet-300"
-						>
-							{!showAddComment ? 'Add comment' : 'Close'}
-						</button>
-					</div>
-					{showAddComment && (
-						<motion.div className="mt-4">
-							<AddComment serie={serie.toString()} setShowAddComment={setShowAddComment} />
-						</motion.div>
-					)}
-					<div className="mt-4">
-						{comments && comments.length ? (
-							<div className="flex flex-col gap-4">
-								{comments.map((comment: any) => (
-									<CardComment key={comment.id} comment={comment} />
-								))}
+					{user && (
+						<div>
+							<div className="flex items-end gap-4 mt-6">
+								<h1 className="text-xl font-semibold">Comments</h1>
+								<button
+									onClick={() => {
+										setShowAddComment(!showAddComment);
+									}}
+									className="px-2 py-1 font-semibold text-white bg-indigo-600 rounded-lg focus:outline-none focus-within:ring-4 ring-violet-300"
+								>
+									{!showAddComment ? 'Add comment' : 'Close'}
+								</button>
 							</div>
-						) : (
-							<h2 className="text-lg font-semibold text-gray-600">No comments</h2>
-						)}
-					</div>
+							{showAddComment && (
+								<motion.div className="mt-4">
+									<AddComment serie={serie.toString()} setShowAddComment={setShowAddComment} />
+								</motion.div>
+							)}
+							<div className="mt-4">
+								{comments && comments.length ? (
+									<div className="flex flex-col gap-4">
+										{comments.map((comment: any) => (
+											<CardComment key={comment.id} comment={comment} />
+										))}
+									</div>
+								) : (
+									<h2 className="text-lg font-semibold text-gray-600">No comments</h2>
+								)}
+							</div>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
