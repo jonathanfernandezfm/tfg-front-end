@@ -22,9 +22,10 @@ const wsLink = process.browser
 			uri: process.env.WS_URL,
 			options: {
 				reconnect: true,
-				connectionParams: {
+				lazy: true,
+				connectionParams: () => ({
 					Authorization: `Bearer ${localStorage.getItem('user-token')}`,
-				},
+				}),
 			},
 	  })
 	: null;

@@ -134,10 +134,10 @@ const Home = () => {
 						</>
 					)}
 				</HorizontalScroll>
-				<Subtitle text={'Drama'} />
+				<Subtitle text={'Action & Adventure'} />
 				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
-					{!loadingGenreDrama && dramaSeries ? (
-						dramaSeries.map((serie) => <Card key={serie.id} serie={serie} />)
+					{!loadingGenreAction && actionSeries ? (
+						actionSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
 							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>
@@ -146,10 +146,10 @@ const Home = () => {
 						</>
 					)}
 				</HorizontalScroll>
-				<Subtitle text={'Action & Adventure'} />
+				<Subtitle text={'Drama'} />
 				<HorizontalScroll className="px-8 xl:px-12 xl:py-4">
-					{!loadingGenreAction && actionSeries ? (
-						actionSeries.map((serie) => <Card key={serie.id} serie={serie} />)
+					{!loadingGenreDrama && dramaSeries ? (
+						dramaSeries.map((serie) => <Card key={serie.id} serie={serie} />)
 					) : (
 						<>
 							<div className="relative flex-shrink-0 h-40 rounded-md shadow-md bg-violet-300 w-28 animate-pulse xl:w-80 xl:h-48"></div>

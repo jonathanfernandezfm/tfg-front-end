@@ -144,11 +144,15 @@ const Serie = () => {
 
 	return (
 		<div className="mb-28 xl:container xl:m-auto xl:px-40 xl:mb-28">
-			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96">
-				<img
-					src={`${process.env.IMAGES_URL_ORIGINAL}${selectedSerie?.backdrop_path}`}
-					className="absolute object-cover h-full xl:w-full "
-				/>
+			<div className="relative w-full bg-center bg-no-repeat bg-cover h-96 bg-gradient-to-b to-gray-700 from-violet-900">
+				{selectedSerie?.backdrop_path ? (
+					<img
+						src={`${process.env.IMAGES_URL_ORIGINAL}${selectedSerie?.backdrop_path}`}
+						className="absolute object-cover h-full xl:w-full "
+					/>
+				) : (
+					''
+				)}
 				<div className="absolute bottom-0 w-full h-20 bg-gradient-to-t from-black to-transparent rounded-b-md"></div>
 				<div className="relative flex justify-between px-8 pt-12 mb-24">
 					<div className="flex items-center gap-4">
