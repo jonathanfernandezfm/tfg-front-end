@@ -376,7 +376,6 @@ const Serie = () => {
 													} w-5 h-5 text-violet-500`}
 												/>
 											)}
-											{!season.overview && <CaretRight className="w-5 h-5 text-violet-500" />}
 										</Disclosure.Button>
 										{season.overview && (
 											<Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black xl:text-base">
