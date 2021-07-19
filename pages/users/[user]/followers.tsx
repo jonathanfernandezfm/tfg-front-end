@@ -40,10 +40,10 @@ const Followers = () => {
 				layoutId="background"
 				src="/background.svg"
 				alt="background"
-				className="absolute top-0 object-cover w-full h-1/2 -z-1 opacity-95"
+				className="absolute top-0 object-cover w-full h-1/2 -z-1 opacity-95 xl:hidden"
 			/>
 
-			<div className="mt-16 mb-24 ">
+			<div className="mt-16 mb-24 xl:container xl:m-auto xl:px-40 xl:mb-28">
 				<div
 					className={`font-bold px-8 sticky top-0 transition-all bg-transparent flex justify-start items-center gap-4 
 						text-white text-4xl

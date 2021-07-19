@@ -380,11 +380,11 @@ const Serie = () => {
 										{season.overview && (
 											<Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-black xl:text-base">
 												{season.overview}
-												<div className="mt-1">
+												{/* <div className="mt-1">
 													<Link href="">
 														<span className="font-bold text-indigo-800">View episodes</span>
 													</Link>
-												</div>
+												</div> */}
 											</Disclosure.Panel>
 										)}
 									</>
